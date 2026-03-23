@@ -25,16 +25,6 @@ const contactDetails = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
       </svg>
     ),
-    label: "Support Email",
-    value: "support@it-guru.online",
-    href: "mailto:support@it-guru.online",
-  },
-  {
-    icon: (
-      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-      </svg>
-    ),
     label: "General Enquiries",
     value: "info@it-guru.co.za",
     href: "mailto:info@it-guru.co.za",
@@ -149,24 +139,6 @@ export default function ContactPage() {
                 </Suspense>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Google Maps embed */}
-      <section className="pb-16 sm:pb-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="overflow-hidden rounded-2xl border border-(--border-color)">
-            <iframe
-              title="IT-Guru Online location — Kuils River, Western Cape"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52775.58835895631!2d18.68268!3d-33.87808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc5f7a8d5a97e3%3A0x5d2451958c1a91cd!2sKuils%20River%2C%20Cape%20Town%2C%207580!5e0!3m2!1sen!2sza!4v1700000000000!5m2!1sen!2sza"
-              width="100%"
-              height="400"
-              style={{ border: 0, display: "block" }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
           </div>
         </div>
       </section>

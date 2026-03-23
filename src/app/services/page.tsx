@@ -123,7 +123,7 @@ const services = [
       "SEO optimisation built-in",
       "Ongoing maintenance packages",
     ],
-    cta: { label: "Get a Quote", href: "/register" },
+    cta: { label: "Get a Quote", href: "https://swiftdesignz.co.za/quote" },
   },
 ];
 
@@ -198,9 +198,20 @@ export default function ServicesPage() {
                 </ul>
                 {service.cta && (
                   <div className="mt-6">
-                    <Button variant="secondary" size="sm" href={service.cta.href}>
-                      {service.cta.label}
-                    </Button>
+                    {service.cta.href.startsWith("http") ? (
+                      <a
+                        href={service.cta.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center h-8 px-3 text-sm font-medium rounded-md border border-primary-700 text-primary-700 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                      >
+                        {service.cta.label}
+                      </a>
+                    ) : (
+                      <Button variant="secondary" size="sm" href={service.cta.href}>
+                        {service.cta.label}
+                      </Button>
+                    )}
                   </div>
                 )}
               </div>

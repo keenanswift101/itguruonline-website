@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Button } from "@/components/ui/Button";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -113,8 +113,18 @@ export default function AboutPage() {
                 </p>
               </blockquote>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Button href="/services">View Our Services</Button>
-                <Button variant="secondary" href="/contact">Get in Touch</Button>
+                <Link
+                  href="/services"
+                  className="inline-flex items-center justify-center h-10 px-4 text-base font-medium rounded-lg bg-primary-700 text-white hover:bg-primary-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                >
+                  View Our Services
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center h-10 px-4 text-base font-medium rounded-lg border border-primary-700 text-primary-700 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                >
+                  Get in Touch
+                </Link>
               </div>
             </div>
 
@@ -222,18 +232,18 @@ export default function AboutPage() {
               One team, one solution, one point of contact.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
+              <Link
                 href="/services#web-design"
-                className="bg-white text-primary-700 hover:bg-teal-50 border-0 focus:ring-white"
+                className="inline-flex items-center justify-center h-10 px-4 text-base font-medium rounded-lg bg-white text-primary-700 hover:bg-primary-50 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-700"
               >
                 Web Design Services
-              </Button>
-              <Button
+              </Link>
+              <Link
                 href="/contact"
-                className="border-white text-white hover:bg-teal-600 bg-transparent border focus:ring-white"
+                className="inline-flex items-center justify-center h-10 px-4 text-base font-medium rounded-lg border-2 border-white text-white hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-700"
               >
                 Start a Project
-              </Button>
+              </Link>
             </div>
           </div>
         </div>
