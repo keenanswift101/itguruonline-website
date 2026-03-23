@@ -15,6 +15,12 @@ export const SUPPORTED_TLDS = [
   ".africa",
 ] as const;
 
+/**
+ * The TLD shown as "Recommended" (primary) in the domain checker UI.
+ * Change this to switch the default without touching components or API routes.
+ */
+export const PRIMARY_TLD: SupportedTld = ".co.za";
+
 export type SupportedTld = (typeof SUPPORTED_TLDS)[number];
 
 // RDAP server overrides for TLDs that have known endpoints
@@ -52,6 +58,13 @@ export function validateDomainInput(input: string): DomainValidation {
       name = name.slice(0, -tld.length);
       break;
     }
+  }
+
+  // Strip any remaining TLD/extension (unknown TLDs like .com.na, .africa, etc.)
+  // Take only the first label — everything before the first dot
+  const dotIndex = name.indexOf(".");
+  if (dotIndex !== -1) {
+    name = name.slice(0, dotIndex);
   }
 
   // Strip trailing dot

@@ -3,6 +3,7 @@
 import { useState, useRef, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
+import { PRIMARY_TLD } from "@/lib/domain-validator";
 import type { DomainCheckResponse, TldResult } from "@/app/api/domain/check/route";
 
 type CheckState = "idle" | "loading" | "done" | "error";
@@ -81,7 +82,14 @@ function SkeletonRow() {
   );
 }
 
-export function DomainChecker({ initialDomain = "" }: { initialDomain?: string }) {
+export function DomainChecker({
+  initialDomain = "",
+  primaryTld = PRIMARY_TLD,
+}: {
+  initialDomain?: string;
+  /** Override the TLD shown in the input suffix and marked as "Recommended". Defaults to PRIMARY_TLD from domain-validator. */
+  primaryTld?: string;
+}) {
   const [input, setInput] = useState(initialDomain);
   const [state, setState] = useState<CheckState>("idle");
   const [result, setResult] = useState<DomainCheckResponse | null>(null);
@@ -141,14 +149,11 @@ export function DomainChecker({ initialDomain = "" }: { initialDomain?: string }
             onChange={(e) => setInput(e.target.value)}
             placeholder="yourbusiness"
             aria-label="Domain name to check"
-            className="h-12 w-full rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] px-4 pr-24 text-base text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            className="h-12 w-full rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] px-4 text-base text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
             maxLength={63}
             autoComplete="off"
             spellCheck={false}
           />
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-[var(--text-secondary)] select-none pointer-events-none">
-            .co.za
-          </span>
         </div>
         <Button
           type="submit"
@@ -192,7 +197,7 @@ export function DomainChecker({ initialDomain = "" }: { initialDomain?: string }
       {/* Results */}
       {state === "done" && result && (
         <div className="mt-6 flex flex-col gap-2">
-          {/* Primary .co.za result */}
+      {/* Primary result (the configured primaryTld) */}
           <DomainRow result={result.primary} onSelect={handleSelect} isPrimary />
 
           {/* Divider */}

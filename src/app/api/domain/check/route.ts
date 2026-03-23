@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   validateDomainInput,
   SUPPORTED_TLDS,
+  PRIMARY_TLD,
   RDAP_SERVERS,
   RDAP_PROXY,
   type SupportedTld,
@@ -107,11 +108,12 @@ export async function POST(req: NextRequest) {
   }
 
   // ── RDAP lookups — all TLDs in parallel ───────────────────────────────────
-  // Primary is .co.za (South African focus), rest are alternatives
-  const [primaryTld, ...altTlds] = SUPPORTED_TLDS;
+  // PRIMARY_TLD is the "Recommended" result; remaining TLDs are alternatives.
+  // To change the default, update PRIMARY_TLD in src/lib/domain-validator.ts.
+  const altTlds = SUPPORTED_TLDS.filter((t) => t !== PRIMARY_TLD) as SupportedTld[];
 
   const [primary, ...alternatives] = await Promise.all([
-    checkOneTld(validation.name, primaryTld),
+    checkOneTld(validation.name, PRIMARY_TLD),
     ...altTlds.map((tld) => checkOneTld(validation.name, tld)),
   ]);
 
