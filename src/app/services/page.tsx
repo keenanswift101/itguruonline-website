@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
@@ -263,13 +264,22 @@ export default function ServicesPage() {
                   ))}
                 </ul>
                 <div className="mt-8">
-                  <Button
-                    variant={pkg.highlight ? "ghost" : "primary"}
-                    className={`w-full justify-center ${pkg.highlight ? "border-white text-white hover:bg-teal-600" : ""}`}
-                    href={`/register?package=${pkg.name.toLowerCase()}`}
-                  >
-                    Get Started
-                  </Button>
+                  {pkg.highlight ? (
+                    <Link
+                      href={`/register?package=${pkg.name.toLowerCase()}`}
+                      className="inline-flex w-full items-center justify-center h-10 px-4 text-base font-medium rounded-lg bg-white text-primary-700 hover:bg-primary-50 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-700"
+                    >
+                      Get Started
+                    </Link>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      className="w-full justify-center"
+                      href={`/register?package=${pkg.name.toLowerCase()}`}
+                    >
+                      Get Started
+                    </Button>
+                  )}
                 </div>
               </div>
             ))}

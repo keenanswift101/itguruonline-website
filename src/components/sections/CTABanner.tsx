@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
 
 export function CTABanner() {
   return (
@@ -13,22 +12,17 @@ export function CTABanner() {
             Check if your perfect domain is available and register today.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link href="/domain-checker">
-              <Button
-                size="lg"
-                className="bg-white text-primary-700 hover:bg-primary-50"
-              >
-                Check Domain Availability
-              </Button>
+            <Link
+              href="/domain-checker"
+              className="inline-flex items-center justify-center h-12 px-6 text-base font-medium rounded-lg bg-white text-primary-700 hover:bg-primary-50 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-700"
+            >
+              Check Domain Availability
             </Link>
-            <Link href="/contact">
-              <Button
-                variant="secondary"
-                size="lg"
-                className="border-white text-white hover:bg-primary-600"
-              >
-                Contact Us
-              </Button>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center h-12 px-6 text-base font-medium rounded-lg border-2 border-white text-white hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-700"
+            >
+              Contact Us
             </Link>
           </div>
         </div>

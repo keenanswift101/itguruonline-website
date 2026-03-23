@@ -69,19 +69,6 @@ export function StepApplicantInfo({ data, onNext }: StepAProps) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-[var(--text-primary)] mb-1" htmlFor="idPassport">
-          SA ID / Passport Number <span className="text-error">*</span>
-        </label>
-        <input
-          id="idPassport" name="idPassport" type="text" autoComplete="off"
-          placeholder="13-digit SA ID or passport number"
-          value={fields.idPassport} onChange={handleChange}
-          className={`h-10 w-full rounded-lg border px-3 bg-[var(--bg-primary)] text-[var(--text-primary)] border-[var(--border-color)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${errors.idPassport ? "ring-2 ring-error border-error" : ""}`}
-        />
-        {errors.idPassport && <p className="mt-1 text-xs text-error">{errors.idPassport}</p>}
-      </div>
-
-      <div>
         <label className="block text-sm font-medium text-[var(--text-primary)] mb-1" htmlFor="physicalAddress">
           Physical Address <span className="text-error">*</span>
         </label>

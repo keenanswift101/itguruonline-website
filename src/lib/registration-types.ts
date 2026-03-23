@@ -7,7 +7,6 @@
 export interface StepAData {
   firstName: string;
   surname: string;
-  idPassport: string;
   physicalAddress: string;
   postalAddress: string;
   telephone: string;
@@ -53,7 +52,6 @@ export interface RegistrationFormData {
 export const defaultStepA: StepAData = {
   firstName: "",
   surname: "",
-  idPassport: "",
   physicalAddress: "",
   postalAddress: "",
   telephone: "",

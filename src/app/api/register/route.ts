@@ -21,7 +21,6 @@ function sanitizeAll(data: RegistrationFormData): RegistrationFormData {
     stepA: {
       firstName: sanitize(data.stepA.firstName),
       surname: sanitize(data.stepA.surname),
-      idPassport: sanitize(data.stepA.idPassport),
       physicalAddress: sanitize(data.stepA.physicalAddress),
       postalAddress: sanitize(data.stepA.postalAddress),
       telephone: sanitize(data.stepA.telephone),

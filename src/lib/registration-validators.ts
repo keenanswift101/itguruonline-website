@@ -65,7 +65,6 @@ export function validateSAPhone(phone: string): { valid: boolean; error?: string
 export function validateStepA(data: {
   firstName: string;
   surname: string;
-  idPassport: string;
   physicalAddress: string;
   cellPhone: string;
   email: string;
@@ -75,15 +74,6 @@ export function validateStepA(data: {
 
   if (!data.firstName.trim()) errors.firstName = "First name is required.";
   if (!data.surname.trim()) errors.surname = "Surname is required.";
-
-  if (!data.idPassport.trim()) {
-    errors.idPassport = "ID or passport number is required.";
-  } else if (/^\d{13}$/.test(data.idPassport.replace(/\s/g, ""))) {
-    // Looks like SA ID — run Luhn check
-    const result = validateSAID(data.idPassport);
-    if (!result.valid) errors.idPassport = result.error!;
-  }
-  // Otherwise assume passport — no further format validation
 
   if (!data.physicalAddress.trim())
     errors.physicalAddress = "Physical address is required.";
