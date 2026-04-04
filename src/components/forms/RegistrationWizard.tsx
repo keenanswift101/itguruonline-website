@@ -156,12 +156,19 @@ export function RegistrationWizard() {
     referenceId: null,
   });
 
-  // Restore draft from localStorage
+  // Restore draft from localStorage (expires after 24 hours to limit PII storage)
   useEffect(() => {
     try {
       const saved = localStorage.getItem(DRAFT_KEY);
       if (saved) {
-        const parsed = JSON.parse(saved) as Partial<RegistrationFormData>;
+        const parsed = JSON.parse(saved) as Partial<RegistrationFormData> & { _savedAt?: number };
+        const savedAt = parsed._savedAt ?? 0;
+        const ageMs = Date.now() - savedAt;
+        const EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
+        if (ageMs > EXPIRY_MS) {
+          localStorage.removeItem(DRAFT_KEY);
+          return;
+        }
         // Only restore stepA draft (personal info) — not domain (may come from URL)
         if (parsed.stepA) {
           dispatch({ type: "NEXT_A", payload: parsed.stepA });
@@ -171,11 +178,11 @@ export function RegistrationWizard() {
     } catch { /* ignore corrupt drafts */ }
   }, []);
 
-  // Persist draft on each step change
+  // Persist draft on each step change (with timestamp for expiry)
   useEffect(() => {
     if (state.submitState !== "success") {
       try {
-        localStorage.setItem(DRAFT_KEY, JSON.stringify(state.data));
+        localStorage.setItem(DRAFT_KEY, JSON.stringify({ ...state.data, _savedAt: Date.now() }));
       } catch { /* quota exceeded — ignore */ }
     } else {
       localStorage.removeItem(DRAFT_KEY);

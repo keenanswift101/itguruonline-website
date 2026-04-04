@@ -38,6 +38,18 @@ const initialState: FormState = {
   message: "",
 };
 
+function validateForm(f: FormState): FieldErrors {
+  const errs: FieldErrors = {};
+  if (!f.name.trim()) errs.name = "Name is required.";
+  else if (f.name.trim().length < 2) errs.name = "Name must be at least 2 characters.";
+  if (!f.email.trim()) errs.email = "Email address is required.";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) errs.email = "Enter a valid email address.";
+  if (!f.subject.trim()) errs.subject = "Please select a subject.";
+  if (!f.message.trim()) errs.message = "Message is required.";
+  else if (f.message.trim().length < 10) errs.message = "Message must be at least 10 characters.";
+  return errs;
+}
+
 export default function ContactForm() {
   const id = useId();
   const [form, setForm] = useState<FormState>(initialState);
@@ -57,6 +69,12 @@ export default function ContactForm() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    // Client-side validation before network call
+    const validationErrors = validateForm(form);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
     setStatus("submitting");
     setErrors({});
 
@@ -115,10 +133,12 @@ export default function ContactForm() {
       data-netlify-honeypot="bot-field"
       onSubmit={handleSubmit}
       noValidate
+      aria-busy={status === "submitting"}
       className="space-y-5"
     >
       <input type="hidden" name="form-name" value="contact" />
-      <p className="hidden">
+      {/* Honeypot hidden from screen readers */}
+      <p className="hidden" aria-hidden="true">
         <label>Don&apos;t fill this out: <input name="bot-field" /></label>
       </p>
       {status === "error" && (

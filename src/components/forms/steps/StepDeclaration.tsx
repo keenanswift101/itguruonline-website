@@ -43,7 +43,12 @@ export function StepDeclaration({ data, onSubmit, onBack, isSubmitting }: StepDP
       </div>
 
       {/* Terms box */}
-      <div className="rounded-lg border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 max-h-48 overflow-y-auto text-sm leading-relaxed text-[var(--text-secondary)]">
+      <div
+        className="rounded-lg border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 max-h-48 overflow-y-auto text-sm leading-relaxed text-[var(--text-secondary)]"
+        role="region"
+        aria-label="Terms and conditions"
+        tabIndex={0}
+      >
         <p className="font-semibold text-[var(--text-primary)] mb-2">Terms and Conditions</p>
         <p className="mb-2">
           By submitting this application, the applicant acknowledges and agrees to the following:
@@ -116,7 +121,7 @@ export function StepDeclaration({ data, onSubmit, onBack, isSubmitting }: StepDP
         </label>
         <input
           id="signatureDate" name="signatureDate" type="date"
-          value={fields.signatureDate} readOnly
+          value={fields.signatureDate} readOnly aria-readonly="true"
           className="h-10 w-48 rounded-lg border px-3 bg-[var(--bg-surface)] text-[var(--text-primary)] border-[var(--border-color)] cursor-not-allowed opacity-75"
         />
         <p className="mt-1 text-xs text-[var(--text-secondary)]">Date is set automatically to today.</p>

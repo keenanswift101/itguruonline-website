@@ -387,7 +387,8 @@ export function ProcessCarousel() {
   const Card = cards[active];
 
   return (
-    <div className="rounded-2xl border dark:border-white/10 border-(--border-color) dark:bg-gray-900/80 bg-(--bg-primary) backdrop-blur-sm overflow-hidden shadow-2xl dark:shadow-black/20 shadow-slate-200">
+    // Decorative mock-UI carousel — hidden from screen readers
+    <div aria-hidden="true" className="rounded-2xl border dark:border-white/10 border-(--border-color) dark:bg-gray-900/80 bg-(--bg-primary) backdrop-blur-sm overflow-hidden shadow-2xl dark:shadow-black/20 shadow-slate-200">
       <div
         key={active}
         style={{ animation: "carousel-in 0.4s ease-out both" }}

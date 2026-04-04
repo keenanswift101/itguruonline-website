@@ -8,11 +8,14 @@ import {
 } from "@/lib/registration-validators";
 import type { RegistrationFormData } from "@/lib/registration-types";
 
-/** Strip HTML/script tags to prevent stored XSS */
+/** Strip HTML/script tags and dangerous URI schemes to prevent stored XSS */
 function sanitize(value: string): string {
   return value
     .replace(/<[^>]*>/g, "")
     .replace(/javascript:/gi, "")
+    .replace(/vbscript:/gi, "")
+    .replace(/data:/gi, "")
+    .replace(/\0/g, "") // strip null bytes
     .trim();
 }
 
@@ -51,7 +54,8 @@ function sanitizeAll(data: RegistrationFormData): RegistrationFormData {
 function generateReferenceId(): string {
   const prefix = "ITG";
   const datePart = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-  const randomPart = Math.random().toString(36).toUpperCase().slice(2, 7);
+  // crypto.randomUUID() is cryptographically secure (available in Node.js ≥ 19 and all edge runtimes)
+  const randomPart = crypto.randomUUID().replace(/-/g, "").slice(0, 5).toUpperCase();
   return `${prefix}-${datePart}-${randomPart}`;
 }
 
@@ -114,8 +118,10 @@ export async function POST(req: NextRequest) {
   // await sendConfirmationEmail({ to: clean.stepA.email, name: clean.stepA.firstName, referenceId });
   // await sendAdminNotification({ referenceId, data: clean });
 
-  // Log reference (server-side only, never expose PII to logs in production)
-  console.log(`[register] New application submitted. Ref: ${referenceId}`);
+  // Reference logged only to stderr in non-production environments
+  if (process.env.NODE_ENV !== "production") {
+    console.log(`[register] New application submitted. Ref: ${referenceId}`);
+  }
 
   return NextResponse.json({ referenceId }, { status: 201 });
 }

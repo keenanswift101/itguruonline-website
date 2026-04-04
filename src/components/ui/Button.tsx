@@ -39,6 +39,17 @@ export function Button({
   const classes = `inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer ${variantStyles[variant]} ${sizeStyles[size]} ${className}`;
 
   if (href) {
+    if (props.disabled) {
+      return (
+        <span
+          className={`${classes} opacity-50 cursor-not-allowed pointer-events-none`}
+          aria-disabled="true"
+          role="link"
+        >
+          {children}
+        </span>
+      );
+    }
     return (
       <Link href={href} className={classes}>
         {children}

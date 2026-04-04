@@ -40,6 +40,16 @@ export function AnimatedCounter({
   useEffect(() => {
     if (!started) return;
 
+    // Skip animation for users who prefer reduced motion
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReduced) {
+      setCount(end);
+      return;
+    }
+
     const isDecimal = end % 1 !== 0;
     const startTime = performance.now();
     let rafId: number;
@@ -67,8 +77,16 @@ export function AnimatedCounter({
 
   return (
     <span ref={ref}>
-      {count}
-      {suffix}
+      {/* Animated visual — hidden from screen readers during count-up */}
+      <span aria-hidden="true">
+        {count}
+        {suffix}
+      </span>
+      {/* Static value always accessible to screen readers */}
+      <span className="sr-only">
+        {end}
+        {suffix}
+      </span>
     </span>
   );
 }

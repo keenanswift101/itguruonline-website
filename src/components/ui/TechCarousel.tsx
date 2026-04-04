@@ -72,7 +72,8 @@ const scrollItems = [...techItems, ...techItems];
 
 export function TechCarousel() {
   return (
-    <div className="relative flex flex-col gap-5 overflow-hidden py-4">
+    // Decorative carousel — hidden from screen readers to avoid reading 30+ duplicate items
+    <div className="relative flex flex-col gap-5 overflow-hidden py-4" aria-hidden="true">
       {/* Row 1 — scrolls left */}
       <div className="flex w-max animate-[marquee-left_30s_linear_infinite] gap-5">
         {scrollItems.map((item, i) => (

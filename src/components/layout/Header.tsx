@@ -56,7 +56,7 @@ export function Header() {
             href="/contact"
             title="Remote Support"
             aria-label="Remote Support"
-            className="group hidden sm:inline-flex h-9 w-9 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface)/60 text-(--text-secondary) transition-colors hover:border-primary-600/50 hover:bg-primary-600/10 hover:text-primary-500"
+            className="group hidden sm:inline-flex h-11 w-11 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface)/60 text-(--text-secondary) transition-colors hover:border-primary-600/50 hover:bg-primary-600/10 hover:text-primary-500"
           >
             <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
               <rect x="2" y="3" width="16" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" />
@@ -70,7 +70,7 @@ export function Header() {
             href="/services"
             title="Our Services"
             aria-label="Our Services"
-            className="group hidden sm:inline-flex h-9 w-9 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface)/60 text-(--text-secondary) transition-colors hover:border-primary-600/50 hover:bg-primary-600/10 hover:text-primary-500"
+            className="group hidden sm:inline-flex h-11 w-11 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface)/60 text-(--text-secondary) transition-colors hover:border-primary-600/50 hover:bg-primary-600/10 hover:text-primary-500"
           >
             <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
               <line x1="3" y1="5" x2="17" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -89,9 +89,10 @@ export function Header() {
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg hover:bg-(--bg-surface) transition-colors md:hidden cursor-pointer"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg hover:bg-(--bg-surface) transition-colors md:hidden cursor-pointer"
             aria-label="Toggle menu"
             aria-expanded={mobileOpen}
+            aria-controls="mobile-nav"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
               {mobileOpen ? (
@@ -106,7 +107,7 @@ export function Header() {
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <nav className="border-t border-(--border-color) px-4 py-2 md:hidden">
+        <nav id="mobile-nav" className="border-t border-(--border-color) px-4 py-2 md:hidden">
           {navLinks.map((link) => (
             <Link
               key={link.href}

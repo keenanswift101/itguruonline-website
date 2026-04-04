@@ -9,11 +9,14 @@ interface ContactPayload {
   message: string;
 }
 
-/** Strip HTML tags and javascript: protocol to prevent stored XSS */
+/** Strip HTML tags and dangerous URI schemes to prevent stored XSS */
 function sanitize(value: string): string {
   return value
     .replace(/<[^>]*>/g, "")
     .replace(/javascript:/gi, "")
+    .replace(/vbscript:/gi, "")
+    .replace(/data:/gi, "")
+    .replace(/\0/g, "") // strip null bytes
     .trim();
 }
 
@@ -99,8 +102,10 @@ export async function POST(req: NextRequest) {
   //   body: payload.message,
   // });
 
-  // Server-side log (no PII in production logs)
-  console.log(`[contact] New message received. Subject: ${payload.subject}`);
+  // Log only in non-production environments
+  if (process.env.NODE_ENV !== "production") {
+    console.log(`[contact] New message received. Subject: ${payload.subject}`);
+  }
 
   return NextResponse.json(
     { message: "Thank you! Your message has been received. We will respond within one business day." },

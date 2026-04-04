@@ -120,7 +120,7 @@ export function Hero() {
   const isDark = theme === "dark";
 
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden" aria-label="Hero">
       {/* ── Full-bleed background image ── */}
       <Image
         src="/itguru-img4.png"
@@ -222,14 +222,18 @@ export function Hero() {
                 className="relative flex w-36 flex-col justify-between rounded-xl p-3.5 sm:w-44 sm:p-4"
                 style={isDark ? {
                   background: "rgba(255,255,255,0.035)",
-                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderTop: "1px solid rgba(255,255,255,0.08)",
+                  borderRight: "1px solid rgba(255,255,255,0.08)",
+                  borderBottom: "1px solid rgba(255,255,255,0.08)",
+                  borderLeft: stat.accent ? `2px solid ${stat.accent}` : "1px solid rgba(255,255,255,0.08)",
                   boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
-                  ...(stat.accent ? { borderLeft: `2px solid ${stat.accent}` } : {}),
                 } : {
                   background: "rgba(255,255,255,0.85)",
-                  border: "1px solid rgba(0,0,0,0.08)",
+                  borderTop: "1px solid rgba(0,0,0,0.08)",
+                  borderRight: "1px solid rgba(0,0,0,0.08)",
+                  borderBottom: "1px solid rgba(0,0,0,0.08)",
+                  borderLeft: stat.accent ? `2px solid ${stat.accent}` : "1px solid rgba(0,0,0,0.08)",
                   boxShadow: "0 1px 3px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,1)",
-                  ...(stat.accent ? { borderLeft: `2px solid ${stat.accent}` } : {}),
                 }}
               >
                 {/* Icon + label row */}
