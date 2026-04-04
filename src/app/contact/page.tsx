@@ -55,15 +55,6 @@ const contactDetails = [
 export default function ContactPage() {
   return (
     <>
-      {/* Hidden form for Netlify Forms build-time detection */}
-      <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
-        <input type="text" name="name" />
-        <input type="email" name="email" />
-        <input type="tel" name="phone" />
-        <select name="subject"><option value="">-</option></select>
-        <textarea name="message" />
-      </form>
-
       {/* Hero */}
       <section className="bg-(--bg-secondary) py-16 sm:py-24">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
