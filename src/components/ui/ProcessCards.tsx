@@ -1,8 +1,10 @@
 "use client";
 
+import { useState, useEffect, useCallback } from "react";
+
 /* ────────────────────────────────────────────────────────────
-   ProcessCards — 3 animated cards showcasing IT Guru's process
-   Inspired by: step-flow | monitoring dashboard | support chat
+   ProcessCarousel — auto-rotating single-card carousel
+   showing 3 animated IT Guru process cards
    ──────────────────────────────────────────────────────────── */
 
 /* ═══ Card 1 — Process Flow ═══ */
@@ -10,10 +12,9 @@ function ProcessFlowCard() {
   const steps = ["ASSESS", "DIAGNOSE", "FIX", "VERIFY"];
 
   return (
-    <article className="group flex flex-col rounded-2xl border border-white/10 bg-gray-900/80 backdrop-blur-sm overflow-hidden transition-colors hover:border-primary-500/30">
+    <div className="flex flex-col">
       {/* Illustration */}
       <div className="relative flex flex-col items-center gap-5 px-6 pt-8 pb-6">
-        {/* Step circles + connecting lines */}
         <div className="flex items-center justify-between w-full max-w-[280px]">
           {steps.map((step, i) => (
             <div key={step} className="flex items-center">
@@ -42,7 +43,6 @@ function ProcessFlowCard() {
             </div>
           ))}
         </div>
-        {/* Info pill */}
         <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-primary-400 animate-pulse" />
           <span className="text-[10px] font-semibold tracking-widest text-gray-400">
@@ -50,7 +50,6 @@ function ProcessFlowCard() {
           </span>
         </div>
       </div>
-
       {/* Stats + copy */}
       <div className="px-6 pb-6 pt-2">
         <div className="flex items-baseline gap-3 mb-1">
@@ -65,9 +64,8 @@ function ProcessFlowCard() {
         <p className="text-sm text-gray-400 mt-1 leading-relaxed">
           Swift issue resolution without compromising on quality or thoroughness.
         </p>
-        <div className="mt-4 h-0.5 w-16 rounded-full bg-primary-500/60" />
       </div>
-    </article>
+    </div>
   );
 }
 
@@ -80,11 +78,9 @@ function MonitorDashboardCard() {
   ];
 
   return (
-    <article className="group flex flex-col rounded-2xl border border-white/10 bg-gray-900/80 backdrop-blur-sm overflow-hidden transition-colors hover:border-primary-500/30">
-      {/* Illustration — monitor window */}
+    <div className="flex flex-col">
       <div className="px-6 pt-8 pb-6">
         <div className="rounded-lg border border-white/10 bg-gray-950/80 overflow-hidden">
-          {/* Title bar */}
           <div className="flex items-center gap-2 border-b border-white/5 px-3 py-2">
             <span className="flex gap-1">
               <span className="h-2 w-2 rounded-full bg-primary-500 animate-pulse" />
@@ -93,7 +89,6 @@ function MonitorDashboardCard() {
             </span>
             <span className="ml-auto text-[9px] font-mono text-gray-600">it-guru.monitor</span>
           </div>
-          {/* Dashboard body */}
           <div className="p-3 space-y-2.5">
             {servers.map((srv, i) => (
               <div key={srv.name} className="flex items-center justify-between">
@@ -107,7 +102,6 @@ function MonitorDashboardCard() {
                 </div>
               </div>
             ))}
-            {/* Uptime bar */}
             <div className="mt-2 pt-2 border-t border-white/5">
               <div className="flex items-center justify-between mb-1.5">
                 <span className="text-[9px] font-semibold text-gray-500">UPTIME</span>
@@ -120,8 +114,6 @@ function MonitorDashboardCard() {
           </div>
         </div>
       </div>
-
-      {/* Stats + copy */}
       <div className="px-6 pb-6 pt-2">
         <div className="flex items-baseline gap-3 mb-1">
           <span className="text-4xl font-extrabold bg-linear-to-r from-primary-400 to-primary-300 bg-clip-text text-transparent">
@@ -135,9 +127,8 @@ function MonitorDashboardCard() {
         <p className="text-sm text-gray-400 mt-1 leading-relaxed">
           24/7 infrastructure monitoring to prevent issues before they happen.
         </p>
-        <div className="mt-4 h-0.5 w-16 rounded-full bg-primary-500/60" />
       </div>
-    </article>
+    </div>
   );
 }
 
@@ -151,11 +142,9 @@ function SupportChatCard() {
   ];
 
   return (
-    <article className="group flex flex-col rounded-2xl border border-white/10 bg-gray-900/80 backdrop-blur-sm overflow-hidden transition-colors hover:border-primary-500/30">
-      {/* Illustration — chat window */}
+    <div className="flex flex-col">
       <div className="px-6 pt-8 pb-6">
         <div className="rounded-lg border border-white/10 bg-gray-950/80 overflow-hidden">
-          {/* Chat header */}
           <div className="flex items-center gap-2.5 border-b border-white/5 px-3 py-2.5">
             <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary-600 text-[8px] font-bold text-white">
               IG
@@ -163,7 +152,6 @@ function SupportChatCard() {
             <span className="text-[10px] font-semibold text-gray-300">IT Guru Support</span>
             <span className="ml-auto h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
           </div>
-          {/* Messages */}
           <div className="p-3 space-y-2 min-h-[110px]">
             {messages.map((msg, i) => (
               <div
@@ -185,8 +173,6 @@ function SupportChatCard() {
           </div>
         </div>
       </div>
-
-      {/* Stats + copy */}
       <div className="px-6 pb-6 pt-2">
         <div className="flex items-baseline gap-3 mb-1">
           <span className="text-4xl font-extrabold bg-linear-to-r from-primary-400 to-primary-300 bg-clip-text text-transparent">
@@ -200,19 +186,83 @@ function SupportChatCard() {
         <p className="text-sm text-gray-400 mt-1 leading-relaxed">
           Ongoing support and communication throughout your IT journey.
         </p>
-        <div className="mt-4 h-0.5 w-16 rounded-full bg-primary-500/60" />
       </div>
-    </article>
+    </div>
   );
 }
 
-/* ═══ Exported grid ═══ */
-export function ProcessCards() {
+const cards = [ProcessFlowCard, MonitorDashboardCard, SupportChatCard];
+
+/* ═══ Exported carousel — single card at a time ═══ */
+export function ProcessCarousel() {
+  const [active, setActive] = useState(0);
+
+  const goTo = useCallback(
+    (index: number) => {
+      setActive(index);
+    },
+    []
+  );
+
+  // Auto-advance every 6 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      goTo((active + 1) % cards.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [active, goTo]);
+
+  const Card = cards[active];
+
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <ProcessFlowCard />
-      <MonitorDashboardCard />
-      <SupportChatCard />
+    <div className="rounded-2xl border border-white/10 bg-gray-900/80 backdrop-blur-sm overflow-hidden">
+      {/* Card content with crossfade */}
+      <div
+        key={active}
+        style={{
+          animation: `carousel-in 0.45s ease-out both`,
+        }}
+      >
+        <Card />
+      </div>
+
+      {/* Dots + arrows */}
+      <div className="flex items-center justify-between border-t border-white/5 px-6 py-3">
+        <div className="flex gap-2">
+          {cards.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              aria-label={`Show card ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === active
+                  ? "w-6 bg-primary-500"
+                  : "w-1.5 bg-gray-600 hover:bg-gray-500"
+              }`}
+            />
+          ))}
+        </div>
+        <div className="flex gap-1">
+          <button
+            onClick={() => goTo((active - 1 + cards.length) % cards.length)}
+            aria-label="Previous card"
+            className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
+          >
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <button
+            onClick={() => goTo((active + 1) % cards.length)}
+            aria-label="Next card"
+            className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
+          >
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
