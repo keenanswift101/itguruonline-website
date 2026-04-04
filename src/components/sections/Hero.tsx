@@ -140,9 +140,9 @@ export function Hero() {
         </>
       ) : (
         <>
-          <div className="absolute inset-0 bg-linear-to-b from-white/90 via-slate-50/85 to-white/92" aria-hidden="true" />
-          <div className="absolute inset-0 bg-linear-to-r from-white/75 via-white/40 to-transparent" aria-hidden="true" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-primary-100/60 to-transparent" aria-hidden="true" />
+          <div className="absolute inset-0 bg-linear-to-b from-white/70 via-slate-50/55 to-white/65" aria-hidden="true" />
+          <div className="absolute inset-0 bg-linear-to-r from-white/60 via-white/25 to-transparent" aria-hidden="true" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-primary-100/40 to-transparent" aria-hidden="true" />
         </>
       )}
 
