@@ -57,7 +57,7 @@ export default function ContactPage() {
     <>
       {/* Hero */}
       <section className="bg-(--bg-secondary) py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+        <div className="mx-auto max-w-\[1440px\] px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Get in Touch</h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg text-(--text-secondary)">
             Have a question about our services, pricing, or your account? We&apos;re here to help.
@@ -68,7 +68,7 @@ export default function ContactPage() {
 
       {/* Main content */}
       <section className="py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-\[1440px\] px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-3">
 
             {/* Contact details sidebar */}

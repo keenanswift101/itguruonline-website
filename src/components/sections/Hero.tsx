@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { DomainChecker } from "@/components/forms/DomainChecker";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
+import { TechCarousel } from "@/components/ui/TechCarousel";
 
 const stats = [
   { value: 10, suffix: "+", label: "Years" },
@@ -36,7 +37,7 @@ export function Hero() {
 
       {/* ── Content ── */}
       <div className="relative flex flex-col justify-center">
-        <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20">
+        <div className="mx-auto w-full max-w-\[1440px\] px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20">
           {/* ═══ Two-column grid ═══ */}
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
             {/* ── Left: Content ── */}
@@ -82,29 +83,16 @@ export function Hero() {
               </div>
             </div>
 
-            {/* ── Right: Split image ── */}
+            {/* ── Right: Tech carousel ── */}
             <div className="hidden lg:block animate-fade-in-right animation-delay-200">
-              <div className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/30">
-                <Image
-                  src="/hero-split.jpg"
-                  alt="Data centre infrastructure"
-                  width={800}
-                  height={600}
-                  className="h-auto w-full object-cover"
-                />
-                {/* Soft edge fade */}
-                <div
-                  className="absolute inset-0 bg-linear-to-l from-transparent via-transparent to-gray-900/30"
-                  aria-hidden="true"
-                />
-              </div>
+              <TechCarousel />
             </div>
           </div>
         </div>
 
         {/* ── Stats strip ── */}
         <div className="relative mt-auto border-t border-white/10 bg-gray-900/50 backdrop-blur-sm animate-fade-in-up animation-delay-500">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
+          <div className="mx-auto flex max-w-\[1440px\] items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
             {stats.map((stat, i) => (
               <div
                 key={stat.label}

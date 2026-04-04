@@ -167,3 +167,16 @@ select {
 .animation-delay-300 { animation-delay: 350ms; }
 .animation-delay-400 { animation-delay: 500ms; }
 .animation-delay-500 { animation-delay: 650ms; }
+
+/* ============================
+   Infinite Marquee
+   ============================ */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
