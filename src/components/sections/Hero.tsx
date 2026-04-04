@@ -178,7 +178,7 @@ export function Hero() {
               <div className="mt-8 flex flex-wrap gap-4 animate-fade-in-up animation-delay-400">
                 <Link
                   href="/services"
-                  className={`btn-metallic inline-flex h-12 items-center justify-center px-7 text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 ${isDark ? "focus:ring-offset-gray-900" : "focus:ring-offset-white"}`}
+                  className={`btn-metallic inline-flex h-12 items-center justify-center px-7 text-base font-bold focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 ${isDark ? "text-slate-900 focus:ring-offset-gray-900" : "text-white focus:ring-offset-white"}`}
                 >
                   Explore Services
                 </Link>
