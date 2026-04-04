@@ -60,8 +60,8 @@ export function Header() {
           >
             <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
               <rect x="2" y="3" width="16" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" />
-              <path d="M5.5 8.5 L8 11 L5.5 13.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M10 13.5 h4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <path d="M5.5 7.5 L8.5 9.75 L5.5 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M10.5 12 h3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </Link>
 
