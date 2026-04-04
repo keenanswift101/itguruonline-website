@@ -78,7 +78,7 @@ export default function AboutPage() {
     <>
       {/* Hero */}
       <section className="bg-(--bg-secondary) py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
               Who We Are
@@ -94,7 +94,7 @@ export default function AboutPage() {
 
       {/* Mission statement */}
       <section className="py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div>
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
@@ -151,7 +151,7 @@ export default function AboutPage() {
 
       {/* Values */}
       <section className="bg-(--bg-secondary) py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Our Values</h2>
             <p className="mt-4 text-lg text-(--text-secondary)">
@@ -221,7 +221,7 @@ export default function AboutPage() {
 
       {/* Partnership section */}
       <section className="bg-(--bg-secondary) py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl bg-primary-700 px-8 py-12 sm:px-12 sm:py-16 text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               In Partnership with Swift Designz
