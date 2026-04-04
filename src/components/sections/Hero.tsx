@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { DomainChecker } from "@/components/forms/DomainChecker";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
-import { TechCarousel } from "@/components/ui/TechCarousel";
+import { ProcessCards } from "@/components/ui/ProcessCards";
 
 const stats = [
   { value: 10, suffix: "+", label: "Years" },
@@ -37,62 +37,59 @@ export function Hero() {
 
       {/* ── Content ── */}
       <div className="relative flex flex-col justify-center">
-        <div className="mx-auto w-full max-w-\[1440px\] px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20">
-          {/* ═══ Two-column grid ═══ */}
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            {/* ── Left: Content ── */}
-            <div className="animate-fade-in-up">
-              <h1 className="text-5xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
-                IT Solutions
-                <br />
-                <span className="bg-linear-to-r from-primary-400 to-primary-300 bg-clip-text text-transparent">
-                  That Simply Work.
-                </span>
-              </h1>
+        <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20">
+          {/* ═══ Hero text — centered ═══ */}
+          <div className="max-w-3xl animate-fade-in-up">
+            <h1 className="text-5xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
+              IT Solutions
+              <br />
+              <span className="bg-linear-to-r from-primary-400 to-primary-300 bg-clip-text text-transparent">
+                That Simply Work.
+              </span>
+            </h1>
 
-              {/* Accent rule */}
-              <div className="mt-6 h-1 w-20 rounded-full bg-primary-500 animation-delay-100" />
+            {/* Accent rule */}
+            <div className="mt-6 h-1 w-20 rounded-full bg-primary-500 animation-delay-100" />
 
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-gray-200 animate-fade-in-up animation-delay-200">
-                Domains. Hosting. Networks. Support. — We handle the technology
-                so you can focus on growing your business.
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-gray-200 animate-fade-in-up animation-delay-200">
+              Domains. Hosting. Networks. Support. — We handle the technology
+              so you can focus on growing your business.
+            </p>
+
+            {/* Domain Checker */}
+            <div className="mt-8 max-w-lg animate-fade-in-up animation-delay-300">
+              <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-primary-400/70">
+                Find your perfect domain
               </p>
-
-              {/* Domain Checker */}
-              <div className="mt-8 max-w-lg animate-fade-in-up animation-delay-300">
-                <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-primary-400/70">
-                  Find your perfect domain
-                </p>
-                <DomainChecker />
-              </div>
-
-              {/* CTAs */}
-              <div className="mt-8 flex flex-wrap gap-4 animate-fade-in-up animation-delay-400">
-                <Link
-                  href="/services"
-                  className="inline-flex h-12 items-center justify-center rounded-lg bg-primary-600 px-7 text-base font-semibold text-white transition-colors hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-gray-900"
-                >
-                  Explore Services
-                </Link>
-                <Link
-                  href="/contact"
-                  className="inline-flex h-12 items-center justify-center rounded-lg border border-white/20 px-7 text-base font-semibold text-white transition-colors hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-gray-900"
-                >
-                  Get in Touch
-                </Link>
-              </div>
+              <DomainChecker />
             </div>
 
-            {/* ── Right: Tech carousel ── */}
-            <div className="hidden lg:block animate-fade-in-right animation-delay-200">
-              <TechCarousel />
+            {/* CTAs */}
+            <div className="mt-8 flex flex-wrap gap-4 animate-fade-in-up animation-delay-400">
+              <Link
+                href="/services"
+                className="inline-flex h-12 items-center justify-center rounded-lg bg-primary-600 px-7 text-base font-semibold text-white transition-colors hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+              >
+                Explore Services
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex h-12 items-center justify-center rounded-lg border border-white/20 px-7 text-base font-semibold text-white transition-colors hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-gray-900"
+              >
+                Get in Touch
+              </Link>
             </div>
+          </div>
+
+          {/* ═══ Process Cards ═══ */}
+          <div className="mt-14 animate-fade-in-up animation-delay-500">
+            <ProcessCards />
           </div>
         </div>
 
         {/* ── Stats strip ── */}
         <div className="relative mt-auto border-t border-white/10 bg-gray-900/50 backdrop-blur-sm animate-fade-in-up animation-delay-500">
-          <div className="mx-auto flex max-w-\[1440px\] items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
             {stats.map((stat, i) => (
               <div
                 key={stat.label}

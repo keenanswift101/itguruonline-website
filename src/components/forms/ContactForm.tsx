@@ -61,24 +61,25 @@ export default function ContactForm() {
     setErrors({});
 
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+      // Submit to Netlify Forms
+      const formBody = new URLSearchParams({
+        "form-name": "contact",
+        ...form,
       });
 
-      const data = await res.json();
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formBody.toString(),
+      });
 
       if (res.ok) {
         setStatus("success");
-        setServerMessage(data.message);
+        setServerMessage("Thank you! Your message has been received. We will respond within one business day.");
         setForm(initialState);
-      } else if (res.status === 422 && data.fields) {
-        setErrors(data.fields);
-        setStatus("idle");
       } else {
         setStatus("error");
-        setServerMessage(data.error ?? "An unexpected error occurred. Please try again.");
+        setServerMessage("An unexpected error occurred. Please try again.");
       }
     } catch {
       setStatus("error");
@@ -107,7 +108,19 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-5">
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      onSubmit={handleSubmit}
+      noValidate
+      className="space-y-5"
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p className="hidden">
+        <label>Don&apos;t fill this out: <input name="bot-field" /></label>
+      </p>
       {status === "error" && (
         <div role="alert" className="rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-700 dark:text-red-300">
           {serverMessage}

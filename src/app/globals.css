@@ -180,3 +180,39 @@ select {
   from { transform: translateX(-50%); }
   to   { transform: translateX(0); }
 }
+
+/* ============================
+   Process Cards Animations
+   ============================ */
+@keyframes step-pulse {
+  0%, 100% { border-color: rgb(20 184 166 / 0.3); }
+  25%      { border-color: rgb(20 184 166 / 1); box-shadow: 0 0 12px rgb(20 184 166 / 0.4); }
+  50%      { border-color: rgb(20 184 166 / 0.5); }
+}
+
+@keyframes step-fill {
+  0%, 100% { opacity: 0.2; transform: scale(0.6); }
+  25%      { opacity: 1;   transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.8); }
+}
+
+@keyframes line-fill {
+  0%, 100% { transform: scaleX(0); }
+  20%      { transform: scaleX(1); }
+  80%      { transform: scaleX(1); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+@keyframes bar-fill {
+  from { width: 0; }
+  to   { width: 99.9%; }
+}
+
+@keyframes chat-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
