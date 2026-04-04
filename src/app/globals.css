@@ -221,3 +221,76 @@ select {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ============================
+   Cursor Animations
+   ============================ */
+@keyframes cursor-move {
+  0%   { transform: translate(0, 0); opacity: 0; }
+  10%  { opacity: 1; }
+  30%  { transform: translate(15px, -10px); }
+  60%  { transform: translate(-8px, 8px); }
+  90%  { opacity: 1; }
+  100% { transform: translate(0, 0); opacity: 0; }
+}
+
+@keyframes cursor-click {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0; }
+  10%  { opacity: 1; }
+  25%  { transform: translate(10px, -5px) scale(1); }
+  30%  { transform: translate(10px, -5px) scale(0.85); }
+  35%  { transform: translate(10px, -5px) scale(1); }
+  60%  { transform: translate(-12px, 6px) scale(1); }
+  65%  { transform: translate(-12px, 6px) scale(0.85); }
+  70%  { transform: translate(-12px, 6px) scale(1); }
+  90%  { opacity: 1; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0; }
+}
+
+@keyframes cursor-hover {
+  0%, 100% { transform: translate(0, 0); opacity: 0.6; }
+  25%      { transform: translate(6px, -3px); opacity: 1; }
+  50%      { transform: translate(12px, 2px); opacity: 1; }
+  75%      { transform: translate(4px, 5px); opacity: 1; }
+}
+
+@keyframes cursor-scan {
+  0%   { transform: translateX(-20px); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(20px); opacity: 0; }
+}
+
+@keyframes cursor-type {
+  0%, 100% { opacity: 0.7; }
+  50%      { opacity: 1; transform: translateY(-1px); }
+}
+
+/* ============================
+   Card Element Animations
+   ============================ */
+@keyframes node-glow {
+  0%, 100% { border-color: rgb(255 255 255 / 0.1); box-shadow: none; }
+  50%      { border-color: rgb(20 184 166 / 0.6); box-shadow: 0 0 12px rgb(20 184 166 / 0.15); }
+}
+
+@keyframes row-fade {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes metric-bar {
+  0%, 100% { opacity: 0.7; }
+  50%      { opacity: 1; }
+}
+
+@keyframes bar-pop {
+  from { opacity: 0; transform: scaleY(0); }
+  to   { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes line-draw {
+  0%   { stroke-dasharray: 100; stroke-dashoffset: 100; stroke-opacity: 0.1; }
+  50%  { stroke-dashoffset: 0; stroke-opacity: 0.5; }
+  100% { stroke-dasharray: 100; stroke-dashoffset: 100; stroke-opacity: 0.1; }
+}
