@@ -98,11 +98,11 @@ function CarouselCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="group flex w-40 shrink-0 flex-col items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-5 backdrop-blur-sm transition-colors hover:border-primary-500/40 hover:bg-primary-500/10">
-      <div className="text-primary-400 transition-transform group-hover:scale-110">
+    <div className="group flex w-40 shrink-0 flex-col items-center gap-3 rounded-xl border border-(--border-color) bg-(--bg-surface) px-4 py-5 backdrop-blur-sm transition-colors hover:border-primary-500/40 hover:bg-primary-500/10">
+      <div className="text-primary-600 dark:text-primary-400 transition-transform group-hover:scale-110">
         {icon}
       </div>
-      <span className="text-xs font-semibold uppercase tracking-wider text-gray-300">
+      <span className="text-xs font-semibold uppercase tracking-wider text-(--text-secondary)">
         {label}
       </span>
     </div>

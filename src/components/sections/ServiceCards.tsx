@@ -1,95 +1,241 @@
-import { Card } from "@/components/ui/Card";
-import type { ReactNode } from "react";
+"use client";
 
-const services: { title: string; description: string; icon: ReactNode }[] = [
+import { useEffect, useRef, useState } from "react";
+import { useTheme } from "@/components/providers/ThemeProvider";
+
+const services: { title: string; description: string }[] = [
   {
     title: "Remote / Online Support",
     description:
       "Secure remote connections for diagnostics, software fixes, and patches — anywhere in the world.",
-    icon: (
-      <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0H3" />
-      </svg>
-    ),
   },
   {
     title: "Network Solutions",
     description:
       "Routers, switches, ethernet cabling, and WiFi solutions tailored to your business needs.",
-    icon: (
-      <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
-      </svg>
-    ),
   },
   {
     title: "Hardware Procurement",
     description:
       "All major brands — custom-built desktops, servers, laptops, printers, and peripherals.",
-    icon: (
-      <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z" />
-      </svg>
-    ),
   },
   {
     title: "Troubleshooting & Repairs",
     description:
       "Hardware troubleshooting, desktop upgrades, laptop repairs, and system optimisation.",
-    icon: (
-      <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z" />
-      </svg>
-    ),
   },
   {
     title: "Web Hosting & Domains",
     description:
       "Domain registration, Windows & Linux hosting, and full web hosting management.",
-    icon: (
-      <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 6 0m-6 0H3m16.5 0a3 3 0 0 0 3-3m-3 3a3 3 0 1 1-6 0m6 0h1.5m-13.5 0h6M3 11.25V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v5.25" />
-      </svg>
-    ),
   },
   {
     title: "Web Design",
     description:
       "Professional website design and development through our Swift Designz partnership.",
-    icon: (
-      <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
-      </svg>
-    ),
   },
 ];
 
+const SLIDE_MS = 580;     // wait for card slide-in transition
+const TYPE_SPEED_MS = 48; // ms per character — deliberate, readable pace
+const CARD_GAP_MS = 200;  // pause between cards
+
 export function ServiceCards() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  // visible[i] = true once card i has slid in
+  const [visible, setVisible] = useState<boolean[]>(
+    () => Array(services.length).fill(false),
+  );
+  // typedLen[i] = how many characters have been revealed for card i
+  const [typedLen, setTypedLen] = useState<number[]>(
+    () => Array(services.length).fill(0),
+  );
+  // activeCard = which card is currently typing (-1 = none)
+  const [activeCard, setActiveCard] = useState(-1);
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const triggered = useRef(false);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    function typeCard(cardIdx: number, charIdx: number, onDone: () => void) {
+      // Write a single character — functional update avoids stale closure
+      setTypedLen((prev) => {
+        const next = [...prev];
+        next[cardIdx] = charIdx + 1;
+        return next;
+      });
+      if (charIdx + 1 < services[cardIdx].description.length) {
+        const t = setTimeout(
+          () => typeCard(cardIdx, charIdx + 1, onDone),
+          TYPE_SPEED_MS,
+        );
+        timers.current.push(t);
+      } else {
+        setActiveCard(-1);
+        onDone();
+      }
+    }
+
+    function runCard(i: number) {
+      if (i >= services.length) return;
+      // Make card visible (slide in)
+      setVisible((prev) => {
+        const next = [...prev];
+        next[i] = true;
+        return next;
+      });
+      // After slide, start typing
+      const t = setTimeout(() => {
+        setActiveCard(i);
+        typeCard(i, 0, () => {
+          const gap = setTimeout(() => runCard(i + 1), CARD_GAP_MS);
+          timers.current.push(gap);
+        });
+      }, SLIDE_MS);
+      timers.current.push(t);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || triggered.current) return;
+        triggered.current = true;
+        runCard(0);
+      },
+      { threshold: 0.12 },
+    );
+
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      timers.current.forEach(clearTimeout);
+    };
+  }, []);
+
   return (
-    <section className="py-16 sm:py-24">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+    <section
+      ref={sectionRef}
+      className="relative py-16 sm:py-24 overflow-hidden bg-(--bg-secondary)"
+    >
+      {/* Dark-mode-only: metallic gradient base */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 hidden dark:block"
+        style={{
+          background:
+            "linear-gradient(160deg, #0d1117 0%, #111827 30%, #0f1f1a 60%, #0a1628 100%)",
+        }}
+      />
+      {/* Dark-mode-only: teal/blue sheen */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 hidden dark:block"
+        style={{
+          background:
+            "linear-gradient(105deg, rgba(13,148,136,0.06) 0%, transparent 40%, rgba(30,58,138,0.05) 70%, transparent 100%)",
+        }}
+      />
+      {/* Dark-mode-only: top edge rim */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px hidden dark:block"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent, rgba(13,148,136,0.4), transparent)",
+        }}
+      />
+      {/* Light-mode-only: subtle top rule */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-(--border-color) dark:hidden"
+      />
+
+      <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary-600 dark:text-primary-400 mb-3">
+            IT-Guru.Online
+          </p>
+          <h2 className="text-3xl font-bold tracking-tight text-(--text-primary) sm:text-4xl">
             How Can We Help?
           </h2>
-          <p className="mt-4 text-lg text-[var(--text-secondary)]">
+          <p className="mt-4 text-lg text-(--text-secondary)">
             Retain your core focus — our IT support frees up your time and
             resources.
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => (
-            <Card key={service.title} hover>
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-700/10 text-primary-700">
-                {service.icon}
+        {/* Cards grid — ALL cards always in DOM, opacity/transform only */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((service, i) => {
+            const isVisible = visible[i];
+            const typed = service.description.slice(0, typedLen[i]);
+            const isTyping = activeCard === i;
+
+            return (
+              <div
+                key={service.title}
+                className="relative rounded-2xl p-6"
+                style={{
+                  opacity: isVisible ? 1 : 0,
+                  transform: isVisible ? "translateX(0)" : "translateX(72px)",
+                  transition:
+                    "opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)",
+                  ...(isDark
+                    ? {
+                        /* Dark: liquid glass surface */
+                        background:
+                          "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 50%, rgba(13,148,136,0.04) 100%)",
+                        backdropFilter: "blur(16px)",
+                        WebkitBackdropFilter: "blur(16px)",
+                        border: "1px solid rgba(255,255,255,0.10)",
+                        borderTop: "1px solid rgba(255,255,255,0.18)",
+                        borderLeft: "1px solid rgba(255,255,255,0.12)",
+                        boxShadow:
+                          "inset 0 1px 0 rgba(255,255,255,0.10), inset 0 -1px 0 rgba(0,0,0,0.15), 0 4px 24px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.2)",
+                      }
+                    : {
+                        /* Light: clean card */
+                        background: "var(--bg-primary)",
+                        border: "1px solid var(--border-color)",
+                        boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
+                      }),
+                }}
+              >
+                {/* Card number badge */}
+                <span
+                  className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-xs font-bold text-primary-600 dark:text-primary-400 mb-4 select-none"
+                  style={{
+                    background: isDark ? "rgba(13,148,136,0.12)" : "rgba(13,148,136,0.08)",
+                    border: isDark
+                      ? "1px solid rgba(13,148,136,0.22)"
+                      : "1px solid rgba(13,148,136,0.18)",
+                  }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                <h3 className="text-base font-semibold text-(--text-primary) leading-snug">
+                  {service.title}
+                </h3>
+
+                {/* Cursor always in DOM — visibility toggled, never mounted/unmounted */}
+                <p className="mt-2 text-sm text-(--text-secondary) leading-relaxed min-h-18">
+                  {typed}
+                  <span
+                    aria-hidden="true"
+                    style={{ visibility: isTyping ? "visible" : "hidden" }}
+                    className="inline-block w-0.5 h-[0.85em] bg-primary-400 align-middle ml-px animate-pulse"
+                  />
+                </p>
               </div>
-              <h3 className="mt-4 text-lg font-semibold">{service.title}</h3>
-              <p className="mt-2 text-sm text-[var(--text-secondary)] leading-relaxed">
-                {service.description}
-              </p>
-            </Card>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

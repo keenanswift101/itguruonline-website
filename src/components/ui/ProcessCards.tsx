@@ -44,12 +44,12 @@ function DiagnosticsCard() {
             <div key={step.label} className="flex items-center">
               <div className="flex flex-col items-center gap-1.5">
                 <div
-                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-gray-950/60 text-xs font-bold text-primary-400 animate-[node-glow_5s_ease-in-out_infinite]"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border dark:border-white/10 border-(--border-color) dark:bg-gray-950/60 bg-(--bg-surface) text-xs font-bold dark:text-primary-400 text-primary-600 animate-[node-glow_5s_ease-in-out_infinite]"
                   style={{ animationDelay: `${i * 1.2}s` }}
                 >
                   {step.icon}
                 </div>
-                <span className="text-[8px] font-bold tracking-widest text-gray-500">{step.label}</span>
+                <span className="text-[8px] font-bold tracking-widest dark:text-gray-500 text-(--text-secondary)">{step.label}</span>
               </div>
               {i < steps.length - 1 && (
                 <div className="mx-1.5 h-px w-5 overflow-hidden bg-gray-700/50 mb-4">
@@ -87,7 +87,7 @@ function ServerRackCard() {
       desc="Real-time health monitoring across your entire server fleet."
     >
       <div className="relative space-y-1.5 font-mono text-[9px]">
-        <div className="grid grid-cols-[1fr_50px_50px_52px] gap-1 text-gray-600 font-semibold border-b border-white/5 pb-1">
+        <div className="grid grid-cols-[1fr_50px_50px_52px] gap-1 dark:text-gray-600 text-(--text-secondary) font-semibold border-b dark:border-white/5 border-(--border-color) pb-1">
           <span>HOST</span><span>CPU</span><span>RAM</span><span>STATUS</span>
         </div>
         {servers.map((srv, i) => (
@@ -96,9 +96,9 @@ function ServerRackCard() {
             className="grid grid-cols-[1fr_50px_50px_52px] gap-1 items-center animate-[row-fade_0.4s_ease-out_both]"
             style={{ animationDelay: `${i * 0.15}s` }}
           >
-            <span className="text-gray-300 truncate">{srv.name}</span>
+            <span className="dark:text-gray-300 text-(--text-primary) truncate">{srv.name}</span>
             <div className="flex items-center gap-1">
-              <div className="h-1 w-7 rounded-full bg-gray-800 overflow-hidden">
+              <div className="h-1 w-7 rounded-full dark:bg-gray-800 bg-gray-200 overflow-hidden">
                 <div
                   className="h-full rounded-full animate-[metric-bar_3s_ease-in-out_infinite]"
                   style={{
@@ -111,7 +111,7 @@ function ServerRackCard() {
               <span className="text-gray-500">{srv.cpu}%</span>
             </div>
             <div className="flex items-center gap-1">
-              <div className="h-1 w-7 rounded-full bg-gray-800 overflow-hidden">
+              <div className="h-1 w-7 rounded-full dark:bg-gray-800 bg-gray-200 overflow-hidden">
                 <div
                   className="h-full rounded-full bg-primary-500 animate-[metric-bar_3s_ease-in-out_infinite]"
                   style={{ width: `${srv.ram}%`, animationDelay: `${i * 0.5 + 0.2}s` }}
@@ -124,7 +124,7 @@ function ServerRackCard() {
                 className="h-1.5 w-1.5 rounded-full bg-green-400 animate-[blink_2.5s_ease-in-out_infinite]"
                 style={{ animationDelay: `${i * 0.3}s` }}
               />
-              <span className="text-green-400">{srv.status}</span>
+              <span className="dark:text-green-400 text-green-600">{srv.status}</span>
             </div>
           </div>
         ))}
@@ -155,8 +155,8 @@ function UptimeCard() {
         {services.map((svc, si) => (
           <div key={svc.name} className="space-y-1">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-medium text-gray-300">{svc.name}</span>
-              <span className="text-[9px] font-bold text-primary-400">{svc.uptime}%</span>
+              <span className="text-[10px] font-medium dark:text-gray-300 text-(--text-primary)">{svc.name}</span>
+              <span className="text-[9px] font-bold dark:text-primary-400 text-primary-600">{svc.uptime}%</span>
             </div>
             <div className="flex gap-0.5">
               {svc.bars.map((v, i) => (
@@ -197,10 +197,10 @@ function SupportChatCard() {
       title="Dedicated Support"
       desc="Real-time expert support with fast, verified resolutions."
     >
-      <div className="relative rounded-lg border border-white/10 bg-gray-950/60 overflow-hidden">
-        <div className="flex items-center gap-2 border-b border-white/5 px-3 py-1.5">
+      <div className="relative rounded-lg border dark:border-white/10 border-(--border-color) dark:bg-gray-950/60 bg-(--bg-surface) overflow-hidden">
+        <div className="flex items-center gap-2 border-b dark:border-white/5 border-(--border-color) px-3 py-1.5">
           <div className="h-4 w-4 rounded bg-primary-600 flex items-center justify-center text-[6px] font-bold text-white">IG</div>
-          <span className="text-[9px] font-semibold text-gray-400">Live Support</span>
+          <span className="text-[9px] font-semibold dark:text-gray-400 text-(--text-secondary)">Live Support</span>
           <span className="ml-auto h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
         </div>
         <div className="p-2.5 space-y-1.5 min-h-[90px]">
@@ -212,8 +212,8 @@ function SupportChatCard() {
             >
               <div className={`max-w-[82%] rounded-md px-2.5 py-1 text-[9px] leading-relaxed ${
                 msg.from === "agent"
-                  ? "bg-primary-600/15 border border-primary-500/20 text-primary-200"
-                  : "bg-white/5 border border-white/8 text-gray-300"
+                  ? "dark:bg-primary-600/15 dark:border-primary-500/20 dark:text-primary-200 bg-primary-50 border border-primary-200 text-primary-700"
+                  : "dark:bg-white/5 dark:border-white/8 dark:text-gray-300 bg-(--bg-primary) border border-(--border-color) text-(--text-primary)"
               }`}>
                 {msg.text}
               </div>
@@ -264,14 +264,14 @@ function NetworkCard() {
             style={{ left: node.x, top: node.y }}
           >
             <div
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/15 bg-gray-950/80 animate-[node-glow_4s_ease-in-out_infinite]"
+              className="flex h-8 w-8 items-center justify-center rounded-lg border dark:border-white/15 border-(--border-color) dark:bg-gray-950/80 bg-(--bg-surface) animate-[node-glow_4s_ease-in-out_infinite]"
               style={{ animationDelay: `${i * 0.8}s` }}
             >
-              <svg className="h-3.5 w-3.5 text-primary-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <svg className="h-3.5 w-3.5 dark:text-primary-400 text-primary-600" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7" />
               </svg>
             </div>
-            <span className="text-[7px] font-bold tracking-wider text-gray-500">{node.label}</span>
+            <span className="text-[7px] font-bold tracking-wider dark:text-gray-500 text-(--text-secondary)">{node.label}</span>
           </div>
         ))}
         <AnimatedCursor className="top-1/2 left-1/3 animate-[cursor-move_4s_ease-in-out_infinite]" />
@@ -302,17 +302,17 @@ function BackupSecurityCard() {
         {events.map((evt, i) => (
           <div
             key={i}
-            className="flex items-center gap-2 rounded-md border border-white/5 bg-gray-950/40 px-2.5 py-1.5 animate-[row-fade_0.3s_ease-out_both]"
+            className="flex items-center gap-2 rounded-md border dark:border-white/5 border-(--border-color) dark:bg-gray-950/40 bg-(--bg-surface) px-2.5 py-1.5 animate-[row-fade_0.3s_ease-out_both]"
             style={{ animationDelay: `${i * 0.25}s` }}
           >
-            <span className="text-[8px] text-gray-600 tabular-nums">{evt.time}</span>
-            <span className="text-[9px] text-gray-300 flex-1">{evt.task}</span>
+            <span className="text-[8px] dark:text-gray-600 text-(--text-secondary) tabular-nums">{evt.time}</span>
+            <span className="text-[9px] dark:text-gray-300 text-(--text-primary) flex-1">{evt.task}</span>
             <span className="flex items-center gap-1">
               <span
                 className="h-1.5 w-1.5 rounded-full bg-green-400 animate-[blink_2s_ease-in-out_infinite]"
                 style={{ animationDelay: `${i * 0.4}s` }}
               />
-              <span className="text-[8px] font-semibold text-green-400 uppercase">{evt.status}</span>
+              <span className="text-[8px] font-semibold dark:text-green-400 text-green-600 uppercase">{evt.status}</span>
             </span>
           </div>
         ))}
@@ -341,18 +341,18 @@ function CardShell({
   return (
     <div className="flex flex-col h-full">
       <div className="px-5 pt-6 pb-4">{children}</div>
-      <div className="mx-5 h-px bg-white/5" />
+      <div className="mx-5 h-px dark:bg-white/5 bg-(--border-color)" />
       <div className="px-5 pb-5 pt-4 mt-auto">
         <div className="flex items-baseline gap-2.5">
-          <span className="text-3xl font-extrabold bg-linear-to-r from-primary-400 to-primary-300 bg-clip-text text-transparent leading-none">
+          <span className="text-3xl font-extrabold bg-linear-to-r dark:from-primary-400 dark:to-primary-300 from-primary-700 to-primary-600 bg-clip-text text-transparent leading-none">
             {stat}
           </span>
-          <span className="text-[9px] font-semibold uppercase tracking-widest text-gray-500">
+          <span className="text-[9px] font-semibold uppercase tracking-widest dark:text-gray-500 text-(--text-secondary)">
             {statLabel}
           </span>
         </div>
-        <h3 className="text-base font-bold text-white mt-2">{title}</h3>
-        <p className="text-[13px] text-gray-400 mt-1 leading-relaxed">{desc}</p>
+        <h3 className="text-base font-bold text-(--text-primary) mt-2">{title}</h3>
+        <p className="text-[13px] dark:text-gray-400 text-(--text-secondary) mt-1 leading-relaxed">{desc}</p>
       </div>
     </div>
   );
@@ -387,7 +387,7 @@ export function ProcessCarousel() {
   const Card = cards[active];
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-gray-900/80 backdrop-blur-sm overflow-hidden shadow-2xl shadow-black/20">
+    <div className="rounded-2xl border dark:border-white/10 border-(--border-color) dark:bg-gray-900/80 bg-(--bg-primary) backdrop-blur-sm overflow-hidden shadow-2xl dark:shadow-black/20 shadow-slate-200">
       <div
         key={active}
         style={{ animation: "carousel-in 0.4s ease-out both" }}
@@ -395,7 +395,7 @@ export function ProcessCarousel() {
         <Card />
       </div>
 
-      <div className="flex items-center justify-between border-t border-white/5 px-5 py-2.5">
+      <div className="flex items-center justify-between border-t dark:border-white/5 border-(--border-color) px-5 py-2.5">
         <div className="flex gap-1.5">
           {cards.map((_, i) => (
             <button
@@ -404,8 +404,8 @@ export function ProcessCarousel() {
               aria-label={`Show card ${i + 1}`}
               className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                 i === active
-                  ? "w-5 bg-primary-500"
-                  : "w-1.5 bg-gray-600 hover:bg-gray-500"
+                  ? "w-5 dark:bg-primary-500 bg-primary-600"
+                  : "w-1.5 dark:bg-gray-600 dark:hover:bg-gray-500 bg-slate-300 hover:bg-slate-400"
               }`}
             />
           ))}
@@ -414,7 +414,7 @@ export function ProcessCarousel() {
           <button
             onClick={() => goTo((active - 1 + cards.length) % cards.length)}
             aria-label="Previous card"
-            className="flex h-6 w-6 items-center justify-center rounded border border-white/10 text-gray-400 transition-colors hover:bg-white/5 hover:text-white cursor-pointer"
+            className="flex h-6 w-6 items-center justify-center rounded border dark:border-white/10 border-(--border-color) dark:text-gray-400 text-(--text-secondary) transition-colors dark:hover:bg-white/5 hover:bg-(--bg-surface) dark:hover:text-white hover:text-(--text-primary) cursor-pointer"
           >
             <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -423,7 +423,7 @@ export function ProcessCarousel() {
           <button
             onClick={() => goTo((active + 1) % cards.length)}
             aria-label="Next card"
-            className="flex h-6 w-6 items-center justify-center rounded border border-white/10 text-gray-400 transition-colors hover:bg-white/5 hover:text-white cursor-pointer"
+            className="flex h-6 w-6 items-center justify-center rounded border dark:border-white/10 border-(--border-color) dark:text-gray-400 text-(--text-secondary) transition-colors dark:hover:bg-white/5 hover:bg-(--bg-surface) dark:hover:text-white hover:text-(--text-primary) cursor-pointer"
           >
             <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />

@@ -234,92 +234,182 @@ select {
   100% { left: 125%; }
 }
 
-/* ============================
-   Metallic Server Switch Button
-   ============================ */
-.btn-metallic {
-  position: relative;
-  overflow: hidden;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.10) 0%, transparent 50%, rgba(0,0,0,0.12) 100%),
-    linear-gradient(180deg, #1a8a7a 0%, #0d7a6a 30%, #0a5e52 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.28),
-    inset 0 -2px 0 rgba(0,0,0,0.25),
-    inset 2px 0 0 rgba(255,255,255,0.06),
-    0 5px 15px rgba(0,0,0,0.45),
-    0 2px 4px rgba(0,0,0,0.25);
-  border: 1px solid rgba(0,0,0,0.3);
-  border-bottom-color: rgba(0,0,0,0.45);
-  border-radius: 10px;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
-}
+@layer components {
+  /* ====================================================
+     PRIMARY — Metallic 3D On/Off Switch
+     Off state: face raised above a dark "base" shadow
+     On/active state: face presses down to meet the base
+     ==================================================== */
+  .btn-metallic {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-.btn-metallic::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -75%;
-  width: 45%;
-  height: 200%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-  transform: skewX(-20deg);
-  animation: btn-shine 4s ease-in-out infinite;
-  pointer-events: none;
-}
+    /* Metallic teal face — top bevel lighter than bottom */
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255,255,255,0.18) 0%,
+        rgba(255,255,255,0.06) 45%,
+        rgba(0,0,0,0.08) 55%,
+        rgba(0,0,0,0.20) 100%
+      ),
+      linear-gradient(180deg, #0d9488 0%, #0f766e 45%, #0a5e52 100%);
 
-.btn-metallic:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.32),
-    inset 0 -2px 0 rgba(0,0,0,0.2),
-    0 8px 20px rgba(0,0,0,0.5),
-    0 3px 6px rgba(0,0,0,0.3);
-}
+    border-radius: 10px;
 
-.btn-metallic:active {
-  transform: translateY(1px);
-  box-shadow:
-    inset 0 3px 6px rgba(0,0,0,0.3),
-    0 1px 3px rgba(0,0,0,0.2);
-}
+    /* Top/side bevels give "raised face" feel */
+    border: 1px solid rgba(0,0,0,0.35);
+    border-top-color: rgba(255,255,255,0.12);
 
-/* ============================
-   Liquid Glass Button
-   ============================ */
-.btn-glass {
-  position: relative;
-  background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.22);
-  border-bottom-color: rgba(255,255,255,0.1);
-  border-radius: 10px;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.2),
-    inset 0 -1px 0 rgba(0,0,0,0.08),
-    0 4px 16px rgba(0,0,0,0.18),
-    0 1px 4px rgba(0,0,0,0.1);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-}
+    /* The "base": 5px dark floor under the button face */
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.30),
+      inset 1px 0 0 rgba(255,255,255,0.10),
+      0 5px 0 #043d37,
+      0 7px 14px rgba(0,0,0,0.55);
 
-.btn-glass:hover {
-  background: rgba(255,255,255,0.13);
-  border-color: rgba(255,255,255,0.35);
-  transform: translateY(-2px);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.28),
-    0 8px 24px rgba(0,0,0,0.22),
-    0 2px 6px rgba(0,0,0,0.14);
-}
+    text-shadow: 0 1px 0 rgba(255,255,255,0.15);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
 
-.btn-glass:active {
-  background: rgba(255,255,255,0.04);
-  transform: translateY(1px);
-  box-shadow:
-    inset 0 2px 4px rgba(0,0,0,0.2),
-    0 1px 2px rgba(0,0,0,0.1);
+  .btn-metallic::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -75%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
+    transform: skewX(-20deg);
+    animation: btn-shine 4.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .btn-metallic:hover {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255,255,255,0.22) 0%,
+        rgba(255,255,255,0.08) 45%,
+        rgba(0,0,0,0.06) 55%,
+        rgba(0,0,0,0.18) 100%
+      ),
+      linear-gradient(180deg, #0fa898 0%, #0d8a7c 45%, #0a6b61 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.35),
+      inset 1px 0 0 rgba(255,255,255,0.14),
+      0 5px 0 #043d37,
+      0 9px 18px rgba(0,0,0,0.6);
+    transform: translateY(-1px);
+  }
+
+  /* PRESSED — button travels DOWN 5px to "sit" on the base */
+  .btn-metallic:active {
+    transform: translateY(5px);
+    background:
+      linear-gradient(
+        180deg,
+        rgba(0,0,0,0.08) 0%,
+        rgba(0,0,0,0.04) 45%,
+        rgba(255,255,255,0.04) 55%,
+        rgba(255,255,255,0.10) 100%
+      ),
+      linear-gradient(180deg, #0a7a72 0%, #0d9488 50%, #21a393 100%);
+    box-shadow:
+      inset 0 3px 5px rgba(0,0,0,0.35),
+      inset 0 1px 2px rgba(0,0,0,0.2),
+      0 0 0 #043d37,
+      0 2px 6px rgba(0,0,0,0.35);
+    text-shadow: none;
+  }
+
+  /* ====================================================
+     SECONDARY — Liquid Glass 3D Switch
+     ==================================================== */
+  .btn-glass {
+    position: relative;
+    overflow: hidden;
+
+    background: rgba(255,255,255,0.09);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.28);
+    border-bottom-color: rgba(255,255,255,0.08);
+
+    /* Same 3D floor trick with a dark transparent base */
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.25),
+      inset 1px 0 0 rgba(255,255,255,0.10),
+      0 5px 0 rgba(0,0,0,0.28),
+      0 7px 18px rgba(0,0,0,0.30);
+
+    transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.08s ease;
+  }
+
+  .btn-glass:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.38);
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.32),
+      0 5px 0 rgba(0,0,0,0.28),
+      0 10px 22px rgba(0,0,0,0.35);
+  }
+
+  /* PRESSED — drops down onto the glass base */
+  .btn-glass:active {
+    transform: translateY(5px);
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.15);
+    box-shadow:
+      inset 0 3px 5px rgba(0,0,0,0.20),
+      inset 0 1px 2px rgba(0,0,0,0.12),
+      0 0 0 rgba(0,0,0,0.28),
+      0 2px 4px rgba(0,0,0,0.18);
+  }
+
+  /* ════════════════════════════════════════════════════
+     LIGHT MODE overrides — btn-glass restyles as a
+     soft teal-tinted bordered button on bright backgrounds
+     ════════════════════════════════════════════════════ */
+  :where([data-theme="light"]) .btn-glass {
+    background: rgba(13,148,136,0.06);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(13,148,136,0.30);
+    border-bottom-color: rgba(13,148,136,0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.90),
+      inset 1px 0 0 rgba(255,255,255,0.60),
+      0 5px 0 rgba(13,148,136,0.18),
+      0 7px 18px rgba(0,0,0,0.08);
+  }
+
+  :where([data-theme="light"]) .btn-glass:hover {
+    background: rgba(13,148,136,0.10);
+    border-color: rgba(13,148,136,0.45);
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.95),
+      0 5px 0 rgba(13,148,136,0.18),
+      0 10px 22px rgba(0,0,0,0.10);
+  }
+
+  :where([data-theme="light"]) .btn-glass:active {
+    transform: translateY(5px);
+    background: rgba(13,148,136,0.04);
+    border-color: rgba(13,148,136,0.20);
+    box-shadow:
+      inset 0 3px 5px rgba(0,0,0,0.08),
+      inset 0 1px 2px rgba(0,0,0,0.05),
+      0 0 0 rgba(13,148,136,0.18),
+      0 2px 4px rgba(0,0,0,0.06);
+  }
 }
 
 /* ============================

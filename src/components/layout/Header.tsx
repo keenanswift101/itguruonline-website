@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/about", label: "About" },
   { href: "/domain-checker", label: "Domain Checker" },
   { href: "/contact", label: "Contact" },
+  { href: "/register", label: "Register" },
 ];
 
 export function Header() {
@@ -34,7 +35,11 @@ export function Header() {
               href={link.href}
               aria-current={pathname === link.href ? "page" : undefined}
               className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                pathname === link.href
+                link.href === "/register"
+                  ? pathname === "/register"
+                    ? "text-white bg-primary-700"
+                    : "text-primary-600 dark:text-primary-400 hover:text-white hover:bg-primary-700"
+                  : pathname === link.href
                   ? "text-primary-700 bg-primary-700/10"
                   : "text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--bg-surface)"
               }`}
@@ -45,14 +50,41 @@ export function Header() {
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
+        <div className="flex items-center gap-1.5">
+          {/* Remote Support icon button */}
           <Link
-            href="/register"
-            className="hidden sm:inline-flex items-center justify-center h-9 px-4 rounded-lg bg-primary-700 text-white text-sm font-medium hover:bg-primary-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            href="/contact"
+            title="Remote Support"
+            aria-label="Remote Support"
+            className="group hidden sm:inline-flex h-9 w-9 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface)/60 text-(--text-secondary) transition-colors hover:border-primary-600/50 hover:bg-primary-600/10 hover:text-primary-500"
           >
-            Register
+            <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
+              <rect x="2" y="3" width="16" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M5.5 8.5 L8 11 L5.5 13.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M10 13.5 h4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
           </Link>
+
+          {/* Services icon button */}
+          <Link
+            href="/services"
+            title="Our Services"
+            aria-label="Our Services"
+            className="group hidden sm:inline-flex h-9 w-9 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface)/60 text-(--text-secondary) transition-colors hover:border-primary-600/50 hover:bg-primary-600/10 hover:text-primary-500"
+          >
+            <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
+              <line x1="3" y1="5" x2="17" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <circle cx="7" cy="5" r="2" fill="currentColor" />
+              <line x1="3" y1="10" x2="17" y2="10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <circle cx="13" cy="10" r="2" fill="currentColor" />
+              <line x1="3" y1="15" x2="17" y2="15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <circle cx="9" cy="15" r="2" fill="currentColor" />
+            </svg>
+          </Link>
+
+          <div className="hidden sm:block w-px h-5 bg-(--border-color) mx-1" aria-hidden="true" />
+
+          <ThemeToggle />
 
           {/* Mobile menu button */}
           <button
@@ -90,13 +122,6 @@ export function Header() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/register"
-            onClick={() => setMobileOpen(false)}
-            className="mt-2 flex items-center justify-center h-10 rounded-lg bg-primary-700 text-white text-sm font-medium hover:bg-primary-800 transition-colors"
-          >
-            Register
-          </Link>
         </nav>
       )}
     </header>

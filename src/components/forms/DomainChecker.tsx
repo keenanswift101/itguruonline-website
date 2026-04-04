@@ -147,9 +147,9 @@ export function DomainChecker({
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="yourbusiness"
+            placeholder="Enter your preferred domain name here..."
             aria-label="Domain name to check"
-            className="h-12 w-full rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] px-4 text-base text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            className="h-12 w-full rounded-xl border border-(--border-color) bg-(--bg-primary) px-4 text-base text-(--text-primary) placeholder:text-(--text-secondary)/60 placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
             maxLength={63}
             autoComplete="off"
             spellCheck={false}
