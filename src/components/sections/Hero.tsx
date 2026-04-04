@@ -23,66 +23,87 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      {/* ── Dark overlay — angled gradient for depth ── */}
+      {/* ── Lighter overlay ── */}
       <div
-        className="absolute inset-0 bg-linear-to-b from-gray-900/80 via-gray-900/70 to-gray-900/90"
+        className="absolute inset-0 bg-linear-to-b from-gray-900/60 via-gray-900/50 to-gray-900/70"
         aria-hidden="true"
       />
       {/* Teal accent bleed along the bottom */}
       <div
-        className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-primary-900/30 to-transparent"
+        className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-primary-900/20 to-transparent"
         aria-hidden="true"
       />
 
       {/* ── Content ── */}
       <div className="relative flex flex-col justify-center">
-        <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-          {/* Headline block */}
-          <div className="max-w-3xl animate-fade-in-up">
-            <h1 className="text-5xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
-              IT Solutions
-              <br />
-              <span className="bg-linear-to-r from-primary-400 to-primary-300 bg-clip-text text-transparent">
-                That Simply Work.
-              </span>
-            </h1>
-          </div>
+        <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20">
+          {/* ═══ Two-column grid ═══ */}
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            {/* ── Left: Content ── */}
+            <div className="animate-fade-in-up">
+              <h1 className="text-5xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
+                IT Solutions
+                <br />
+                <span className="bg-linear-to-r from-primary-400 to-primary-300 bg-clip-text text-transparent">
+                  That Simply Work.
+                </span>
+              </h1>
 
-          {/* Accent rule */}
-          <div className="mt-6 h-1 w-20 rounded-full bg-primary-500 animate-fade-in-up animation-delay-100" />
+              {/* Accent rule */}
+              <div className="mt-6 h-1 w-20 rounded-full bg-primary-500 animation-delay-100" />
 
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-gray-300 animate-fade-in-up animation-delay-200">
-            Domains. Hosting. Networks. Support. — We handle the technology
-            so you can focus on growing your business.
-          </p>
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-gray-200 animate-fade-in-up animation-delay-200">
+                Domains. Hosting. Networks. Support. — We handle the technology
+                so you can focus on growing your business.
+              </p>
 
-          {/* Domain Checker */}
-          <div className="mt-10 max-w-lg animate-fade-in-up animation-delay-300">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-primary-400/70">
-              Find your perfect domain
-            </p>
-            <DomainChecker />
-          </div>
+              {/* Domain Checker */}
+              <div className="mt-8 max-w-lg animate-fade-in-up animation-delay-300">
+                <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-primary-400/70">
+                  Find your perfect domain
+                </p>
+                <DomainChecker />
+              </div>
 
-          {/* CTAs */}
-          <div className="mt-8 flex flex-wrap gap-4 animate-fade-in-up animation-delay-400">
-            <Link
-              href="/services"
-              className="inline-flex h-12 items-center justify-center rounded-lg bg-primary-600 px-7 text-base font-semibold text-white transition-colors hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-gray-900"
-            >
-              Explore Services
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex h-12 items-center justify-center rounded-lg border border-white/20 px-7 text-base font-semibold text-white transition-colors hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-gray-900"
-            >
-              Get in Touch
-            </Link>
+              {/* CTAs */}
+              <div className="mt-8 flex flex-wrap gap-4 animate-fade-in-up animation-delay-400">
+                <Link
+                  href="/services"
+                  className="inline-flex h-12 items-center justify-center rounded-lg bg-primary-600 px-7 text-base font-semibold text-white transition-colors hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+                >
+                  Explore Services
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex h-12 items-center justify-center rounded-lg border border-white/20 px-7 text-base font-semibold text-white transition-colors hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-gray-900"
+                >
+                  Get in Touch
+                </Link>
+              </div>
+            </div>
+
+            {/* ── Right: Split image ── */}
+            <div className="hidden lg:block animate-fade-in-right animation-delay-200">
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/30">
+                <Image
+                  src="/hero-split.jpg"
+                  alt="Data centre infrastructure"
+                  width={800}
+                  height={600}
+                  className="h-auto w-full object-cover"
+                />
+                {/* Soft edge fade */}
+                <div
+                  className="absolute inset-0 bg-linear-to-l from-transparent via-transparent to-gray-900/30"
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* ── Stats strip — anchored to bottom ── */}
-        <div className="relative mt-auto border-t border-white/10 bg-gray-900/60 backdrop-blur-sm animate-fade-in-up animation-delay-500">
+        {/* ── Stats strip ── */}
+        <div className="relative mt-auto border-t border-white/10 bg-gray-900/50 backdrop-blur-sm animate-fade-in-up animation-delay-500">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
             {stats.map((stat, i) => (
               <div
