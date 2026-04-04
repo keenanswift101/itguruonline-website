@@ -1,11 +1,21 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { DomainChecker } from "@/components/forms/DomainChecker";
 
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-[var(--bg-secondary)]">
-      <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 text-center">
+      {/* Hero background image */}
+      <Image
+        src="/hero.png"
+        alt=""
+        fill
+        priority
+        className="object-cover object-center opacity-20 dark:opacity-10"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
           Your Trusted{" "}
           <span className="text-primary-700">IT Partner</span> in South Africa
