@@ -159,7 +159,7 @@ export default function ServicesPage() {
     <>
       {/* Hero */}
       <section className="bg-(--bg-secondary) py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
             Our IT Services
           </h1>
@@ -172,7 +172,7 @@ export default function ServicesPage() {
 
       {/* Services grid */}
       <section className="py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => (
               <div
@@ -222,7 +222,7 @@ export default function ServicesPage() {
 
       {/* Hosting Packages */}
       <section className="bg-(--bg-secondary) py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Web Hosting Plans

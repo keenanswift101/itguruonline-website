@@ -380,7 +380,7 @@ export function ProcessCarousel() {
   useEffect(() => {
     const timer = setInterval(() => {
       setActive((prev) => (prev + 1) % cards.length);
-    }, 5000);
+    }, 8000);
     return () => clearInterval(timer);
   }, []);
 

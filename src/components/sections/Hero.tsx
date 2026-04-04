@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { DomainChecker } from "@/components/forms/DomainChecker";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import { ProcessCarousel } from "@/components/ui/ProcessCards";
@@ -10,6 +13,34 @@ const stats = [
   { value: 99.9, suffix: "%", label: "Uptime" },
   { value: 24, suffix: "/7", label: "Support" },
 ];
+
+const taglines = [
+  "That Simply Work.",
+  "You Can Trust.",
+  "Built to Last.",
+  "Around the Clock.",
+  "Designed to Scale.",
+];
+
+function RotatingTagline() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setIndex((i) => (i + 1) % taglines.length);
+    }, 3500);
+    return () => clearInterval(t);
+  }, []);
+
+  return (
+    <span
+      key={index}
+      className="block bg-linear-to-r from-primary-400 via-primary-300 to-teal-300 bg-clip-text text-transparent animate-[tagline-in_0.55s_cubic-bezier(0.16,1,0.3,1)_both]"
+    >
+      {taglines[index]}
+    </span>
+  );
+}
 
 export function Hero() {
   return (
@@ -37,17 +68,14 @@ export function Hero() {
 
       {/* ── Content ── */}
       <div className="relative flex flex-col justify-center">
-        <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20">
+        <div className="mx-auto w-full max-w-5xl px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20">
           {/* ═══ Two-column split ═══ */}
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
             {/* ── Left: Content ── */}
             <div className="animate-fade-in-up">
               <h1 className="text-5xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
                 IT Solutions
-                <br />
-                <span className="bg-linear-to-r from-primary-400 to-primary-300 bg-clip-text text-transparent">
-                  That Simply Work.
-                </span>
+                <RotatingTagline />
               </h1>
 
               {/* Accent rule */}
@@ -70,13 +98,13 @@ export function Hero() {
               <div className="mt-8 flex flex-wrap gap-4 animate-fade-in-up animation-delay-400">
                 <Link
                   href="/services"
-                  className="inline-flex h-12 items-center justify-center rounded-lg bg-primary-600 px-7 text-base font-semibold text-white transition-colors hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+                  className="btn-metallic inline-flex h-12 items-center justify-center px-7 text-base font-bold text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-gray-900"
                 >
                   Explore Services
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex h-12 items-center justify-center rounded-lg border border-white/20 px-7 text-base font-semibold text-white transition-colors hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-gray-900"
+                  className="btn-glass inline-flex h-12 items-center justify-center px-7 text-base font-semibold text-white focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-gray-900"
                 >
                   Get in Touch
                 </Link>
@@ -92,7 +120,7 @@ export function Hero() {
 
         {/* ── Stats strip ── */}
         <div className="relative mt-auto border-t border-white/10 bg-gray-900/50 backdrop-blur-sm animate-fade-in-up animation-delay-500">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
+          <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
             {stats.map((stat, i) => (
               <div
                 key={stat.label}
