@@ -12,7 +12,7 @@ const stats = [
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section className="relative overflow-hidden">
       {/* ── Full-bleed background image ── */}
       <Image
         src="/itguru-img4.png"
@@ -35,8 +35,8 @@ export function Hero() {
       />
 
       {/* ── Content ── */}
-      <div className="relative flex min-h-screen flex-col justify-center">
-        <div className="mx-auto w-full max-w-5xl px-4 py-24 sm:px-6 lg:px-8">
+      <div className="relative flex flex-col justify-center">
+        <div className="mx-auto w-full max-w-5xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
           {/* Headline block */}
           <div className="max-w-3xl animate-fade-in-up">
             <h1 className="text-5xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
