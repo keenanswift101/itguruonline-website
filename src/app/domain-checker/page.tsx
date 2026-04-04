@@ -87,13 +87,13 @@ export default function DomainCheckerPage() {
             <table className="w-full text-sm">
               <thead className="bg-[var(--bg-surface)]">
                 <tr>
-                  <th className="px-4 py-3 text-left font-semibold text-[var(--text-primary)]">
+                  <th scope="col" className="px-4 py-3 text-left font-semibold text-[var(--text-primary)]">
                     Extension
                   </th>
-                  <th className="px-4 py-3 text-left font-semibold text-[var(--text-primary)]">
+                  <th scope="col" className="px-4 py-3 text-left font-semibold text-[var(--text-primary)]">
                     Best For
                   </th>
-                  <th className="px-4 py-3 text-left font-semibold text-[var(--text-primary)]">
+                  <th scope="col" className="px-4 py-3 text-left font-semibold text-[var(--text-primary)]">
                     Recommended
                   </th>
                 </tr>
@@ -103,12 +103,12 @@ export default function DomainCheckerPage() {
                   {
                     tld: ".co.za",
                     desc: "South African businesses",
-                    rec: "✅ Local credibility",
+                    rec: "Local credibility",
                   },
                   {
                     tld: ".com",
                     desc: "Global / international reach",
-                    rec: "✅ Universal recognition",
+                    rec: "Universal recognition",
                   },
                   {
                     tld: ".net",

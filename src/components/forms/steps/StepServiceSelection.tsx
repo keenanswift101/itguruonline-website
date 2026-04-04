@@ -47,16 +47,22 @@ export function StepServiceSelection({ data, onNext, onBack }: StepCProps) {
 
       {/* Hosting package selection */}
       <div>
-        <p className="text-sm font-semibold text-[var(--text-primary)] mb-3">
+        <p className="text-sm font-semibold text-[var(--text-primary)] mb-3" id="hosting-pkg-label">
           Web Hosting Package <span className="text-error">*</span>
         </p>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div
+          className="grid grid-cols-1 gap-3 sm:grid-cols-3"
+          role="radiogroup"
+          aria-labelledby="hosting-pkg-label"
+        >
           {HOSTING_PACKAGES.map((pkg) => {
             const selected = fields.hostingPackage === pkg.id;
             return (
               <button
                 key={pkg.id}
                 type="button"
+                role="radio"
+                aria-checked={selected}
                 onClick={() => selectPackage(pkg.id)}
                 className={`text-left rounded-xl border-2 p-4 transition-all focus:outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer ${
                   selected

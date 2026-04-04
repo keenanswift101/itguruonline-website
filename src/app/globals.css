@@ -488,3 +488,20 @@ select {
   50%  { stroke-dashoffset: 0; stroke-opacity: 0.5; }
   100% { stroke-dasharray: 100; stroke-dashoffset: 100; stroke-opacity: 0.1; }
 }
+
+/* ============================
+   Reduced Motion — WCAG 2.3.3
+   Disable or simplify all
+   animations & transitions for
+   users who prefer less motion.
+   ============================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

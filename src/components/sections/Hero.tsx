@@ -120,7 +120,7 @@ export function Hero() {
   const isDark = theme === "dark";
 
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden" aria-label="Hero">
       {/* ── Full-bleed background image ── */}
       <Image
         src="/itguru-img4.png"

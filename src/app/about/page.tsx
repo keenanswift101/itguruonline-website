@@ -132,7 +132,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-2 gap-6">
               {[
                 { label: "Years in IT", value: "10+" },
-                { label: "Clients Served", value: "200+" },
+                { label: "Clients Served", value: "20+" },
                 { label: "Service Uptime", value: "99.9%" },
                 { label: "Response Time", value: "< 4hrs" },
               ].map((stat) => (
