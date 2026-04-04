@@ -15,7 +15,7 @@ export function Hero() {
     <section className="relative min-h-screen overflow-hidden">
       {/* ── Full-bleed background image ── */}
       <Image
-        src="/itguru-img1.png"
+        src="/itguru-img4.png"
         alt=""
         fill
         priority
