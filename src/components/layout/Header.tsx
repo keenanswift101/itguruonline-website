@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
@@ -19,12 +20,26 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-(--border-color) bg-(--bg-primary)/95 backdrop-blur-sm">
-      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 border-b border-(--border-color) bg-gray-100/95 dark:bg-(--bg-primary)/95 backdrop-blur-sm">
+      <div className="mx-auto flex h-24 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 font-bold text-xl text-primary-700">
-          <span>IT-Guru</span>
-          <span className="text-(--text-secondary) font-normal text-sm">.Online</span>
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/FullLogo_Transparentwhite.png"
+            alt="IT-Guru Online"
+            width={360}
+            height={120}
+            priority
+            className="h-28 w-auto saturate-200 contrast-125 dark:hidden"
+          />
+          <Image
+            src="/FullLogo_Transparent.png"
+            alt="IT-Guru Online"
+            width={360}
+            height={120}
+            priority
+            className="h-28 w-auto saturate-200 contrast-125 hidden dark:block"
+          />
         </Link>
 
         {/* Desktop nav */}

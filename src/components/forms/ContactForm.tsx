@@ -79,25 +79,26 @@ export default function ContactForm() {
     setErrors({});
 
     try {
-      // Submit to Netlify Forms
-      const formBody = new URLSearchParams({
-        "form-name": "contact",
-        ...form,
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
       });
 
-      const res = await fetch("/__forms.html", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: formBody.toString(),
-      });
+      const data = await res.json().catch(() => ({}));
 
       if (res.ok) {
         setStatus("success");
-        setServerMessage("Thank you! Your message has been received. We will respond within one business day.");
+        setServerMessage(
+          (data as { message?: string }).message ??
+            "Thank you! Your message has been received. We will respond within one business day."
+        );
         setForm(initialState);
       } else {
         setStatus("error");
-        setServerMessage("An unexpected error occurred. Please try again.");
+        setServerMessage(
+          (data as { error?: string }).error ?? "An unexpected error occurred. Please try again."
+        );
       }
     } catch {
       setStatus("error");

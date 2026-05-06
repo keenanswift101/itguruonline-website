@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const footerLinks = {
   services: [
@@ -27,8 +28,21 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <Link href="/" className="font-bold text-xl text-primary-700">
-              IT-Guru<span className="text-[var(--text-secondary)] font-normal text-sm">.Online</span>
+            <Link href="/" className="inline-block">
+              <Image
+                src="/FullLogo_Transparentwhite.png"
+                alt="IT-Guru Online"
+                width={300}
+                height={100}
+                className="h-24 w-auto saturate-200 contrast-125 dark:hidden"
+              />
+              <Image
+                src="/FullLogo_Transparent.png"
+                alt="IT-Guru Online"
+                width={300}
+                height={100}
+                className="h-24 w-auto saturate-200 contrast-125 hidden dark:block"
+              />
             </Link>
             <p className="mt-3 text-sm text-[var(--text-secondary)]">
               Professional IT support, domain registration, and web hosting services based in
