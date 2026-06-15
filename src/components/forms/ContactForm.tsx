@@ -94,6 +94,15 @@ export default function ContactForm() {
             "Thank you! Your message has been received. We will respond within one business day."
         );
         setForm(initialState);
+
+        // Best-effort: also notify the admin inbox via Resend. Netlify Forms
+        // has already captured the submission above, so a failure here
+        // shouldn't affect the success state shown to the user.
+        fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        }).catch(() => {});
       } else {
         setStatus("error");
         setServerMessage(

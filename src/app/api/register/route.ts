@@ -7,6 +7,8 @@ import {
   validateStepD,
 } from "@/lib/registration-validators";
 import type { RegistrationFormData } from "@/lib/registration-types";
+import { HOSTING_PACKAGES } from "@/lib/registration-types";
+import { sendEmail, emailLayout, escapeHtml, ADMIN_EMAIL } from "@/lib/email";
 
 /** Strip HTML/script tags and dangerous URI schemes to prevent stored XSS */
 function sanitize(value: string): string {
@@ -114,9 +116,52 @@ export async function POST(req: NextRequest) {
   // When DATABASE_URL/SUPABASE_URL is configured, insert here:
   // await supabase.from("registrations").insert({ reference_id: referenceId, ...clean, created_at: new Date() });
 
-  // ── TODO: Send confirmation email (Resend/SendGrid) ────────────────────
-  // await sendConfirmationEmail({ to: clean.stepA.email, name: clean.stepA.firstName, referenceId });
-  // await sendAdminNotification({ referenceId, data: clean });
+  // ── Send confirmation email to client + notification to admin ──────────
+  const hostingPackageName =
+    HOSTING_PACKAGES.find((p) => p.id === clean.stepC.hostingPackage)?.name ?? "None selected";
+
+  const selectedExtras = [
+    clean.stepC.domainRegistration && "Domain Registration",
+    clean.stepC.sslCertificate && "SSL Certificate",
+    clean.stepC.emailHosting && "Email Hosting",
+    clean.stepC.websiteDesign && "Website Design",
+  ].filter(Boolean) as string[];
+
+  await sendEmail({
+    to: clean.stepA.email,
+    subject: `Your IT-Guru Online registration — ${referenceId}`,
+    html: emailLayout(
+      `Thanks for registering, ${escapeHtml(clean.stepA.firstName)}!`,
+      `
+        <p>We've received your application for <strong>${escapeHtml(clean.stepB.domainName)}</strong>.</p>
+        <p>Your reference number is <strong>${referenceId}</strong> — please quote this in any correspondence with us.</p>
+        <p><strong>Hosting Package:</strong> ${escapeHtml(hostingPackageName)}</p>
+        ${selectedExtras.length ? `<p><strong>Add-ons:</strong> ${selectedExtras.map(escapeHtml).join(", ")}</p>` : ""}
+        <p>We'll be in touch within one business day to confirm next steps.</p>
+      `
+    ),
+  });
+
+  await sendEmail({
+    to: ADMIN_EMAIL,
+    replyTo: clean.stepA.email,
+    subject: `[Registration] New application — ${referenceId}`,
+    html: emailLayout(
+      "New Registration Application",
+      `
+        <p><strong>Reference:</strong> ${referenceId}</p>
+        <p><strong>Name:</strong> ${escapeHtml(clean.stepA.firstName)} ${escapeHtml(clean.stepA.surname)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(clean.stepA.email)}</p>
+        <p><strong>Phone:</strong> ${escapeHtml(clean.stepA.cellPhone)}</p>
+        <p><strong>Physical Address:</strong> ${escapeHtml(clean.stepA.physicalAddress)}</p>
+        <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 16px 0;" />
+        <p><strong>Domain:</strong> ${escapeHtml(clean.stepB.domainName)}</p>
+        <p><strong>Hosting Package:</strong> ${escapeHtml(hostingPackageName)}</p>
+        ${selectedExtras.length ? `<p><strong>Add-ons:</strong> ${selectedExtras.map(escapeHtml).join(", ")}</p>` : ""}
+        ${clean.stepC.additionalServices ? `<p><strong>Additional Services:</strong> ${escapeHtml(clean.stepC.additionalServices)}</p>` : ""}
+      `
+    ),
+  });
 
   // Reference logged only to stderr in non-production environments
   if (process.env.NODE_ENV !== "production") {
