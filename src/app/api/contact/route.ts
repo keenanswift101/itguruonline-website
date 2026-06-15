@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limiter";
+import { sendEmail, emailLayout, escapeHtml, ADMIN_EMAIL } from "@/lib/email";
 
 interface ContactPayload {
   name: string;
@@ -93,14 +94,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Validation failed.", fields: errors }, { status: 422 });
   }
 
-  // ── TODO: Send email notification ─────────────────────────────────────
-  // When EMAIL_API_KEY is configured:
-  // await sendEmail({
-  //   to: process.env.ADMIN_EMAIL ?? "info@it-guru.co.za",
-  //   replyTo: payload.email,
-  //   subject: `[IT-Guru Contact] ${payload.subject} — from ${payload.name}`,
-  //   body: payload.message,
-  // });
+  // ── Send admin notification email ───────────────────────────────────────
+  await sendEmail({
+    to: ADMIN_EMAIL,
+    replyTo: payload.email,
+    subject: `[Contact] ${payload.subject} — ${payload.name}`,
+    html: emailLayout(
+      "New Contact Form Submission",
+      `
+        <p><strong>Name:</strong> ${escapeHtml(payload.name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(payload.email)}</p>
+        ${payload.phone ? `<p><strong>Phone:</strong> ${escapeHtml(payload.phone)}</p>` : ""}
+        <p><strong>Subject:</strong> ${escapeHtml(payload.subject)}</p>
+        <p><strong>Message:</strong></p>
+        <p style="white-space: pre-wrap;">${escapeHtml(payload.message)}</p>
+      `
+    ),
+  });
 
   // Log only in non-production environments
   if (process.env.NODE_ENV !== "production") {
