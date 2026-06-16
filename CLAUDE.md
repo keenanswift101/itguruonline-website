@@ -54,8 +54,16 @@ Verify a deploy actually fired with `netlify api listSiteDeploys --data '{"site_
 
 Only merge `dev` → `main` when explicitly asked to deploy/ship/push live — don't do it automatically after every commit.
 
+### `NEXT_PUBLIC_BASE_URL` — must be set on Netlify, and a fresh build is required for changes to take effect
+
+`NEXT_PUBLIC_BASE_URL` is read in `layout.tsx` (metadataBase/OG), `robots.ts`, `sitemap.ts`, and `email.ts` (logo/signature-background absolute URLs), all falling back to `https://it-guru-online.netlify.app` if unset. It was previously unset on Netlify and the old fallback was the dead domain `https://it-guru.online` (no DNS at all) — this silently broke the WhatsApp/social OG image preview *and* the logo/signature images in outgoing emails for a while. It's now set correctly via `netlify env:set NEXT_PUBLIC_BASE_URL "https://it-guru-online.netlify.app" --site 2cb84145-76d9-4916-ae7d-9df49a5a348c`. Env var changes only apply to the *next* build — if OG images or email images break again, check (a) the env var is still correct and (b) whether `main` has actually been rebuilt since the env var was set (see branch strategy above).
+
+If `it-guru.online` (the real custom domain) ever gets DNS pointed at this Netlify site, update `NEXT_PUBLIC_BASE_URL` to that domain instead and redeploy.
+
 ## Conventions
 
 - Server components by default; add `"use client"` only where state/effects are needed (Header, ServiceCards, Hero-adjacent interactive bits).
 - Section components accept no props and own their copy/data arrays at the top of the file (see `Hero.tsx`, `TechStack.tsx`, `Values.tsx`) — keep new sections consistent with this pattern rather than threading props through pages.
 - Decorative images/icons get `aria-hidden="true"`; keep accessible labels (`aria-label` on `<section>`, real `alt` text on content images) intact when editing.
+- Pricing is real business data, not placeholder copy — it lives in two places that must be kept in sync by hand: `HOSTING_PACKAGES` in `src/lib/registration-types.ts` (drives the registration wizard's package picker + the `HOSTING_SETUP_FEE` note + email summaries) and the `packages` array in `src/app/services/page.tsx` (the public-facing pricing cards). If a price/tier changes, update both. The R395 once-off cPanel setup fee is intentionally surfaced as a separate note (`HOSTING_SETUP_FEE_NOTE`) rather than folded into the monthly price, since SA market research showed this fee is unusual for self-service hosts and reads better framed as a managed-onboarding line item.
+- Testing scroll-reveal content with Playwright: `Reveal` (and anything else using `IntersectionObserver`) won't trigger its visible state under Playwright's `page.screenshot(full_page=True)` — that capture mode doesn't perform a real incremental scroll, so observers never fire and revealed sections silently stay at `opacity-0` (looks like "missing content" in the screenshot even though it's correctly in the DOM). To verify content lower on a page, either scroll there in small steps with `wait_for_timeout` between each (so the observer fires naturally) or check `page.eval_on_selector_all(...)` against the DOM directly instead of trusting a full-page screenshot.
