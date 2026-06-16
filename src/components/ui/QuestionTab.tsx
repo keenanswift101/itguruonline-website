@@ -23,7 +23,7 @@ export function QuestionTab() {
     >
       <Link
         href="/contact"
-        className="group flex items-center gap-1.5 rounded-l-xl bg-primary-700 px-3 py-2 text-white shadow-xl ring-1 ring-primary-600/40 hover:bg-primary-600 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2"
+        className="btn-metallic group flex items-center gap-0 rounded-l-xl rounded-r-none py-2 pl-2 pr-2 transition-[padding,gap] duration-300 hover:gap-1.5 hover:pl-3 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
         aria-label="Questions? Go to the contact page"
       >
         <svg
@@ -36,7 +36,7 @@ export function QuestionTab() {
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
         </svg>
-        <span className="text-xs font-bold tracking-wide whitespace-nowrap select-none">
+        <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-bold tracking-wide select-none transition-all duration-300 group-hover:max-w-22.5">
           Questions?
         </span>
       </Link>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useReducer, useCallback } from "react";
+import { useEffect, useReducer, useCallback, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { StepApplicantInfo } from "./steps/StepApplicantInfo";
 import { StepDomainDetails } from "./steps/StepDomainDetails";
@@ -142,6 +142,7 @@ function SuccessView({ referenceId, name }: { referenceId: string; name: string 
 export function RegistrationWizard() {
   const searchParams = useSearchParams();
   const prefilledDomain = searchParams.get("domain") ?? "";
+  const wizardRef = useRef<HTMLDivElement>(null);
 
   const [state, dispatch] = useReducer(wizardReducer, {
     step: 0,
@@ -189,6 +190,12 @@ export function RegistrationWizard() {
     }
   }, [state.data, state.submitState]);
 
+  // Scroll the wizard back into view at the top whenever the step changes,
+  // so users land on the new step's heading instead of wherever they scrolled to.
+  useEffect(() => {
+    wizardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [state.step]);
+
   const handleSubmit = useCallback(async (stepDData: StepDData) => {
     dispatch({ type: "SUBMITTING" });
     const payload: RegistrationFormData = {
@@ -225,7 +232,7 @@ export function RegistrationWizard() {
   const selectedPkg = HOSTING_PACKAGES.find((p) => p.id === state.data.stepC.hostingPackage);
 
   return (
-    <div>
+    <div ref={wizardRef}>
       <StepIndicator current={state.step} />
 
       {state.submitState === "error" && state.submitError && (
@@ -265,27 +272,27 @@ export function RegistrationWizard() {
 
       {/* Summary sidebar — visible on step 3 */}
       {state.step === 3 && (
-        <div className="mt-6 rounded-lg border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 text-sm">
-          <p className="font-semibold text-[var(--text-primary)] mb-3">Application Summary</p>
-          <dl className="space-y-1.5 text-[var(--text-secondary)]">
+        <div className="mt-6 rounded-2xl border border-[#00aaff]/40 bg-white/8 backdrop-blur-xl p-4 text-sm shadow-[0_0_20px_-6px_rgba(0,170,255,0.4)]">
+          <p className="font-semibold text-white mb-3">Application Summary</p>
+          <dl className="space-y-1.5 text-slate-300">
             <div className="flex justify-between">
               <dt>Name:</dt>
-              <dd className="font-medium text-[var(--text-primary)]">
+              <dd className="font-medium text-white">
                 {state.data.stepA.firstName} {state.data.stepA.surname}
               </dd>
             </div>
             <div className="flex justify-between">
               <dt>Email:</dt>
-              <dd className="font-medium text-[var(--text-primary)]">{state.data.stepA.email}</dd>
+              <dd className="font-medium text-white">{state.data.stepA.email}</dd>
             </div>
             <div className="flex justify-between">
               <dt>Domain:</dt>
-              <dd className="font-mono font-medium text-primary-700">{state.data.stepB.domainName}</dd>
+              <dd className="font-mono font-medium text-primary-400">{state.data.stepB.domainName}</dd>
             </div>
             {selectedPkg && (
               <div className="flex justify-between">
                 <dt>Package:</dt>
-                <dd className="font-medium text-[var(--text-primary)]">{selectedPkg.name} — {selectedPkg.price}</dd>
+                <dd className="font-medium text-white">{selectedPkg.name} — {selectedPkg.price}</dd>
               </div>
             )}
           </dl>

@@ -59,10 +59,21 @@ export default function ContactPage() {
     <div className="relative">
       <div className="fixed inset-0 -z-10">
         <Image src="/bg-image.jpg" alt="" fill className="object-cover object-center" aria-hidden="true" priority />
+        <div className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm" aria-hidden="true" />
       </div>
 
       {/* Hero */}
-      <section className="relative overflow-hidden py-16 sm:py-24" aria-label="Contact hero">
+      <section className="relative overflow-hidden py-10 sm:py-14" aria-label="Contact hero">
+        <div className="flex justify-center mb-8">
+          <Image
+            src="/FullLogo_Transparent.png"
+            alt="IT-Guru Online"
+            width={360}
+            height={120}
+            priority
+            className="h-20 sm:h-24 w-auto saturate-200 contrast-125"
+          />
+        </div>
         <Reveal className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <p className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-primary-400">
             ~/contact

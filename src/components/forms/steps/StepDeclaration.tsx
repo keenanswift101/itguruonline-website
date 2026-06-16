@@ -36,20 +36,20 @@ export function StepDeclaration({ data, onSubmit, onBack, isSubmitting }: StepDP
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-[var(--text-primary)]">Section D — Declaration</h2>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">
+        <h2 className="text-xl font-semibold text-white">Section D — Declaration</h2>
+        <p className="mt-1 text-sm text-slate-300">
           Please read and accept the terms, then provide your digital signature.
         </p>
       </div>
 
       {/* Terms box */}
       <div
-        className="rounded-lg border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 max-h-48 overflow-y-auto text-sm leading-relaxed text-[var(--text-secondary)]"
+        className="rounded-2xl border border-[#00aaff]/30 bg-white/8 backdrop-blur-xl p-4 max-h-48 overflow-y-auto text-sm leading-relaxed text-slate-300 shadow-[0_0_16px_-6px_rgba(0,170,255,0.35)]"
         role="region"
         aria-label="Terms and conditions"
         tabIndex={0}
       >
-        <p className="font-semibold text-[var(--text-primary)] mb-2">Terms and Conditions</p>
+        <p className="font-semibold text-white mb-2">Terms and Conditions</p>
         <p className="mb-2">
           By submitting this application, the applicant acknowledges and agrees to the following:
         </p>
@@ -65,31 +65,31 @@ export function StepDeclaration({ data, onSubmit, onBack, isSubmitting }: StepDP
         </ol>
         <p className="mt-3">
           For full terms and conditions, visit{" "}
-          <Link href="/terms" className="text-primary-700 underline hover:no-underline">
+          <Link href="/terms" className="text-primary-400 underline hover:no-underline">
             it-guru.online/terms
           </Link>.
         </p>
       </div>
 
       {/* Terms acceptance */}
-      <label className={`flex items-start gap-3 rounded-lg border p-3 cursor-pointer transition-colors ${
+      <label className={`flex items-start gap-3 rounded-xl border p-3 cursor-pointer backdrop-blur-xl transition-colors ${
         fields.termsAccepted
-          ? "border-primary-300 bg-primary-50/40 dark:border-primary-700/50 dark:bg-primary-900/10"
+          ? "border-[#00aaff] bg-[#00aaff]/10 shadow-[0_0_16px_-4px_rgba(0,170,255,0.55)]"
           : errors.termsAccepted
-          ? "border-error bg-red-50/30 dark:bg-red-900/10"
-          : "border-[var(--border-color)] hover:bg-[var(--bg-surface)]"
+          ? "border-error bg-red-500/10"
+          : "border-white/15 bg-white/8 hover:bg-white/12"
       }`}>
         <input
           type="checkbox" name="termsAccepted"
-          className="mt-0.5 h-4 w-4 rounded accent-primary-700 cursor-pointer"
+          className="mt-0.5 h-4 w-4 rounded accent-[#00aaff] cursor-pointer"
           checked={fields.termsAccepted}
           onChange={handleChange}
         />
         <div>
-          <p className="text-sm font-medium text-[var(--text-primary)]">
+          <p className="text-sm font-medium text-white">
             I accept the Terms and Conditions <span className="text-error">*</span>
           </p>
-          <p className="text-xs text-[var(--text-secondary)] mt-0.5">
+          <p className="text-xs text-slate-300 mt-0.5">
             I confirm that I have read, understood, and agree to the terms above.
           </p>
         </div>
@@ -98,33 +98,33 @@ export function StepDeclaration({ data, onSubmit, onBack, isSubmitting }: StepDP
 
       {/* Digital signature */}
       <div>
-        <label className="block text-sm font-medium text-[var(--text-primary)] mb-1" htmlFor="signature">
+        <label className="block text-sm font-medium text-white mb-1" htmlFor="signature">
           Digital Signature — Type Your Full Name <span className="text-error">*</span>
         </label>
         <input
           id="signature" name="signature" type="text" autoComplete="name"
           placeholder="e.g. John Smith"
           value={fields.signature} onChange={handleChange}
-          className={`h-12 w-full rounded-lg border px-4 text-lg italic bg-[var(--bg-primary)] text-[var(--text-primary)] border-[var(--border-color)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 font-serif ${errors.signature ? "ring-2 ring-error border-error" : ""}`}
+          className={`h-12 w-full rounded-xl border px-4 text-lg italic bg-white/8 backdrop-blur-xl text-white border-white/20 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00aaff] focus:border-[#00aaff] font-serif ${errors.signature ? "ring-2 ring-error border-error" : ""}`}
           style={{ fontFamily: "'Georgia', serif" }}
         />
         {errors.signature
           ? <p className="mt-1 text-xs text-error">{errors.signature}</p>
-          : <p className="mt-1 text-xs text-[var(--text-secondary)]">Typing your full name serves as your digital signature for this application.</p>
+          : <p className="mt-1 text-xs text-slate-400">Typing your full name serves as your digital signature for this application.</p>
         }
       </div>
 
       {/* Date */}
       <div>
-        <label className="block text-sm font-medium text-[var(--text-primary)] mb-1" htmlFor="signatureDate">
+        <label className="block text-sm font-medium text-white mb-1" htmlFor="signatureDate">
           Date
         </label>
         <input
           id="signatureDate" name="signatureDate" type="date"
           value={fields.signatureDate} readOnly aria-readonly="true"
-          className="h-10 w-48 rounded-lg border px-3 bg-[var(--bg-surface)] text-[var(--text-primary)] border-[var(--border-color)] cursor-not-allowed opacity-75"
+          className="h-10 w-48 rounded-xl border px-3 bg-white/5 backdrop-blur-xl text-white border-white/15 cursor-not-allowed opacity-75"
         />
-        <p className="mt-1 text-xs text-[var(--text-secondary)]">Date is set automatically to today.</p>
+        <p className="mt-1 text-xs text-slate-400">Date is set automatically to today.</p>
       </div>
 
       <div className="flex justify-between pt-2">

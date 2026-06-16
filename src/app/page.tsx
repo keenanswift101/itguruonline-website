@@ -10,6 +10,7 @@ export default function HomePage() {
       {/* Full-page fixed background */}
       <div className="fixed inset-0 -z-10">
         <Image src="/bg-image.jpg" alt="" fill className="object-cover object-center" aria-hidden="true" priority />
+        <div className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm" aria-hidden="true" />
       </div>
       <Hero />
       <ServiceCards />

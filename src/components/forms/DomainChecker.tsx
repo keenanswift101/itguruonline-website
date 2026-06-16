@@ -11,14 +11,14 @@ type CheckState = "idle" | "loading" | "done" | "error";
 function AvailabilityBadge({ available, error }: { available: boolean; error?: string }) {
   if (error) {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-[var(--bg-surface)] px-2.5 py-0.5 text-xs font-medium text-[var(--text-secondary)]">
+      <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-medium text-slate-300">
         <span>?</span> Unknown
       </span>
     );
   }
   if (available) {
     return (
-      <span className="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700 dark:bg-green-900/30 dark:text-green-400">
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-green-400/15 px-2.5 py-0.5 text-xs font-semibold text-green-400">
         <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
         </svg>
@@ -27,7 +27,7 @@ function AvailabilityBadge({ available, error }: { available: boolean; error?: s
     );
   }
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-700 dark:bg-red-900/30 dark:text-red-400">
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-red-400/15 px-2.5 py-0.5 text-xs font-semibold text-red-400">
       <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>
@@ -47,19 +47,19 @@ function DomainRow({
 }) {
   return (
     <div
-      className={`flex items-center justify-between gap-4 rounded-lg border px-4 py-3 transition-colors ${
+      className={`flex items-center justify-between gap-4 rounded-lg border px-4 py-3 backdrop-blur-xl transition-colors ${
         isPrimary
-          ? "border-primary-300 bg-primary-50/50 dark:border-primary-700/50 dark:bg-primary-900/10"
-          : "border-[var(--border-color)] bg-[var(--bg-primary)]"
+          ? "border-[#00aaff]/50 bg-[#00aaff]/8 shadow-[0_0_16px_-4px_rgba(0,170,255,0.45)]"
+          : "border-white/15 bg-white/8"
       }`}
     >
       <div className="flex items-center gap-3 min-w-0">
         {isPrimary && (
-          <span className="hidden sm:inline-flex shrink-0 rounded-full bg-primary-100 px-2 py-0.5 text-xs font-semibold text-primary-700 dark:bg-primary-800/30 dark:text-primary-300">
+          <span className="hidden sm:inline-flex shrink-0 rounded-full bg-[#00aaff]/20 px-2 py-0.5 text-xs font-semibold text-primary-300">
             Recommended
           </span>
         )}
-        <span className="font-medium truncate text-[var(--text-primary)]">{result.domain}</span>
+        <span className="font-medium truncate text-white">{result.domain}</span>
       </div>
       <div className="flex items-center gap-3 shrink-0">
         <AvailabilityBadge available={result.available} error={result.error} />

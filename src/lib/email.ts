@@ -15,17 +15,91 @@ export function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
-/** Wraps body content in a minimal branded HTML shell shared by all outgoing emails. */
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://it-guru.online";
+const LOGO_URL = `${BASE_URL}/FullLogo_Transparent.png`;
+
+/**
+ * Wraps body content in a branded HTML shell shared by all outgoing emails.
+ *
+ * Built table-based with every style declared inline — webmail clients
+ * (Outlook desktop, Gmail, Yahoo, Apple Mail) strip <style> blocks and don't
+ * support flexbox/grid, so this intentionally avoids both to render
+ * consistently everywhere.
+ */
 export function emailLayout(title: string, bodyHtml: string): string {
   return `<!DOCTYPE html>
-<html>
-  <body style="font-family: -apple-system, Helvetica, Arial, sans-serif; color: #1a1a1a; line-height: 1.6;">
-    <div style="max-width: 560px; margin: 0 auto; padding: 24px;">
-      <h2 style="color: #0f4c81; margin-bottom: 16px;">${title}</h2>
-      ${bodyHtml}
-      <hr style="margin-top: 32px; border: none; border-top: 1px solid #e5e7eb;" />
-      <p style="font-size: 12px; color: #6b7280;">IT-Guru Online &middot; Kuils River, Western Cape &middot; info@it-guru.co.za</p>
-    </div>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>${title}</title>
+  </head>
+  <body style="margin:0; padding:0; background-color:#0b1220; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0b1220;">
+      <tr>
+        <td align="center" style="padding:32px 16px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px; background-color:#ffffff; border-radius:12px; overflow:hidden;">
+            <!-- Header banner -->
+            <tr>
+              <td align="center" style="background-color:#1e3a8a; padding:28px 24px;">
+                <img src="${LOGO_URL}" width="168" alt="IT-Guru Online" style="display:block; border:0; outline:none; text-decoration:none; max-width:168px;" />
+              </td>
+            </tr>
+            <!-- Title -->
+            <tr>
+              <td style="padding:32px 32px 8px 32px;">
+                <h1 style="margin:0; font-size:20px; line-height:1.3; color:#0f172a; font-family:-apple-system,Helvetica,Arial,sans-serif;">${title}</h1>
+              </td>
+            </tr>
+            <!-- Body -->
+            <tr>
+              <td style="padding:8px 32px 32px 32px; font-size:14px; line-height:1.65; color:#334155;">
+                ${bodyHtml}
+              </td>
+            </tr>
+            <!-- Divider -->
+            <tr>
+              <td style="padding:0 32px;">
+                <hr style="border:none; border-top:1px solid #e2e8f0; margin:0;" />
+              </td>
+            </tr>
+            <!-- Signature -->
+            <tr>
+              <td style="padding:24px 32px 32px 32px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td style="font-size:13px; color:#0f172a; font-weight:700;">IT-Guru Online</td>
+                  </tr>
+                  <tr>
+                    <td style="font-size:11px; color:#0d9488; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding-top:2px;">
+                      Your IT Needs, Our Priority
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="font-size:12px; color:#64748b; padding-top:10px; line-height:1.7;">
+                      Kuils River, Western Cape, South Africa<br />
+                      <a href="mailto:info@it-guru.co.za" style="color:#1d4ed8; text-decoration:none;">info@it-guru.co.za</a>
+                      &middot;
+                      <a href="tel:+27729627608" style="color:#1d4ed8; text-decoration:none;">+27 72 962 7608</a><br />
+                      <a href="${BASE_URL}" style="color:#1d4ed8; text-decoration:none;">it-guru.online</a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
+            <tr>
+              <td align="center" style="padding:16px 8px; font-size:11px; color:#64748b;">
+                You're receiving this email because of an enquiry or application submitted at it-guru.online.
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>`;
 }

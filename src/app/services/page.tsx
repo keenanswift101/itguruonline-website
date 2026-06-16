@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
 import { CTAPanelBackground } from "@/components/ui/CTAPanelBackground";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -10,15 +9,6 @@ export const metadata: Metadata = {
   description:
     "From remote support and network solutions to web hosting, domain registration, and hardware procurement — IT-Guru Online covers all your IT needs in South Africa.",
 };
-
-const serviceAccents = [
-  { hoverBorder: "hover:border-primary-400/40", hoverShadow: "hover:shadow-[0_0_30px_-8px_rgba(13,148,136,0.35)]" },
-  { hoverBorder: "hover:border-blue-400/40",    hoverShadow: "hover:shadow-[0_0_30px_-8px_rgba(59,130,246,0.35)]" },
-  { hoverBorder: "hover:border-amber-400/40",   hoverShadow: "hover:shadow-[0_0_30px_-8px_rgba(217,119,6,0.35)]" },
-  { hoverBorder: "hover:border-purple-400/40",  hoverShadow: "hover:shadow-[0_0_30px_-8px_rgba(168,85,247,0.35)]" },
-  { hoverBorder: "hover:border-cyan-400/40",    hoverShadow: "hover:shadow-[0_0_30px_-8px_rgba(6,182,212,0.35)]" },
-  { hoverBorder: "hover:border-rose-400/40",    hoverShadow: "hover:shadow-[0_0_30px_-8px_rgba(244,63,94,0.35)]" },
-];
 
 const services = [
   {
@@ -171,10 +161,21 @@ export default function ServicesPage() {
     <div className="relative">
       <div className="fixed inset-0 -z-10">
         <Image src="/bg-image.jpg" alt="" fill className="object-cover object-center" aria-hidden="true" priority />
+        <div className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm" aria-hidden="true" />
       </div>
 
       {/* Hero */}
-      <section className="relative overflow-hidden py-16 sm:py-24" aria-label="Services hero">
+      <section className="relative overflow-hidden py-10 sm:py-14" aria-label="Services hero">
+        <div className="flex justify-center mb-8">
+          <Image
+            src="/FullLogo_Transparent.png"
+            alt="IT-Guru Online"
+            width={360}
+            height={120}
+            priority
+            className="h-20 sm:h-24 w-auto saturate-200 contrast-125"
+          />
+        </div>
         <Reveal className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <p className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-primary-400">
             ~/services
@@ -194,22 +195,20 @@ export default function ServicesPage() {
       <section className="relative overflow-hidden py-16 sm:py-24" aria-label="Services list">
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service, i) => {
-              const accent = serviceAccents[i % serviceAccents.length];
-              return (
+            {services.map((service, i) => (
               <Reveal
                 key={service.id}
                 id={service.id}
                 delayMs={(i % 3) * 80}
-                className={`group relative rounded-2xl border border-(--border-color) bg-(--bg-primary) p-6 flex flex-col transition-all duration-300 hover:-translate-y-1.5 ${accent.hoverBorder} ${accent.hoverShadow}`}
+                className="group relative rounded-2xl border border-[#00aaff]/60 bg-white/8 backdrop-blur-xl p-6 flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:border-[#00aaff] shadow-[0_0_16px_-2px_rgba(0,170,255,0.45)] hover:shadow-[0_0_30px_0px_rgba(0,170,255,0.75)]"
               >
-                <h2 className="text-xl font-semibold text-(--text-primary)">{service.title}</h2>
-                <p className="mt-1 text-sm font-medium text-primary-600 dark:text-primary-400">{service.tagline}</p>
-                <p className="mt-3 text-sm text-(--text-secondary) leading-relaxed">{service.description}</p>
+                <h2 className="text-xl font-semibold text-white">{service.title}</h2>
+                <p className="mt-1 text-sm font-medium text-primary-400">{service.tagline}</p>
+                <p className="mt-3 text-sm text-slate-300 leading-relaxed">{service.description}</p>
                 <ul className="mt-5 space-y-2 flex-1">
                   {service.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-(--text-secondary)">
-                      <svg className="mt-0.5 h-4 w-4 shrink-0 text-primary-600 dark:text-primary-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <li key={f} className="flex items-start gap-2 text-sm text-slate-300">
+                      <svg className="mt-0.5 h-4 w-4 shrink-0 text-primary-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                         <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
                       </svg>
                       {f}
@@ -223,20 +222,22 @@ export default function ServicesPage() {
                         href={service.cta.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center h-8 px-3 text-sm font-medium rounded-[10px] border border-primary-600 text-primary-600 dark:border-primary-400 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                        className="btn-metallic inline-flex h-8 items-center justify-center px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-transparent"
                       >
                         {service.cta.label}
                       </a>
                     ) : (
-                      <Button variant="secondary" size="sm" href={service.cta.href}>
+                      <Link
+                        href={service.cta.href}
+                        className="btn-metallic inline-flex h-8 items-center justify-center px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-transparent"
+                      >
                         {service.cta.label}
-                      </Button>
+                      </Link>
                     )}
                   </div>
                 )}
               </Reveal>
-              );
-            })}
+            ))}
           </div>
         </div>
       </section>
@@ -272,12 +273,12 @@ export default function ServicesPage() {
                 delayMs={i * 80}
                 className={`relative rounded-2xl p-8 flex flex-col ${
                   pkg.highlight
-                    ? "bg-primary-700 text-white shadow-xl ring-2 ring-primary-400"
+                    ? "bg-metallic-navy text-white border-2 border-[#00aaff] shadow-[0_0_40px_-4px_rgba(0,170,255,0.65)]"
                     : "border border-white/15 bg-white/8 backdrop-blur-sm"
                 }`}
               >
                 {pkg.highlight && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center rounded-full bg-primary-400 px-3 py-0.5 text-xs font-semibold text-primary-900">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center rounded-full bg-[#00aaff] px-3 py-0.5 text-xs font-semibold text-white shadow-[0_0_12px_2px_rgba(0,170,255,0.7)]">
                     Most Popular
                   </span>
                 )}
@@ -288,18 +289,18 @@ export default function ServicesPage() {
                   <span className="text-4xl font-extrabold text-white">
                     {pkg.price}
                   </span>
-                  <span className={`text-sm ${pkg.highlight ? "text-teal-100" : "text-slate-300"}`}>
+                  <span className={`text-sm ${pkg.highlight ? "text-blue-200" : "text-slate-300"}`}>
                     {pkg.period}
                   </span>
                 </div>
-                <p className={`mt-3 text-sm ${pkg.highlight ? "text-teal-100" : "text-slate-300"}`}>
+                <p className={`mt-3 text-sm ${pkg.highlight ? "text-blue-200" : "text-slate-300"}`}>
                   {pkg.description}
                 </p>
                 <ul className="mt-6 space-y-3 flex-1">
                   {pkg.features.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-sm">
                       <svg
-                        className={`mt-0.5 h-4 w-4 shrink-0 ${pkg.highlight ? "text-teal-300" : "text-primary-400"}`}
+                        className={`mt-0.5 h-4 w-4 shrink-0 ${pkg.highlight ? "text-[#00aaff]" : "text-primary-400"}`}
                         fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"
                       >
                         <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
@@ -312,7 +313,7 @@ export default function ServicesPage() {
                   {pkg.highlight ? (
                     <Link
                       href={`/register?package=${pkg.name.toLowerCase()}`}
-                      className="inline-flex w-full items-center justify-center h-10 px-4 text-base font-medium rounded-[10px] bg-white text-primary-700 hover:bg-primary-50 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-700"
+                      className="inline-flex w-full items-center justify-center h-10 px-4 text-base font-medium rounded-[10px] bg-white text-blue-700 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-900"
                     >
                       Get Started
                     </Link>

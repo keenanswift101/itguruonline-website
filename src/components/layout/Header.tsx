@@ -7,8 +7,8 @@ import { useState } from "react";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
   { href: "/domain-checker", label: "Domain Checker" },
   { href: "/contact", label: "Contact" },
 ];
@@ -19,7 +19,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/15 bg-white/8 backdrop-blur-xl">
-      <div className="relative mx-auto flex h-24 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto grid h-20 max-w-5xl grid-cols-[auto_1fr_auto] items-center gap-2 px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
@@ -28,12 +28,12 @@ export function Header() {
             width={360}
             height={120}
             priority
-            className="h-28 w-auto saturate-200 contrast-125"
+            className="h-[52px] w-auto saturate-200 contrast-125"
           />
         </Link>
 
-        {/* Desktop nav — absolutely centered */}
-        <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1">
+        {/* Desktop nav — centered in the middle grid column */}
+        <nav className="hidden md:flex items-center justify-center gap-1">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -41,7 +41,7 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 aria-current={isActive ? "page" : undefined}
-                className={`relative px-3 py-2.5 text-sm font-medium transition-colors ${
+                className={`relative px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors ${
                   isActive ? "text-white" : "text-white/70 hover:text-white"
                 }`}
               >
@@ -62,7 +62,7 @@ export function Header() {
         </nav>
 
         {/* Right: Register CTA + mobile toggle */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-end gap-3">
           <Link
             href="/register"
             className="btn-metallic hidden md:inline-flex h-7 items-center justify-center px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-transparent"

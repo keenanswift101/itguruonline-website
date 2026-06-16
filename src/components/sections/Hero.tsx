@@ -88,6 +88,9 @@ export function Hero() {
 
             {/* Left: text */}
             <div className="animate-fade-in-up">
+              <p className="mb-3 font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#38bdf8]">
+                Your IT Needs, Our Priority
+              </p>
               <h1 className="text-5xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl text-white">
                 IT Solutions
                 <span

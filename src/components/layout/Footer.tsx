@@ -68,6 +68,9 @@ export function Footer() {
                 className="h-24 w-auto saturate-200 contrast-125"
               />
             </Link>
+            <p className="mt-3 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[#38bdf8]">
+              Your IT Needs, Our Priority
+            </p>
             <p className="mt-3 text-sm text-slate-300">
               Professional IT support, domain registration, and web hosting services based in
               Kuils River, South Africa.
@@ -145,7 +148,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} IT-Guru Online. All rights reserved.
           </p>
           <p className="text-sm text-slate-400">
-            Designed by{" "}
+            Built by{" "}
             <a
               href="https://swiftdesignz.co.za"
               target="_blank"

@@ -38,7 +38,7 @@ export function TechStack() {
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
           {items.map((item, i) => (
             <Reveal key={item.label} delayMs={i * 60} className="h-full">
-              <div className="group h-full flex flex-col cursor-default rounded-xl border border-white/15 bg-white/12 p-5 backdrop-blur-[20px] transition-all duration-300 hover:border-white/25 hover:bg-white/20">
+              <div className="group h-full flex flex-col cursor-default rounded-xl border border-white/20 bg-white/20 p-5 backdrop-blur-[48px] transition-all duration-300 hover:border-white/30 hover:bg-white/28">
                 <span className="font-mono text-[11px] text-slate-400 transition-colors duration-200 group-hover:text-primary-400">
                   {item.num}
                 </span>

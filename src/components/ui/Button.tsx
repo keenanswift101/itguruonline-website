@@ -12,12 +12,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<Variant, string> = {
-  primary:
-    "bg-primary-700 text-white hover:bg-primary-800 focus:ring-primary-500",
-  secondary:
-    "border border-primary-700 text-primary-700 hover:bg-primary-50 dark:hover:bg-primary-900/20 focus:ring-primary-500",
+  primary: "btn-metallic focus:ring-blue-400",
+  secondary: "btn-glass focus:ring-white/40",
   ghost:
-    "text-primary-700 hover:bg-[var(--bg-surface)] focus:ring-primary-500",
+    "text-primary-400 hover:bg-white/10 focus:ring-primary-500",
   danger:
     "bg-error text-white hover:bg-red-700 focus:ring-red-500",
 };

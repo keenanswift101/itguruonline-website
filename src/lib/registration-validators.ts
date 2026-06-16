@@ -42,18 +42,33 @@ export function validateSAID(id: string): { valid: boolean; error?: string } {
 }
 
 /**
- * South African phone number validation
- * Accepts: 0XXXXXXXXX, +27XXXXXXXXX, 27XXXXXXXXX
+ * Phone number validation.
+ * South African numbers (+27 / 27 / 0-prefixed) get the strict SA format check.
+ * Numbers entered with any other country code get a general international
+ * format check (a leading "+" followed by 7–15 digits — E.164-style).
  */
 export function validateSAPhone(phone: string): { valid: boolean; error?: string } {
   const clean = phone.replace(/[\s\-().]/g, "");
   if (!clean) return { valid: true }; // optional fields allowed empty
 
-  const saPhoneRe = /^(\+27|27|0)[1-9]\d{8}$/;
-  if (!saPhoneRe.test(clean)) {
+  const isSA = /^(\+27|27|0)/.test(clean);
+
+  if (isSA) {
+    const saPhoneRe = /^(\+27|27|0)[1-9]\d{8}$/;
+    if (!saPhoneRe.test(clean)) {
+      return {
+        valid: false,
+        error: "Enter a valid South African number (e.g. 072 962 7608 or +27 72 962 7608).",
+      };
+    }
+    return { valid: true };
+  }
+
+  const intlPhoneRe = /^\+[1-9]\d{6,14}$/;
+  if (!intlPhoneRe.test(clean)) {
     return {
       valid: false,
-      error: "Enter a valid South African number (e.g. 072 962 7608 or +27 72 962 7608).",
+      error: "Enter a valid phone number including country code (e.g. +44 7911 123456).",
     };
   }
   return { valid: true };
