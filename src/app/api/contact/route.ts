@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limiter";
+import { isTrustedOrigin } from "@/lib/csrf";
+import { getClientIp } from "@/lib/client-ip";
 import { sendEmail, emailLayout, escapeHtml, ADMIN_EMAIL } from "@/lib/email";
 
 interface ContactPayload {
@@ -54,9 +56,13 @@ function validateContact(data: ContactPayload): Record<string, string> {
 }
 
 export async function POST(req: NextRequest) {
+  // ── CSRF defense-in-depth ───────────────────────────────────────────────
+  if (!isTrustedOrigin(req)) {
+    return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
+  }
+
   // ── Rate limiting ──────────────────────────────────────────────────────
-  const forwarded = req.headers.get("x-forwarded-for");
-  const ip = forwarded ? forwarded.split(",")[0].trim() : "unknown";
+  const ip = getClientIp(req);
   const rl = checkRateLimit(`contact:${ip}`);
 
   if (!rl.allowed) {

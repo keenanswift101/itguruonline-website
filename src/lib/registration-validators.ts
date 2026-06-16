@@ -126,12 +126,21 @@ export function validateStepB(data: { domainName: string }): Record<string, stri
   return errors;
 }
 
+const VALID_HOSTING_PACKAGE_IDS = ["startup", "basic", "standard", "advanced", "enterprise", "parked"];
+
 /**
  * Validate step C fields
  */
-export function validateStepC(data: { hostingPackage: string }): Record<string, string> {
+export function validateStepC(data: { hostingPackage: string; additionalServices?: string }): Record<string, string> {
   const errors: Record<string, string> = {};
-  if (!data.hostingPackage) errors.hostingPackage = "Please select a hosting package.";
+  if (!data.hostingPackage) {
+    errors.hostingPackage = "Please select a hosting package.";
+  } else if (!VALID_HOSTING_PACKAGE_IDS.includes(data.hostingPackage)) {
+    errors.hostingPackage = "Invalid hosting package selected.";
+  }
+  if (data.additionalServices && data.additionalServices.length > 2000) {
+    errors.additionalServices = "Additional notes must be under 2000 characters.";
+  }
   return errors;
 }
 

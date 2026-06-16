@@ -6,6 +6,8 @@ Guidance for Claude Code when working in this repository.
 
 IT-Guru.Online — marketing site + client onboarding for a Kuils River (South Africa) IT support company. Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4. Deployed on Netlify (`@netlify/plugin-nextjs`). Transactional email via Resend.
 
+See `SECURITY-AUDIT.md` for the OWASP ZAP + manual security review findings/fixes/accepted-risks — read it before touching API routes, `next.config.ts` headers, or rate limiting.
+
 ## Commands
 
 ```

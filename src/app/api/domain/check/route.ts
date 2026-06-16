@@ -8,6 +8,8 @@ import {
   type SupportedTld,
 } from "@/lib/domain-validator";
 import { checkRateLimit } from "@/lib/rate-limiter";
+import { isTrustedOrigin } from "@/lib/csrf";
+import { getClientIp } from "@/lib/client-ip";
 
 export interface TldResult {
   domain: string;
@@ -59,9 +61,13 @@ async function checkOneTld(name: string, tld: SupportedTld): Promise<TldResult> 
 }
 
 export async function POST(req: NextRequest) {
+  // ── CSRF defense-in-depth ───────────────────────────────────────────────────
+  if (!isTrustedOrigin(req)) {
+    return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
+  }
+
   // ── Rate limiting ─────────────────────────────────────────────────────────
-  const forwarded = req.headers.get("x-forwarded-for");
-  const ip = forwarded ? forwarded.split(",")[0].trim() : "unknown";
+  const ip = getClientIp(req);
   const rl = checkRateLimit(ip);
 
   if (!rl.allowed) {
