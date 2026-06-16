@@ -131,30 +131,57 @@ const services = [
 
 const packages = [
   {
-    name: "Starter",
-    price: "R149",
+    name: "Startup",
+    price: "R85",
     period: "/month",
     description: "Perfect for personal sites and small businesses just getting started online.",
-    features: ["1 Website", "5 GB Storage", "10 Email Accounts", "Free SSL Certificate", "Basic Support"],
+    features: ["1 Website", "1 GB SSD Storage", "2 Databases", "Free SSL Certificate", "Unlimited Mailboxes", "50 Emails/hour", "Unlimited Traffic", "Free Migration"],
     highlight: false,
   },
   {
-    name: "Business",
-    price: "R299",
+    name: "Basic",
+    price: "R99",
     period: "/month",
-    description: "The most popular option for growing businesses with professional needs.",
-    features: ["5 Websites", "25 GB Storage", "50 Email Accounts", "Free SSL Certificate", "Priority Support", "Daily Backups"],
+    description: "Our most popular plan — ideal for growing small businesses.",
+    features: ["3 Websites", "5 GB SSD Storage", "3 Subdomains", "6 Databases", "Free SSL Certificate", "Unlimited Mailboxes", "100 Emails/hour", "Unlimited Traffic", "Free Migration"],
     highlight: true,
   },
   {
-    name: "Professional",
-    price: "R549",
+    name: "Standard",
+    price: "R149",
     period: "/month",
-    description: "Full power for agencies, developers, or businesses managing multiple clients.",
-    features: ["Unlimited Websites", "100 GB Storage", "Unlimited Email Accounts", "Free SSL Certificate", "24/7 Premium Support", "Daily Backups", "Staging Environment"],
+    description: "More room to grow, with extra websites and resources.",
+    features: ["5 Websites", "10 GB SSD Storage", "5 Subdomains", "10 Databases", "Free SSL Certificate", "Unlimited Mailboxes", "200 Emails/hour", "Unlimited Traffic", "Free Migration"],
+    highlight: false,
+  },
+  {
+    name: "Advanced",
+    price: "R279",
+    period: "/month",
+    description: "For established businesses running multiple sites.",
+    features: ["10 Websites", "20 GB SSD Storage", "10 Subdomains", "20 Databases", "Free SSL Certificate", "Unlimited Mailboxes", "500 Emails/hour", "Unlimited Traffic", "Free Migration"],
+    highlight: false,
+  },
+  {
+    name: "Enterprise",
+    price: "R399",
+    period: "/month",
+    description: "Maximum resources for agencies and high-traffic businesses.",
+    features: ["20 Websites", "30 GB SSD Storage", "20 Subdomains", "40 Databases", "Free SSL Certificate", "Unlimited Mailboxes", "1000 Emails/hour", "Unlimited Traffic", "Free Migration"],
+    highlight: false,
+  },
+  {
+    name: "Parked Domain",
+    price: "R35",
+    period: "/month",
+    description: "Reserve your domain online while you plan your website — upgrade anytime.",
+    features: ["Holds your domain online", "No website hosting included", "Upgrade anytime"],
     highlight: false,
   },
 ];
+
+const HOSTING_SETUP_FEE_NOTE =
+  "New hosting accounts include a once-off R395 cPanel account setup, configuration, and migration-assistance fee.";
 
 export default function ServicesPage() {
   return (
@@ -262,16 +289,16 @@ export default function ServicesPage() {
             </h2>
             <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-primary-500" />
             <p className="mt-4 text-lg text-slate-300">
-              Simple, transparent pricing. No hidden fees. Cancel anytime.
+              Simple, transparent monthly pricing. Cancel anytime.
             </p>
           </Reveal>
 
-          <div className="mt-12 grid gap-8 sm:grid-cols-3">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {packages.map((pkg, i) => (
               <Reveal
                 key={pkg.name}
                 delayMs={i * 80}
-                className={`relative rounded-2xl p-8 flex flex-col ${
+                className={`relative rounded-2xl p-6 flex flex-col ${
                   pkg.highlight
                     ? "bg-metallic-navy text-white border-2 border-[#00aaff] shadow-[0_0_40px_-4px_rgba(0,170,255,0.65)]"
                     : "border border-white/15 bg-white/8 backdrop-blur-sm"
@@ -286,7 +313,7 @@ export default function ServicesPage() {
                   {pkg.name}
                 </h3>
                 <div className="mt-3 flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold text-white">
+                  <span className="text-3xl font-extrabold text-white">
                     {pkg.price}
                   </span>
                   <span className={`text-sm ${pkg.highlight ? "text-blue-200" : "text-slate-300"}`}>
@@ -296,7 +323,7 @@ export default function ServicesPage() {
                 <p className={`mt-3 text-sm ${pkg.highlight ? "text-blue-200" : "text-slate-300"}`}>
                   {pkg.description}
                 </p>
-                <ul className="mt-6 space-y-3 flex-1">
+                <ul className="mt-5 space-y-2.5 flex-1">
                   {pkg.features.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-sm">
                       <svg
@@ -329,6 +356,30 @@ export default function ServicesPage() {
               </Reveal>
             ))}
           </div>
+
+          <Reveal delayMs={480} className="mt-8 text-center">
+            <p className="text-sm text-slate-400">{HOSTING_SETUP_FEE_NOTE}</p>
+          </Reveal>
+
+          {/* Domain registration callout */}
+          <Reveal delayMs={560} className="mt-10 rounded-2xl border border-[#00aaff]/40 bg-white/8 backdrop-blur-xl p-6 sm:p-8 text-center shadow-[0_0_20px_-6px_rgba(0,170,255,0.35)]">
+            <h3 className="text-xl font-bold text-white">Domain Registration</h3>
+            <p className="mt-2 text-sm text-slate-300 max-w-xl mx-auto">
+              We register and manage your domain alongside your hosting.{" "}
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-400/15 px-2.5 py-0.5 text-xs font-semibold text-amber-300 align-middle">
+                ★ .co.za — Most Popular
+              </span>
+              {" "}— and we can also register .com, .net, .org, .online, .africa, and more.
+            </p>
+            <div className="mt-5">
+              <Link
+                href="/domain-checker"
+                className="btn-metallic inline-flex h-10 items-center justify-center px-5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-transparent"
+              >
+                Check Domain Availability &amp; Pricing
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
 

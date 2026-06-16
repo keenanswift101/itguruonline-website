@@ -111,6 +111,7 @@ export default function DomainCheckerPage() {
                     tld: ".co.za",
                     desc: "South African businesses",
                     rec: "Local credibility",
+                    popular: true,
                   },
                   {
                     tld: ".com",
@@ -140,10 +141,17 @@ export default function DomainCheckerPage() {
                 ].map((row) => (
                   <tr
                     key={row.tld}
-                    className="hover:bg-white/5 transition-colors"
+                    className={`hover:bg-white/5 transition-colors ${row.popular ? "bg-amber-400/8" : ""}`}
                   >
                     <td className="px-4 py-3 font-mono font-semibold text-primary-400">
-                      {row.tld}
+                      <span className="inline-flex items-center gap-1.5">
+                        {row.tld}
+                        {row.popular && (
+                          <span className="inline-flex items-center rounded-full bg-amber-400/15 px-2 py-0.5 text-[10px] font-semibold text-amber-300">
+                            ★ Most Popular
+                          </span>
+                        )}
+                      </span>
                     </td>
                     <td className="px-4 py-3 text-slate-300">{row.desc}</td>
                     <td className="px-4 py-3 text-slate-300">{row.rec}</td>
