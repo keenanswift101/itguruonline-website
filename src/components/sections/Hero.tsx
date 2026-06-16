@@ -128,25 +128,16 @@ export function Hero() {
               </div>
             </div>
 
-            {/* Right: signage image card */}
-            <div className="hidden lg:block animate-fade-in-up animation-delay-200">
-              <div
-                className="overflow-hidden rounded-2xl"
-                style={{
-                  background: "#07080d",
-                  border: "1px solid rgba(255,255,255,0.10)",
-                  boxShadow: "0 25px 60px -10px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.05)",
-                }}
-              >
-                <Image
-                  src="/itgurusignage.png"
-                  alt="IT-Guru Online neon signage"
-                  width={2317}
-                  height={1408}
-                  className="w-full h-auto object-contain"
-                  priority
-                />
-              </div>
+            {/* Right: logo */}
+            <div className="hidden lg:flex items-center justify-center animate-fade-in-up animation-delay-200">
+              <Image
+                src="/FullLogo_Transparent.png"
+                alt="IT-Guru Online"
+                width={360}
+                height={120}
+                className="w-full max-w-md h-auto object-contain saturate-200 contrast-125"
+                priority
+              />
             </div>
 
           </div>
