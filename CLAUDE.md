@@ -35,7 +35,24 @@ Light/dark mode was removed entirely (`ThemeProvider`, `ThemeToggle`, and all `d
 - Buttons: `.btn-metallic` = flat deep-navy primary CTA (no 3D press, no outer glow — just an inner highlight + shine sweep). `.btn-glass` = frosted liquid-glass secondary CTA (`bg-white/10 backdrop-blur-xl`). Both defined in `globals.css`; reuse these classes rather than one-off button styles.
 - Neon accents: active nav underline and stat-card underlines use bright electric colors (`#00aaff` cobalt blue for nav, per-stat neon colors in `Hero.tsx`) with a `box-shadow` glow — this is the site's signature highlight style, prefer it over solid highlight boxes.
 - `Reveal` (`src/components/ui/Reveal.tsx`) is the standard scroll-reveal wrapper (IntersectionObserver + `animate-fade-in-up`, respects `prefers-reduced-motion`). Wrap new section content in it rather than writing a new observer.
-- Header nav is absolutely centered (`absolute left-1/2 -translate-x-1/2`) with the Register link pulled out as a `.btn-metallic` CTA pinned to the far right — not part of the regular nav-link list.
+- Header uses a 3-column CSS grid (`grid-cols-[auto_1fr_auto]`: logo / centered nav / actions) — **not** absolute positioning for the nav. Absolute-centering the nav was tried and broke at viewport widths where the logo+nav+actions didn't fit (nav overlapped or clipped the logo); the grid guarantees each section gets its own space. Register is pulled out as a `.btn-metallic` CTA in the actions column, not part of the regular nav-link list.
+- Country/flag pickers (e.g. registration form's cell-phone country code) **cannot** use a native `<select><option>` — `<option>` can't render `<img>`, and emoji flags don't render on Windows (show as text like "ZA" instead of 🇿🇦). Build a custom dropdown (button + listbox) with flag images from `flagcdn.com` instead, like `StepApplicantInfo.tsx`'s `CountryCodeSelect`.
+- Outgoing emails (`src/lib/email.ts` `emailLayout()`) are deliberately table-based with every style inline — no `<style>` block, no flexbox/grid. Outlook desktop and other webmail clients strip `<style>` tags and don't support flexbox/grid, so anything added to email HTML must follow this same table+inline-style pattern to render consistently.
+
+## Deployment — branch strategy
+
+**Netlify only builds/deploys the `main` branch** (site `it-guru-online`, `build_settings.repo_branch` and `allowed_branches` are both `["main"]`). Day-to-day work happens on `dev`. Pushing to `dev` alone **will not trigger a Netlify deploy** — this caused a "nothing deployed" incident where several commits sat on `dev` with no build at all.
+
+To ship to production:
+```
+git checkout main
+git merge dev --ff-only   # dev should already be linear ahead of main
+git push origin main
+git checkout dev          # switch back to keep working
+```
+Verify a deploy actually fired with `netlify api listSiteDeploys --data '{"site_id":"2cb84145-76d9-4916-ae7d-9df49a5a348c"}'` (or check the Netlify dashboard) — look for `"branch": "main"` and `"state": "ready"` on the latest entry with the expected `commit_ref`.
+
+Only merge `dev` → `main` when explicitly asked to deploy/ship/push live — don't do it automatically after every commit.
 
 ## Conventions
 

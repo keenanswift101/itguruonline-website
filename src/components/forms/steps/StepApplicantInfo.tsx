@@ -131,7 +131,27 @@ export function StepApplicantInfo({ data, onNext }: StepAProps) {
     if (errors[name]) setErrors((prev) => { const next = { ...prev }; delete next[name]; return next; });
   }
 
-  function handleCellPhoneChange(nextCode: string, nextLocal: string) {
+  function handleCellPhoneChange(nextCode: string, rawLocal: string) {
+    // Browser autofill sometimes fills the local-number field with the full
+    // international number (e.g. "+27729627608") instead of just the local
+    // part. Only treat it as a full-number paste/autofill (and strip the
+    // redundant country code / leading 0) once it's long enough to be a
+    // complete number — otherwise a normal SA number typed digit-by-digit
+    // (which legitimately starts with "0") would lose its leading 0 as soon
+    // as it's typed.
+    let nextLocal = rawLocal.trim();
+    const codeDigits = nextCode.replace("+", "");
+    const digitCount = nextLocal.replace(/\D/g, "").length;
+    if (digitCount > 8) {
+      if (nextLocal.startsWith(nextCode)) {
+        nextLocal = nextLocal.slice(nextCode.length);
+      } else if (nextLocal.startsWith(codeDigits)) {
+        nextLocal = nextLocal.slice(codeDigits.length);
+      } else if (nextCode === "+27" && nextLocal.startsWith("0")) {
+        nextLocal = nextLocal.slice(1);
+      }
+    }
+
     setCellCountryCode(nextCode);
     setCellLocalNumber(nextLocal);
     const digitsOnly = nextLocal.replace(/[^\d]/g, "");
@@ -236,7 +256,7 @@ export function StepApplicantInfo({ data, onNext }: StepAProps) {
             onChange={(code) => handleCellPhoneChange(code, cellLocalNumber)}
           />
           <input
-            id="cellPhone" name="cellPhone" type="tel" autoComplete="tel"
+            id="cellPhone" name="cellPhone" type="tel" autoComplete="off"
             placeholder="82 123 4567"
             value={cellLocalNumber}
             onChange={(e) => handleCellPhoneChange(cellCountryCode, e.target.value)}

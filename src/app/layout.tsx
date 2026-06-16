@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "IT-Guru Online" }],
   creator: "Swift Designz",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? "https://it-guru.online"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? "https://it-guru-online.netlify.app"),
   icons: {
     icon: "/favicon.png",
     shortcut: "/favicon.png",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_ZA",
-    url: process.env.NEXT_PUBLIC_BASE_URL ?? "https://it-guru.online",
+    url: process.env.NEXT_PUBLIC_BASE_URL ?? "https://it-guru-online.netlify.app",
     siteName: "IT-Guru Online",
     title: "IT-Guru Online | IT Solutions & Support — Kuils River",
     description:

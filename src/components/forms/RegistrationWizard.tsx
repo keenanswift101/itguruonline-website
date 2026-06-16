@@ -113,25 +113,28 @@ function StepIndicator({ current }: { current: number }) {
 function SuccessView({ referenceId, name }: { referenceId: string; name: string }) {
   return (
     <div className="text-center py-8 space-y-4">
-      <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
-        <svg className="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <div
+        className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#00aaff]/15 border border-[#00aaff]/50"
+        style={{ boxShadow: "0 0 24px -2px rgba(0,170,255,0.55)" }}
+      >
+        <svg className="h-8 w-8 text-[#00aaff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
         </svg>
       </div>
-      <h2 className="text-2xl font-bold text-[var(--text-primary)]">Application Submitted!</h2>
-      <p className="text-[var(--text-secondary)]">
-        Thank you, <strong>{name}</strong>. Your application has been received.
+      <h2 className="text-2xl font-bold text-white">Application Submitted!</h2>
+      <p className="text-slate-300">
+        Thank you, <strong className="text-white">{name}</strong>. Your application has been received.
       </p>
-      <div className="inline-block rounded-lg bg-[var(--bg-surface)] border border-[var(--border-color)] px-6 py-3">
-        <p className="text-xs text-[var(--text-secondary)]">Reference Number</p>
-        <p className="text-xl font-mono font-bold text-primary-700 mt-0.5">{referenceId}</p>
+      <div className="bg-metallic-navy inline-block rounded-xl border border-[#00aaff]/50 px-6 py-3 shadow-[0_0_20px_-4px_rgba(0,170,255,0.5)]">
+        <p className="text-xs text-blue-200">Reference Number</p>
+        <p className="text-xl font-mono font-bold text-white mt-0.5">{referenceId}</p>
       </div>
-      <p className="text-sm text-[var(--text-secondary)] max-w-sm mx-auto">
+      <p className="text-sm text-slate-300 max-w-sm mx-auto">
         A confirmation email has been sent to you. IT-Guru Online will contact you within 1 business day.
       </p>
-      <p className="text-sm text-[var(--text-secondary)]">
+      <p className="text-sm text-slate-300">
         Questions? Call or WhatsApp{" "}
-        <a href="tel:+27729627608" className="text-primary-700 font-medium">+27 72 962 7608</a>
+        <a href="tel:+27729627608" className="text-primary-400 font-medium">+27 72 962 7608</a>
         {" "}(Mon – Fri, 08:30 – 17:00)
       </p>
     </div>

@@ -15,8 +15,9 @@ export function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://it-guru.online";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://it-guru-online.netlify.app";
 const LOGO_URL = `${BASE_URL}/FullLogo_Transparent.png`;
+const SIGNATURE_BG_URL = `${BASE_URL}/footer_bg.png`;
 
 /**
  * Wraps body content in a branded HTML shell shared by all outgoing emails.
@@ -64,28 +65,40 @@ export function emailLayout(title: string, bodyHtml: string): string {
                 <hr style="border:none; border-top:1px solid #e2e8f0; margin:0;" />
               </td>
             </tr>
-            <!-- Signature -->
+            <!-- Signature — footer_bg image, with a solid navy fallback for clients that block images -->
             <tr>
-              <td style="padding:24px 32px 32px 32px;">
+              <td
+                background="${SIGNATURE_BG_URL}"
+                style="background-color:#0b1220; background-image:url('${SIGNATURE_BG_URL}'); background-size:cover; background-position:center; padding:24px 32px 32px 32px;"
+              >
+                <!--[if gte mso 9]>
+                <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:496px;">
+                  <v:fill type="frame" src="${SIGNATURE_BG_URL}" color="#0b1220" />
+                  <v:textbox inset="0,0,0,0">
+                <![endif]-->
                 <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                   <tr>
-                    <td style="font-size:13px; color:#0f172a; font-weight:700;">IT-Guru Online</td>
+                    <td style="font-size:13px; color:#ffffff; font-weight:700;">IT-Guru Online</td>
                   </tr>
                   <tr>
-                    <td style="font-size:11px; color:#0d9488; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding-top:2px;">
+                    <td style="font-size:11px; color:#2dd4bf; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding-top:2px;">
                       Your IT Needs, Our Priority
                     </td>
                   </tr>
                   <tr>
-                    <td style="font-size:12px; color:#64748b; padding-top:10px; line-height:1.7;">
+                    <td style="font-size:12px; color:#cbd5e1; padding-top:10px; line-height:1.7;">
                       Kuils River, Western Cape, South Africa<br />
-                      <a href="mailto:info@it-guru.co.za" style="color:#1d4ed8; text-decoration:none;">info@it-guru.co.za</a>
+                      <a href="mailto:info@it-guru.co.za" style="color:#7dd3fc; text-decoration:none;">info@it-guru.co.za</a>
                       &middot;
-                      <a href="tel:+27729627608" style="color:#1d4ed8; text-decoration:none;">+27 72 962 7608</a><br />
-                      <a href="${BASE_URL}" style="color:#1d4ed8; text-decoration:none;">it-guru.online</a>
+                      <a href="tel:+27729627608" style="color:#7dd3fc; text-decoration:none;">+27 72 962 7608</a><br />
+                      <a href="${BASE_URL}" style="color:#7dd3fc; text-decoration:none;">it-guru.online</a>
                     </td>
                   </tr>
                 </table>
+                <!--[if gte mso 9]>
+                  </v:textbox>
+                </v:rect>
+                <![endif]-->
               </td>
             </tr>
           </table>
