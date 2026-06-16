@@ -5,7 +5,6 @@
  * Based on: .github/skills/ui-ux-design/SKILL.md
  */
 
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme {
   /* Primary — Teal */
@@ -42,21 +41,9 @@
 }
 
 /* ============================
-   Light theme (default)
+   Theme tokens
    ============================ */
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-surface: #f1f5f9;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --border-color: #e2e8f0;
-}
-
-/* ============================
-   Dark theme
-   ============================ */
-[data-theme="dark"] {
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;
   --bg-surface: #334155;
@@ -169,9 +156,16 @@ select {
 .animation-delay-400 { animation-delay: 500ms; }
 .animation-delay-500 { animation-delay: 650ms; }
 
-/* ============================
-   Infinite Marquee
-   ============================ */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes scan-sweep {
+  0%   { top: 0; }
+  100% { top: 100%; }
+}
+
 @keyframes marquee-left {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -182,52 +176,13 @@ select {
   to   { transform: translateX(0); }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation-play-state: paused; }
+}
+
 /* ============================
-   Process Cards Animations
+   Button Shine Animation
    ============================ */
-@keyframes step-pulse {
-  0%, 100% { border-color: rgb(20 184 166 / 0.3); }
-  25%      { border-color: rgb(20 184 166 / 1); box-shadow: 0 0 12px rgb(20 184 166 / 0.4); }
-  50%      { border-color: rgb(20 184 166 / 0.5); }
-}
-
-@keyframes step-fill {
-  0%, 100% { opacity: 0.2; transform: scale(0.6); }
-  25%      { opacity: 1;   transform: scale(1); }
-  50%      { opacity: 0.4; transform: scale(0.8); }
-}
-
-@keyframes line-fill {
-  0%, 100% { transform: scaleX(0); }
-  20%      { transform: scaleX(1); }
-  80%      { transform: scaleX(1); }
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.3; }
-}
-
-@keyframes bar-fill {
-  from { width: 0; }
-  to   { width: 99.9%; }
-}
-
-@keyframes chat-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes carousel-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes tagline-in {
-  from { opacity: 0; transform: translateY(18px) skewY(1deg); }
-  to   { opacity: 1; transform: translateY(0) skewY(0deg); }
-}
-
 @keyframes btn-shine {
   0%   { left: -75%; }
   35%  { left: 125%; }
@@ -236,9 +191,7 @@ select {
 
 @layer components {
   /* ====================================================
-     PRIMARY — Metallic 3D On/Off Switch
-     Off state: face raised above a dark "base" shadow
-     On/active state: face presses down to meet the base
+     PRIMARY — Flat Metallic Navy
      ==================================================== */
   .btn-metallic {
     position: relative;
@@ -247,32 +200,25 @@ select {
     align-items: center;
     justify-content: center;
 
-    /* Metallic teal face — top bevel lighter than bottom */
-    background:
-      linear-gradient(
-        180deg,
-        rgba(255,255,255,0.18) 0%,
-        rgba(255,255,255,0.06) 45%,
-        rgba(0,0,0,0.08) 55%,
-        rgba(0,0,0,0.20) 100%
-      ),
-      linear-gradient(180deg, #0d9488 0%, #0f766e 45%, #0a5e52 100%);
+    background: linear-gradient(
+      150deg,
+      #1d4ed8 0%,
+      #1e40af 20%,
+      #1e3a8a 45%,
+      #172554 55%,
+      #1e3a8a 75%,
+      #1e40af 100%
+    );
 
     border-radius: 10px;
+    border: 1px solid rgba(59,130,246,0.25);
+    border-bottom-color: rgba(15,23,42,0.60);
 
-    /* Top/side bevels give "raised face" feel */
-    border: 1px solid rgba(0,0,0,0.35);
-    border-top-color: rgba(255,255,255,0.12);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
 
-    /* The "base": 5px dark floor under the button face */
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.30),
-      inset 1px 0 0 rgba(255,255,255,0.10),
-      0 5px 0 #043d37,
-      0 7px 14px rgba(0,0,0,0.55);
-
-    text-shadow: 0 1px 0 rgba(255,255,255,0.15);
-    transition: transform 0.08s ease, box-shadow 0.08s ease;
+    color: #fff;
+    font-weight: 700;
+    transition: filter 0.15s ease, transform 0.10s ease;
   }
 
   .btn-metallic::after {
@@ -282,211 +228,64 @@ select {
     left: -75%;
     width: 40%;
     height: 200%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
     transform: skewX(-20deg);
     animation: btn-shine 4.5s ease-in-out infinite;
     pointer-events: none;
   }
 
   .btn-metallic:hover {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(255,255,255,0.22) 0%,
-        rgba(255,255,255,0.08) 45%,
-        rgba(0,0,0,0.06) 55%,
-        rgba(0,0,0,0.18) 100%
-      ),
-      linear-gradient(180deg, #0fa898 0%, #0d8a7c 45%, #0a6b61 100%);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.35),
-      inset 1px 0 0 rgba(255,255,255,0.14),
-      0 5px 0 #043d37,
-      0 9px 18px rgba(0,0,0,0.6);
+    filter: brightness(1.12);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.24);
     transform: translateY(-1px);
   }
 
-  /* PRESSED — button travels DOWN 5px to "sit" on the base */
   .btn-metallic:active {
-    transform: translateY(5px);
-    background:
-      linear-gradient(
-        180deg,
-        rgba(0,0,0,0.08) 0%,
-        rgba(0,0,0,0.04) 45%,
-        rgba(255,255,255,0.04) 55%,
-        rgba(255,255,255,0.10) 100%
-      ),
-      linear-gradient(180deg, #0a7a72 0%, #0d9488 50%, #21a393 100%);
-    box-shadow:
-      inset 0 3px 5px rgba(0,0,0,0.35),
-      inset 0 1px 2px rgba(0,0,0,0.2),
-      0 0 0 #043d37,
-      0 2px 6px rgba(0,0,0,0.35);
-    text-shadow: none;
+    filter: brightness(0.88);
+    transform: scale(0.97);
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.25);
   }
 
   /* ====================================================
-     SECONDARY — Liquid Glass 3D Switch
+     SECONDARY — Liquid Glass
      ==================================================== */
   .btn-glass {
     position: relative;
     overflow: hidden;
 
-    background: rgba(255,255,255,0.09);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    background: rgba(255,255,255,0.10);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 
     border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.28);
-    border-bottom-color: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.30);
+    border-bottom-color: rgba(255,255,255,0.10);
 
-    /* Same 3D floor trick with a dark transparent base */
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.25),
-      inset 1px 0 0 rgba(255,255,255,0.10),
-      0 5px 0 rgba(0,0,0,0.28),
-      0 7px 18px rgba(0,0,0,0.30);
+      inset 0 1px 0 rgba(255,255,255,0.30),
+      0 4px 16px rgba(0,0,0,0.20);
 
-    transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.08s ease;
+    color: #fff;
+    font-weight: 600;
+    transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.10s ease;
   }
 
   .btn-glass:hover {
-    background: rgba(255,255,255,0.15);
-    border-color: rgba(255,255,255,0.38);
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.45);
     transform: translateY(-1px);
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.32),
-      0 5px 0 rgba(0,0,0,0.28),
-      0 10px 22px rgba(0,0,0,0.35);
+      inset 0 1px 0 rgba(255,255,255,0.38),
+      0 6px 20px rgba(0,0,0,0.25);
   }
 
-  /* PRESSED — drops down onto the glass base */
   .btn-glass:active {
-    transform: translateY(5px);
-    background: rgba(255,255,255,0.04);
-    border-color: rgba(255,255,255,0.15);
-    box-shadow:
-      inset 0 3px 5px rgba(0,0,0,0.20),
-      inset 0 1px 2px rgba(0,0,0,0.12),
-      0 0 0 rgba(0,0,0,0.28),
-      0 2px 4px rgba(0,0,0,0.18);
+    transform: scale(0.97);
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.18);
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.15);
   }
 
-  :where([data-theme="light"]) .btn-metallic {
-    text-shadow: 0 1px 2px rgba(0,0,0,0.25);
-  }
-
-  /* ════════════════════════════════════════════════════
-     LIGHT MODE overrides — btn-glass restyles as a
-     soft teal-tinted bordered button on bright backgrounds
-     ════════════════════════════════════════════════════ */
-  :where([data-theme="light"]) .btn-glass {
-    background: rgba(13,148,136,0.06);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(13,148,136,0.30);
-    border-bottom-color: rgba(13,148,136,0.14);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.90),
-      inset 1px 0 0 rgba(255,255,255,0.60),
-      0 5px 0 rgba(13,148,136,0.18),
-      0 7px 18px rgba(0,0,0,0.08);
-  }
-
-  :where([data-theme="light"]) .btn-glass:hover {
-    background: rgba(13,148,136,0.10);
-    border-color: rgba(13,148,136,0.45);
-    transform: translateY(-1px);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.95),
-      0 5px 0 rgba(13,148,136,0.18),
-      0 10px 22px rgba(0,0,0,0.10);
-  }
-
-  :where([data-theme="light"]) .btn-glass:active {
-    transform: translateY(5px);
-    background: rgba(13,148,136,0.04);
-    border-color: rgba(13,148,136,0.20);
-    box-shadow:
-      inset 0 3px 5px rgba(0,0,0,0.08),
-      inset 0 1px 2px rgba(0,0,0,0.05),
-      0 0 0 rgba(13,148,136,0.18),
-      0 2px 4px rgba(0,0,0,0.06);
-  }
-}
-
-/* ============================
-   Cursor Animations
-   ============================ */
-@keyframes cursor-move {
-  0%   { transform: translate(0, 0); opacity: 0; }
-  10%  { opacity: 1; }
-  30%  { transform: translate(15px, -10px); }
-  60%  { transform: translate(-8px, 8px); }
-  90%  { opacity: 1; }
-  100% { transform: translate(0, 0); opacity: 0; }
-}
-
-@keyframes cursor-click {
-  0%   { transform: translate(0, 0) scale(1); opacity: 0; }
-  10%  { opacity: 1; }
-  25%  { transform: translate(10px, -5px) scale(1); }
-  30%  { transform: translate(10px, -5px) scale(0.85); }
-  35%  { transform: translate(10px, -5px) scale(1); }
-  60%  { transform: translate(-12px, 6px) scale(1); }
-  65%  { transform: translate(-12px, 6px) scale(0.85); }
-  70%  { transform: translate(-12px, 6px) scale(1); }
-  90%  { opacity: 1; }
-  100% { transform: translate(0, 0) scale(1); opacity: 0; }
-}
-
-@keyframes cursor-hover {
-  0%, 100% { transform: translate(0, 0); opacity: 0.6; }
-  25%      { transform: translate(6px, -3px); opacity: 1; }
-  50%      { transform: translate(12px, 2px); opacity: 1; }
-  75%      { transform: translate(4px, 5px); opacity: 1; }
-}
-
-@keyframes cursor-scan {
-  0%   { transform: translateX(-20px); opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { transform: translateX(20px); opacity: 0; }
-}
-
-@keyframes cursor-type {
-  0%, 100% { opacity: 0.7; }
-  50%      { opacity: 1; transform: translateY(-1px); }
-}
-
-/* ============================
-   Card Element Animations
-   ============================ */
-@keyframes node-glow {
-  0%, 100% { border-color: rgb(255 255 255 / 0.1); box-shadow: none; }
-  50%      { border-color: rgb(20 184 166 / 0.6); box-shadow: 0 0 12px rgb(20 184 166 / 0.15); }
-}
-
-@keyframes row-fade {
-  from { opacity: 0; transform: translateX(-6px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes metric-bar {
-  0%, 100% { opacity: 0.7; }
-  50%      { opacity: 1; }
-}
-
-@keyframes bar-pop {
-  from { opacity: 0; transform: scaleY(0); }
-  to   { opacity: 1; transform: scaleY(1); }
-}
-
-@keyframes line-draw {
-  0%   { stroke-dasharray: 100; stroke-dashoffset: 100; stroke-opacity: 0.1; }
-  50%  { stroke-dashoffset: 0; stroke-opacity: 0.5; }
-  100% { stroke-dasharray: 100; stroke-dashoffset: 100; stroke-opacity: 0.1; }
 }
 
 /* ============================

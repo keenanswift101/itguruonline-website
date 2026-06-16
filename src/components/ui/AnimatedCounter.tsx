@@ -40,16 +40,6 @@ export function AnimatedCounter({
   useEffect(() => {
     if (!started) return;
 
-    // Skip animation for users who prefer reduced motion
-    const prefersReduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (prefersReduced) {
-      setCount(end);
-      return;
-    }
-
     const isDecimal = end % 1 !== 0;
     const startTime = performance.now();
     let rafId: number;

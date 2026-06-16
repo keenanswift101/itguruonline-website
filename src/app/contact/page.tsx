@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Suspense } from "react";
 import ContactForm from "@/components/forms/ContactForm";
+import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "Get in Touch",
@@ -54,25 +56,33 @@ const contactDetails = [
 
 export default function ContactPage() {
   return (
-    <>
+    <div className="relative">
+      <div className="fixed inset-0 -z-10">
+        <Image src="/bg-image.jpg" alt="" fill className="object-cover object-center" aria-hidden="true" priority />
+      </div>
+
       {/* Hero */}
-      <section className="bg-(--bg-secondary) py-16 sm:py-24">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Get in Touch</h1>
-          <p className="mt-6 max-w-2xl mx-auto text-lg text-(--text-secondary)">
+      <section className="relative overflow-hidden py-16 sm:py-24" aria-label="Contact hero">
+        <Reveal className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
+          <p className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-primary-400">
+            ~/contact
+          </p>
+          <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Get in Touch</h1>
+          <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-primary-500" />
+          <p className="mt-6 max-w-2xl mx-auto text-lg text-slate-300">
             Have a question about our services, pricing, or your account? We&apos;re here to help.
             Send us a message and we&apos;ll get back to you within one business day.
           </p>
-        </div>
+        </Reveal>
       </section>
 
       {/* Main content */}
-      <section className="py-16 sm:py-24">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden py-16 sm:py-24 pb-0 sm:pb-0">
+        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-3">
 
             {/* Contact details sidebar */}
-            <div className="lg:col-span-1 space-y-6">
+            <Reveal className="lg:col-span-1 space-y-6">
               <div>
                 <h2 className="text-xl font-semibold">Contact Details</h2>
                 <p className="mt-1 text-sm text-(--text-secondary)">
@@ -128,20 +138,38 @@ export default function ContactPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                 </svg>
               </a>
-            </div>
+            </Reveal>
 
             {/* Contact form */}
-            <div className="lg:col-span-2">
+            <Reveal delayMs={80} className="lg:col-span-2">
               <div className="rounded-2xl border border-(--border-color) bg-(--bg-primary) p-6 sm:p-8">
                 <h2 className="text-xl font-semibold mb-6">Send a Message</h2>
                 <Suspense>
                   <ContactForm />
                 </Suspense>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
-    </>
+      {/* Google Maps embed */}
+      <section className="relative overflow-hidden py-16 sm:py-24" aria-label="Our location">
+        <Reveal className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-semibold mb-6">Find Us</h2>
+          <div className="rounded-2xl overflow-hidden border border-(--border-color) h-72 sm:h-96">
+            <iframe
+              src="https://maps.google.com/maps?q=Kuils+River,+Western+Cape,+South+Africa&t=&z=13&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen={false}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="IT-Guru Online location — Kuils River, Western Cape"
+            />
+          </div>
+        </Reveal>
+      </section>
+    </div>
   );
 }

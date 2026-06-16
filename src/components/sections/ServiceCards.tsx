@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTheme } from "@/components/providers/ThemeProvider";
+import Image from "next/image";
 
-const services: { title: string; description: string }[] = [
+const services = [
   {
     title: "Remote / Online Support",
     description:
@@ -36,206 +36,421 @@ const services: { title: string; description: string }[] = [
   },
 ];
 
-const SLIDE_MS = 580;     // wait for card slide-in transition
-const TYPE_SPEED_MS = 48; // ms per character — deliberate, readable pace
-const CARD_GAP_MS = 200;  // pause between cards
+const CMD = "run --scan services --verbose";
+const PROMPT_SPEED = 52;
+const SCAN_SPEED = 20;
+const SVC_GAP = 200;
+
+type SvcState = "queued" | "scanning" | "done";
 
 export function ServiceCards() {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
+  const isDark = true;
 
-  // visible[i] = true once card i has slid in
-  const [visible, setVisible] = useState<boolean[]>(
-    () => Array(services.length).fill(false),
+  const [cmdLen, setCmdLen] = useState(0);
+  const [cmdDone, setCmdDone] = useState(false);
+  const [svcStates, setSvcStates] = useState<SvcState[]>(() =>
+    services.map(() => "queued"),
   );
-  // typedLen[i] = how many characters have been revealed for card i
-  const [typedLen, setTypedLen] = useState<number[]>(
-    () => Array(services.length).fill(0),
+  const [typedDescs, setTypedDescs] = useState<number[]>(() =>
+    services.map(() => 0),
   );
-  // activeCard = which card is currently typing (-1 = none)
-  const [activeCard, setActiveCard] = useState(-1);
+  const [pct, setPct] = useState(0);
+  const [done, setDone] = useState(false);
 
   const sectionRef = useRef<HTMLElement>(null);
   const triggered = useRef(false);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
+  function push(fn: () => void, ms: number) {
+    timers.current.push(setTimeout(fn, ms));
+  }
+
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
 
-    function typeCard(cardIdx: number, charIdx: number, onDone: () => void) {
-      // Write a single character — functional update avoids stale closure
-      setTypedLen((prev) => {
-        const next = [...prev];
-        next[cardIdx] = charIdx + 1;
-        return next;
-      });
-      if (charIdx + 1 < services[cardIdx].description.length) {
-        const t = setTimeout(
-          () => typeCard(cardIdx, charIdx + 1, onDone),
-          TYPE_SPEED_MS,
-        );
-        timers.current.push(t);
-      } else {
-        setActiveCard(-1);
-        onDone();
-      }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setCmdLen(CMD.length);
+      setCmdDone(true);
+      setSvcStates(services.map(() => "done"));
+      setTypedDescs(services.map((s) => s.description.length));
+      setPct(100);
+      setDone(true);
+      return;
     }
 
-    function runCard(i: number) {
-      if (i >= services.length) return;
-      // Make card visible (slide in)
-      setVisible((prev) => {
-        const next = [...prev];
-        next[i] = true;
-        return next;
-      });
-      // After slide, start typing
-      const t = setTimeout(() => {
-        setActiveCard(i);
-        typeCard(i, 0, () => {
-          const gap = setTimeout(() => runCard(i + 1), CARD_GAP_MS);
-          timers.current.push(gap);
-        });
-      }, SLIDE_MS);
-      timers.current.push(t);
-    }
-
-    const observer = new IntersectionObserver(
+    const obs = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting || triggered.current) return;
         triggered.current = true;
-        runCard(0);
+        let ci = 0;
+        const typeCmd = () => {
+          setCmdLen(++ci);
+          if (ci < CMD.length) push(typeCmd, PROMPT_SPEED);
+          else { setCmdDone(true); push(() => scanSvc(0), 500); }
+        };
+        push(typeCmd, 350);
       },
-      { threshold: 0.12 },
+      { threshold: 0.1 },
     );
 
-    observer.observe(el);
+    function scanSvc(i: number) {
+      if (i >= services.length) {
+        setPct(100);
+        push(() => setDone(true), 400);
+        return;
+      }
+      setSvcStates((prev) => { const n = [...prev]; n[i] = "scanning"; return n; });
+      setPct(Math.round((i / services.length) * 100));
+
+      let dc = 0;
+      const typeDesc = () => {
+        setTypedDescs((prev) => { const n = [...prev]; n[i] = dc + 1; return n; });
+        if (dc + 1 < services[i].description.length) {
+          dc++;
+          push(typeDesc, SCAN_SPEED);
+        } else {
+          setSvcStates((prev) => { const n = [...prev]; n[i] = "done"; return n; });
+          setPct(Math.round(((i + 1) / services.length) * 100));
+          push(() => scanSvc(i + 1), SVC_GAP);
+        }
+      };
+      push(typeDesc, 80);
+    }
+
+    obs.observe(el);
     return () => {
-      observer.disconnect();
+      obs.disconnect();
       timers.current.forEach(clearTimeout);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // ── Terminal colour palette ──────────────────────────────────────────────────
+  const tc = isDark
+    ? {
+        wrap:       "0 25px 50px -12px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.05)",
+        titleBar:   "#1c1c1e",
+        titleText:  "#8e8e93",
+        body:       "#0d1117",
+        panelBdr:   "#30363d",
+        statCard:   "#161b22",
+        progressBg: "#21262d",
+        promptIcon: "#34d399",
+        promptName: "#58a6ff",
+        promptDim:  "#8b949e",
+        promptText: "#e6edf3",
+        queued:     "#484f58",
+        scanTitle:  "#fef3c7",
+        doneTitle:  "#e6edf3",
+        desc:       "#8b949e",
+        labelDim:   "#8b949e",
+        scanBadge:  "#f59e0b",
+        doneBadge:  "#10b981",
+        scanIcon:   "#fbbf24",
+        doneIcon:   "#34d399",
+        cursorDesc: "#fbbf24",
+      }
+    : {
+        wrap:       "0 15px 40px -8px rgba(30,64,175,0.18), 0 0 0 1px rgba(30,64,175,0.12)",
+        titleBar:   "#1e3a5f",   // deep navy title bar — clearly a terminal
+        titleText:  "#93b4d0",
+        body:       "#f0f7ff",   // very light blue body — matches page tone
+        panelBdr:   "#c3d9ef",
+        statCard:   "#dbeafe",   // secondary-100
+        progressBg: "#bfdbfe",
+        promptIcon: "#0d9488",   // teal
+        promptName: "#1d4ed8",   // secondary-700
+        promptDim:  "#64748b",
+        promptText: "#0f172a",
+        queued:     "#94a3b8",
+        scanTitle:  "#78350f",   // amber-900 — legible on light bg
+        doneTitle:  "#0f172a",
+        desc:       "#475569",
+        labelDim:   "#64748b",
+        scanBadge:  "#b45309",   // amber-700
+        doneBadge:  "#047857",   // emerald-700
+        scanIcon:   "#d97706",
+        doneIcon:   "#059669",
+        cursorDesc: "#d97706",
+      };
 
   return (
     <section
       ref={sectionRef}
-      className="relative py-16 sm:py-24 overflow-hidden bg-(--bg-secondary)"
+      className="relative pt-6 pb-8 sm:pt-8 sm:pb-12 overflow-hidden"
     >
-      {/* Dark-mode-only: metallic gradient base */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 hidden dark:block"
-        style={{
-          background:
-            "linear-gradient(160deg, #0d1117 0%, #111827 30%, #0f1f1a 60%, #0a1628 100%)",
-        }}
-      />
-      {/* Dark-mode-only: teal/blue sheen */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 hidden dark:block"
-        style={{
-          background:
-            "linear-gradient(105deg, rgba(13,148,136,0.06) 0%, transparent 40%, rgba(30,58,138,0.05) 70%, transparent 100%)",
-        }}
-      />
-      {/* Dark-mode-only: top edge rim */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px hidden dark:block"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent, rgba(13,148,136,0.4), transparent)",
-        }}
-      />
-      {/* Light-mode-only: subtle top rule */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-(--border-color) dark:hidden"
-      />
 
       <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary-600 dark:text-primary-400 mb-3">
-            IT-Guru.Online
-          </p>
-          <h2 className="text-3xl font-bold tracking-tight text-(--text-primary) sm:text-4xl">
+        {/* Logo */}
+        <div className="flex justify-center mb-8">
+          <Image
+            src="/FullLogo_Transparent.png"
+            alt="IT-Guru Online"
+            width={360}
+            height={120}
+            className="h-24 sm:h-32 lg:h-40 w-auto saturate-200 contrast-125"
+          />
+        </div>
+
+        {/* Section header */}
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             How Can We Help?
           </h2>
-          <p className="mt-4 text-lg text-(--text-secondary)">
-            Retain your core focus — our IT support frees up your time and
-            resources.
+          <p className="mt-4 text-lg text-slate-300">
+            Retain your core focus — our IT support frees up your time and resources.
           </p>
         </div>
 
-        {/* Cards grid — ALL cards always in DOM, opacity/transform only */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, i) => {
-            const isVisible = visible[i];
-            const typed = service.description.slice(0, typedLen[i]);
-            const isTyping = activeCard === i;
-
-            return (
-              <div
-                key={service.title}
-                className="relative rounded-2xl p-6"
-                style={{
-                  opacity: isVisible ? 1 : 0,
-                  transform: isVisible ? "translateX(0)" : "translateX(72px)",
-                  transition:
-                    "opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)",
-                  ...(isDark
-                    ? {
-                        /* Dark: liquid glass surface */
-                        background:
-                          "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 50%, rgba(13,148,136,0.04) 100%)",
-                        backdropFilter: "blur(16px)",
-                        WebkitBackdropFilter: "blur(16px)",
-                        border: "1px solid rgba(255,255,255,0.10)",
-                        borderTop: "1px solid rgba(255,255,255,0.18)",
-                        borderLeft: "1px solid rgba(255,255,255,0.12)",
-                        boxShadow:
-                          "inset 0 1px 0 rgba(255,255,255,0.10), inset 0 -1px 0 rgba(0,0,0,0.15), 0 4px 24px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.2)",
-                      }
-                    : {
-                        /* Light: clean card */
-                        background: "var(--bg-primary)",
-                        border: "1px solid var(--border-color)",
-                        boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
-                      }),
-                }}
+        {/* ═══ Terminal window ═══ */}
+        <div
+          className="rounded-2xl overflow-hidden"
+          style={{ boxShadow: tc.wrap }}
+        >
+          {/* Title bar */}
+          <div
+            className="flex items-center gap-2 px-4 py-3 select-none"
+            style={{ backgroundColor: tc.titleBar }}
+          >
+            <span className="h-3 w-3 rounded-full bg-[#ff5f57]" aria-hidden="true" />
+            <span className="h-3 w-3 rounded-full bg-[#febc2e]" aria-hidden="true" />
+            <span className="h-3 w-3 rounded-full bg-[#28c840]" aria-hidden="true" />
+            <span
+              className="ml-3 flex-1 text-center text-xs font-mono tracking-wide"
+              style={{ color: tc.titleText }}
+            >
+              IT-Guru System Scanner — v2.1.0
+            </span>
+            <div className="flex items-center gap-1.5">
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${
+                  done ? "bg-emerald-400" : "bg-amber-400 animate-pulse"
+                }`}
+              />
+              <span
+                className={`text-[10px] font-mono font-bold tracking-widest ${
+                  done ? "text-emerald-400" : "text-amber-400"
+                }`}
               >
-                {/* Card number badge */}
-                <span
-                  className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-xs font-bold text-primary-600 dark:text-primary-400 mb-4 select-none"
-                  style={{
-                    background: isDark ? "rgba(13,148,136,0.12)" : "rgba(13,148,136,0.08)",
-                    border: isDark
-                      ? "1px solid rgba(13,148,136,0.22)"
-                      : "1px solid rgba(13,148,136,0.18)",
-                  }}
-                >
-                  {String(i + 1).padStart(2, "0")}
+                {done ? "COMPLETE" : "LIVE"}
+              </span>
+            </div>
+          </div>
+
+          {/* Body — two panels */}
+          <div
+            className="grid lg:grid-cols-2"
+            style={{ backgroundColor: tc.body }}
+          >
+            {/* ── Left: CLI output ── */}
+            <div
+              className="p-5 sm:p-7 border-b lg:border-b-0 lg:border-r"
+              style={{ borderColor: tc.panelBdr }}
+            >
+              {/* Shell prompt */}
+              <div className="flex items-center gap-1.5 text-sm font-mono flex-wrap">
+                <span style={{ color: tc.promptIcon }} className="select-none">⬡</span>
+                <span style={{ color: tc.promptName }}>it-guru</span>
+                <span style={{ color: tc.promptDim }}>~$</span>
+                <span className="ml-1 break-all" style={{ color: tc.promptText }}>
+                  {CMD.slice(0, cmdLen)}
                 </span>
-
-                <h3 className="text-base font-semibold text-(--text-primary) leading-snug">
-                  {service.title}
-                </h3>
-
-                {/* Cursor always in DOM — visibility toggled, never mounted/unmounted */}
-                <p className="mt-2 text-sm text-(--text-secondary) leading-relaxed min-h-18">
-                  {typed}
+                {!cmdDone && (
                   <span
-                    aria-hidden="true"
-                    style={{ visibility: isTyping ? "visible" : "hidden" }}
-                    className="inline-block w-0.5 h-[0.85em] bg-primary-400 align-middle ml-px animate-pulse"
+                    className="inline-block w-1.75 h-[1em] ml-0.5 align-middle"
+                    style={{
+                      backgroundColor: tc.promptIcon,
+                      animation: "blink 1s step-end infinite",
+                    }}
                   />
-                </p>
+                )}
               </div>
-            );
-          })}
+
+              {/* Service scan output */}
+              {cmdDone && (
+                <div className="mt-5 space-y-4 font-mono text-sm">
+                  {services.map((svc, i) => {
+                    const st = svcStates[i];
+                    return (
+                      <div key={svc.title}>
+                        <div className="flex items-start gap-2.5">
+                          <span
+                            className="shrink-0 text-xs tabular-nums transition-colors duration-300"
+                            style={{
+                              color:
+                                st === "queued"
+                                  ? tc.queued
+                                  : st === "scanning"
+                                  ? tc.scanIcon
+                                  : tc.doneIcon,
+                            }}
+                          >
+                            {st === "queued" ? "[ ]" : st === "scanning" ? "[~]" : "[✓]"}
+                          </span>
+                          <div className="flex-1 min-w-0">
+                            <div
+                              className="transition-colors duration-300 leading-snug"
+                              style={{
+                                color:
+                                  st === "queued"
+                                    ? tc.queued
+                                    : st === "scanning"
+                                    ? tc.scanTitle
+                                    : tc.doneTitle,
+                              }}
+                            >
+                              {st !== "queued" && (
+                                <span
+                                  className="text-[9px] font-bold tracking-[0.15em] mr-2"
+                                  style={{
+                                    color:
+                                      st === "scanning" ? tc.scanBadge : tc.doneBadge,
+                                  }}
+                                >
+                                  {st === "scanning" ? "SCANNING" : "DETECTED"}
+                                </span>
+                              )}
+                              <span className={st !== "queued" ? "font-semibold" : ""}>
+                                {svc.title}
+                              </span>
+                            </div>
+                            {typedDescs[i] > 0 && (
+                              <p
+                                className="text-xs mt-1 leading-relaxed"
+                                style={{ color: tc.desc }}
+                              >
+                                {svc.description.slice(0, typedDescs[i])}
+                                {st === "scanning" && (
+                                  <span
+                                    className="inline-block w-1.25 h-[0.85em] ml-0.5 align-middle"
+                                    style={{
+                                      backgroundColor: tc.cursorDesc,
+                                      animation: "blink 0.7s step-end infinite",
+                                    }}
+                                  />
+                                )}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {/* Progress bar */}
+                  {svcStates[0] !== "queued" && (
+                    <div className="pt-4" style={{ borderTop: `1px solid ${tc.panelBdr}` }}>
+                      <div
+                        className="flex justify-between text-[10px] font-mono mb-1.5"
+                        style={{ color: tc.labelDim }}
+                      >
+                        <span>
+                          {done
+                            ? "Scan complete — 6/6 services detected"
+                            : "Scanning infrastructure..."}
+                        </span>
+                        <span
+                          className={done ? "text-emerald-500" : "text-amber-500"}
+                        >
+                          {pct}%
+                        </span>
+                      </div>
+                      <div
+                        className="h-1.5 rounded-full overflow-hidden"
+                        style={{ backgroundColor: tc.progressBg }}
+                      >
+                        <div
+                          className="h-full rounded-full transition-all duration-500"
+                          style={{
+                            width: `${pct}%`,
+                            background: done
+                              ? "linear-gradient(90deg, #10b981, #14b8a6)"
+                              : "linear-gradient(90deg, #f59e0b, #fbbf24)",
+                          }}
+                        />
+                      </div>
+                      {done && (
+                        <p
+                          className="mt-2 text-[10px] font-mono"
+                          style={{ color: tc.doneBadge }}
+                        >
+                          ✓ All systems operational — no anomalies detected.
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* ── Right: Video (top) + Stats (bottom) ── */}
+            <div className="flex flex-col">
+              {/* Video */}
+              <div className="relative overflow-hidden" style={{ minHeight: "220px", flex: "1 1 0" }}>
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  aria-hidden="true"
+                  className="absolute inset-0 h-full w-full object-cover"
+                >
+                  <source src="/it_guru_video_2.mp4" type="video/mp4" />
+                </video>
+              </div>
+
+              {/* Stats counters */}
+              <div
+                className="p-5 sm:p-6 border-t"
+                style={{ borderColor: tc.panelBdr, backgroundColor: tc.body }}
+              >
+                <div
+                  className="text-[9px] font-mono uppercase tracking-widest mb-3"
+                  style={{ color: tc.labelDim }}
+                >
+                  Live Infrastructure Metrics
+                </div>
+                <div className="grid grid-cols-2 gap-2 sm:gap-3 font-mono">
+                  {[
+                    { label: "UPTIME",     value: "99.9%"   },
+                    { label: "RESPONSE",   value: "< 4 hrs" },
+                    { label: "CLIENTS",    value: "20+"     },
+                    { label: "EXPERIENCE", value: "10+ yrs" },
+                  ].map(({ label, value }) => (
+                    <div
+                      key={label}
+                      className="rounded-xl border px-3 py-3"
+                      style={{ backgroundColor: tc.statCard, borderColor: tc.panelBdr }}
+                    >
+                      <div
+                        className="text-[8px] mb-1 tracking-widest uppercase"
+                        style={{ color: tc.labelDim }}
+                      >
+                        {label}
+                      </div>
+                      <div
+                        className="text-xl font-bold"
+                        style={{ color: isDark ? "#67e8f9" : "#0e7490" }}
+                      >
+                        {value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center gap-2 mt-3">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span
+                    className="text-[10px] font-mono tracking-widest uppercase"
+                    style={{ color: tc.doneBadge }}
+                  >
+                    All systems operational
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </section>

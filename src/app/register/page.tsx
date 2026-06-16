@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Suspense } from "react";
 import { RegistrationWizard } from "@/components/forms/RegistrationWizard";
+import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "Client Registration",
@@ -10,36 +12,44 @@ export const metadata: Metadata = {
 
 export default function RegisterPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg-secondary)] py-12">
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-        {/* Page header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold tracking-tight text-[var(--text-primary)]">
-            Client Registration
-          </h1>
-          <p className="mt-2 text-[var(--text-secondary)]">
+    <div className="relative overflow-hidden min-h-screen">
+      <div className="fixed inset-0 -z-10">
+        <Image src="/bg-image.jpg" alt="" fill className="object-cover object-center" aria-hidden="true" priority />
+      </div>
+
+      {/* Hero banner */}
+      <section className="relative overflow-hidden py-14 sm:py-20" aria-label="Registration hero">
+        <Reveal className="relative mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 text-center">
+          <p className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-primary-400">~/register</p>
+          <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Client Registration</h1>
+          <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-primary-500" />
+          <p className="mt-4 text-slate-300">
             Complete the form below to apply for IT-Guru Online services.
             We'll be in touch within 1 business day.
           </p>
-        </div>
+        </Reveal>
+      </section>
 
-        {/* Form card */}
-        <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-primary)] p-6 sm:p-8 shadow-sm">
+      {/* Form content */}
+      <div className="relative mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
+        <Reveal delayMs={80} className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-primary)] p-6 sm:p-8 shadow-sm">
           <Suspense fallback={<div className="h-64 flex items-center justify-center text-[var(--text-secondary)]">Loading form…</div>}>
             <RegistrationWizard />
           </Suspense>
-        </div>
+        </Reveal>
 
         {/* POPIA notice */}
-        <p className="mt-6 text-center text-xs text-[var(--text-secondary)]">
-          Your personal information is protected under the{" "}
-          <strong>Protection of Personal Information Act (POPIA)</strong>.
-          We will never share your details with third parties without your consent.
-          View our{" "}
-          <a href="/privacy" className="text-primary-700 underline hover:no-underline">
-            Privacy Policy
-          </a>.
-        </p>
+        <Reveal delayMs={160} className="mt-6 text-center text-xs text-[var(--text-secondary)]">
+          <p>
+            Your personal information is protected under the{" "}
+            <strong>Protection of Personal Information Act (POPIA)</strong>.
+            We will never share your details with third parties without your consent.
+            View our{" "}
+            <a href="/privacy" className="text-primary-700 underline hover:no-underline">
+              Privacy Policy
+            </a>.
+          </p>
+        </Reveal>
       </div>
     </div>
   );

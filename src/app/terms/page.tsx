@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -11,15 +13,28 @@ export default function TermsPage() {
   const updated = "23 March 2026";
 
   return (
-    <div className="bg-[var(--bg-secondary)] min-h-screen py-16 sm:py-24">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-primary)] p-8 sm:p-12">
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Terms of Service</h1>
-          <p className="mt-2 text-sm text-[var(--text-secondary)]">Last updated: {updated}</p>
+    <div className="relative overflow-hidden min-h-screen">
+      <div className="fixed inset-0 -z-10">
+        <Image src="/bg-image.jpg" alt="" fill className="object-cover object-center" aria-hidden="true" priority />
+      </div>
 
-          <div className="mt-8 prose prose-sm max-w-none text-[var(--text-secondary)] space-y-6">
+      {/* Hero banner */}
+      <section className="relative overflow-hidden py-14 sm:py-20" aria-label="Terms of service hero">
+        <Reveal className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+          <p className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-primary-400">~/legal</p>
+          <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Terms of Service</h1>
+          <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-primary-500" />
+        </Reveal>
+      </section>
+      <div className="relative mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="rounded-2xl border border-(--border-color) bg-(--bg-primary) p-8 sm:p-12">
+          <Reveal>
+            <p className="text-sm text-(--text-secondary)">Last updated: {updated}</p>
+          </Reveal>
+
+          <Reveal delayMs={80} className="mt-8 prose prose-sm max-w-none text-(--text-secondary) space-y-6">
             <section>
-              <h2 className="text-lg font-semibold text-[var(--text-primary)] mt-0">1. Acceptance of Terms</h2>
+              <h2 className="text-lg font-semibold text-(--text-primary) mt-0">1. Acceptance of Terms</h2>
               <p>
                 By accessing or using the IT-Guru Online website and services, you agree to be bound by these
                 Terms of Service. If you do not agree, please do not use our services.
@@ -27,7 +42,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold text-[var(--text-primary)]">2. Services</h2>
+              <h2 className="text-lg font-semibold text-(--text-primary)">2. Services</h2>
               <p>
                 IT-Guru Online provides IT support, domain registration, web hosting, hardware procurement, and
                 related services. Specific terms for individual services are communicated at the point of purchase
@@ -36,7 +51,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold text-[var(--text-primary)]">3. User Responsibilities</h2>
+              <h2 className="text-lg font-semibold text-(--text-primary)">3. User Responsibilities</h2>
               <p>You agree to:</p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Provide accurate and complete registration information</li>
@@ -48,7 +63,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold text-[var(--text-primary)]">4. Payment & Billing</h2>
+              <h2 className="text-lg font-semibold text-(--text-primary)">4. Payment & Billing</h2>
               <p>
                 All prices are quoted in South African Rand (ZAR) and are inclusive of VAT unless stated otherwise.
                 Invoices are due on receipt unless a payment term has been agreed in writing. We reserve the right
@@ -57,7 +72,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold text-[var(--text-primary)]">5. Domain Names</h2>
+              <h2 className="text-lg font-semibold text-(--text-primary)">5. Domain Names</h2>
               <p>
                 Domain registration is subject to the rules and policies of the relevant registrar (e.g. ZACR for
                 .co.za domains). IT-Guru Online acts as a reseller and cannot guarantee availability. Domains
@@ -66,7 +81,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold text-[var(--text-primary)]">6. Limitation of Liability</h2>
+              <h2 className="text-lg font-semibold text-(--text-primary)">6. Limitation of Liability</h2>
               <p>
                 IT-Guru Online shall not be liable for any indirect, incidental, or consequential damages arising
                 from the use of our services. Our total liability in any matter shall not exceed the amount paid
@@ -75,7 +90,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold text-[var(--text-primary)]">7. Intellectual Property</h2>
+              <h2 className="text-lg font-semibold text-(--text-primary)">7. Intellectual Property</h2>
               <p>
                 All content on this website, including text, graphics, logos, and software, is the property of
                 IT-Guru Online or its content suppliers and is protected by applicable intellectual property laws.
@@ -83,7 +98,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold text-[var(--text-primary)]">8. Termination</h2>
+              <h2 className="text-lg font-semibold text-(--text-primary)">8. Termination</h2>
               <p>
                 Either party may terminate a service agreement with 30 days&apos; written notice. We reserve the
                 right to terminate immediately in cases of material breach of these terms.
@@ -91,7 +106,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold text-[var(--text-primary)]">9. Governing Law</h2>
+              <h2 className="text-lg font-semibold text-(--text-primary)">9. Governing Law</h2>
               <p>
                 These terms are governed by the laws of the Republic of South Africa. Any disputes shall be
                 subject to the jurisdiction of the South African courts.
@@ -99,13 +114,13 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-lg font-semibold text-[var(--text-primary)]">10. Contact</h2>
+              <h2 className="text-lg font-semibold text-(--text-primary)">10. Contact</h2>
               <p>
                 For questions about these terms, please contact us:
               </p>
               <ul className="list-none pl-0 space-y-1 mt-2">
                 <li>
-                  <strong className="text-[var(--text-primary)]">IT-Guru Online</strong>
+                  <strong className="text-(--text-primary)">IT-Guru Online</strong>
                 </li>
                 <li>Kuils River, Western Cape, South Africa</li>
                 <li>
@@ -122,13 +137,13 @@ export default function TermsPage() {
                 </li>
               </ul>
             </section>
-          </div>
+          </Reveal>
 
-          <div className="mt-10 pt-6 border-t border-[var(--border-color)]">
+          <Reveal delayMs={160} className="mt-10 pt-6 border-t border-(--border-color)">
             <Link href="/" className="text-sm text-primary-700 hover:underline">
               &larr; Back to Home
             </Link>
-          </div>
+          </Reveal>
         </div>
       </div>
     </div>

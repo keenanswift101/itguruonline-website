@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { FloatingActions } from "@/components/ui/FloatingActions";
+import { QuestionTab } from "@/components/ui/QuestionTab";
+import { DomainPromo } from "@/components/ui/DomainPromo";
+import { CookieConsent } from "@/components/ui/CookieConsent";
 import "./globals.css";
 
 const inter = Inter({
@@ -33,6 +36,11 @@ export const metadata: Metadata = {
   authors: [{ name: "IT-Guru Online" }],
   creator: "Swift Designz",
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? "https://it-guru.online"),
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_ZA",
@@ -41,12 +49,19 @@ export const metadata: Metadata = {
     title: "IT-Guru Online | IT Solutions & Support — Kuils River",
     description:
       "Professional IT support, domain registration, web hosting, and network solutions in Kuils River, South Africa.",
+    images: [
+      {
+        url: "/favicon.png",
+        alt: "IT-Guru Online",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "IT-Guru Online | IT Solutions & Support — Kuils River",
     description:
       "Professional IT support, domain registration, web hosting, and network solutions in South Africa.",
+    images: ["/favicon.png"],
   },
   robots: {
     index: true,
@@ -61,23 +76,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <head>
-        {/* Prevent flash of wrong theme: runs synchronously before paint */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}else if(window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();`,
-          }}
-        />
-      </head>
+    <html lang="en" className={inter.variable} data-theme="dark">
       <body className="min-h-screen flex flex-col antialiased overflow-x-hidden">
-        <ThemeProvider>
-          <div className="flex min-h-screen flex-col overflow-x-hidden">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-        </ThemeProvider>
+        <div className="flex min-h-screen flex-col overflow-x-hidden">
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
+        <FloatingActions />
+        <QuestionTab />
+        <DomainPromo />
+        <CookieConsent />
       </body>
     </html>
   );

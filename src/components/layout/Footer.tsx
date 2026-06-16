@@ -3,60 +3,84 @@ import Image from "next/image";
 
 const footerLinks = {
   services: [
-    { href: "/services#remote-support", label: "Remote Support" },
-    { href: "/services#network", label: "Network Solutions" },
-    { href: "/services#hardware", label: "Hardware Procurement" },
-    { href: "/services#hosting", label: "Web Hosting" },
-    { href: "/domain-checker", label: "Domain Registration" },
+    { href: "/services#remote-support",      label: "Remote Support" },
+    { href: "/services#network-services",    label: "Network Solutions" },
+    { href: "/services#hardware-procurement",label: "Hardware Procurement" },
+    { href: "/services#web-hosting",         label: "Web Hosting" },
+    { href: "/domain-checker",               label: "Domain Registration" },
   ],
   company: [
-    { href: "/about", label: "About Us" },
-    { href: "/services", label: "Our Services" },
+    { href: "/about",          label: "About Us" },
+    { href: "/services",       label: "Our Services" },
     { href: "/domain-checker", label: "Domain Checker" },
-    { href: "/contact", label: "Contact" },
+    { href: "/contact",        label: "Contact" },
   ],
   legal: [
     { href: "/privacy", label: "Privacy Policy" },
-    { href: "/terms", label: "Terms of Service" },
+    { href: "/terms",   label: "Terms of Service" },
   ],
 };
 
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--border-color)] bg-[var(--bg-secondary)]" aria-label="Site footer">
-      <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="relative overflow-hidden" aria-label="Site footer">
+      {/* Background image */}
+      <Image
+        src="/footer_bg.png"
+        alt=""
+        fill
+        sizes="100vw"
+        className="object-cover object-center"
+        aria-hidden="true"
+      />
+
+      {/* Dark overlay so text is always legible */}
+      <div
+        className="absolute inset-0"
+        aria-hidden="true"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(10,24,32,0.60) 0%, rgba(8,18,28,0.72) 100%)",
+        }}
+      />
+
+      {/* Top border accent */}
+      <div
+        className="absolute inset-x-0 top-0 h-px"
+        aria-hidden="true"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent, rgba(20,184,166,0.6) 40%, rgba(59,130,246,0.5) 60%, transparent)",
+        }}
+      />
+
+      <div className="relative mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
           {/* Brand */}
           <div>
             <Link href="/" className="inline-block">
-              <Image
-                src="/FullLogo_Transparentwhite.png"
-                alt="IT-Guru Online"
-                width={300}
-                height={100}
-                className="h-24 w-auto saturate-200 contrast-125 dark:hidden"
-              />
+              {/* Always use the white logo — footer bg is always dark */}
               <Image
                 src="/FullLogo_Transparent.png"
                 alt="IT-Guru Online"
                 width={300}
                 height={100}
-                className="h-24 w-auto saturate-200 contrast-125 hidden dark:block"
+                className="h-24 w-auto saturate-200 contrast-125"
               />
             </Link>
-            <p className="mt-3 text-sm text-[var(--text-secondary)]">
+            <p className="mt-3 text-sm text-slate-300">
               Professional IT support, domain registration, and web hosting services based in
               Kuils River, South Africa.
             </p>
-            <div className="mt-4 text-sm text-[var(--text-secondary)]">
+            <div className="mt-4 text-sm text-slate-300">
               <p>Office Hours: 08:30 – 17:00 Mon – Fri</p>
               <p className="mt-1">
-                <a href="tel:+27729627608" className="hover:text-primary-700 transition-colors">
+                <a href="tel:+27729627608" className="hover:text-primary-300 transition-colors">
                   +27 72 962 7608
                 </a>
               </p>
               <p>
-                <a href="mailto:support@it-guru.online" className="hover:text-primary-700 transition-colors">
+                <a href="mailto:support@it-guru.online" className="hover:text-primary-300 transition-colors">
                   support@it-guru.online
                 </a>
               </p>
@@ -64,14 +88,14 @@ export function Footer() {
           </div>
 
           {/* Services */}
-          <div>
-            <h3 className="text-sm font-semibold text-[var(--text-primary)]">Services</h3>
+          <div className="lg:pt-28">
+            <h3 className="text-sm font-semibold text-white">Services</h3>
             <ul className="mt-3 space-y-2">
               {footerLinks.services.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--text-secondary)] hover:text-primary-700 transition-colors"
+                    className="text-sm text-slate-300 hover:text-primary-300 transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -81,14 +105,14 @@ export function Footer() {
           </div>
 
           {/* Company */}
-          <div>
-            <h3 className="text-sm font-semibold text-[var(--text-primary)]">Company</h3>
+          <div className="lg:pt-28">
+            <h3 className="text-sm font-semibold text-white">Company</h3>
             <ul className="mt-3 space-y-2">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--text-secondary)] hover:text-primary-700 transition-colors"
+                    className="text-sm text-slate-300 hover:text-primary-300 transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -98,14 +122,14 @@ export function Footer() {
           </div>
 
           {/* Legal */}
-          <div>
-            <h3 className="text-sm font-semibold text-[var(--text-primary)]">Legal</h3>
+          <div className="lg:pt-28">
+            <h3 className="text-sm font-semibold text-white">Legal</h3>
             <ul className="mt-3 space-y-2">
               {footerLinks.legal.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--text-secondary)] hover:text-primary-700 transition-colors"
+                    className="text-sm text-slate-300 hover:text-primary-300 transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -116,17 +140,17 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 border-t border-[var(--border-color)] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-[var(--text-secondary)]">
+        <div className="mt-12 border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-slate-400">
             &copy; {new Date().getFullYear()} IT-Guru Online. All rights reserved.
           </p>
-          <p className="text-sm text-[var(--text-secondary)]">
+          <p className="text-sm text-slate-400">
             Designed by{" "}
             <a
               href="https://swiftdesignz.co.za"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary-700 hover:underline"
+              className="text-primary-300 hover:underline"
             >
               Swift Designz
             </a>

@@ -2,11 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { useTheme } from "@/components/providers/ThemeProvider";
-import { DomainChecker } from "@/components/forms/DomainChecker";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
-import { ProcessCarousel } from "@/components/ui/ProcessCards";
 
 const stats = [
   {
@@ -16,6 +12,7 @@ const stats = [
     statusDot: true,
     statusText: "Since 2014",
     statusColor: "#14b8a6",
+    neon: "#2dd4bf",
     accent: "rgba(13,148,136,0.55)",
     icon: (
       <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth={1.5}>
@@ -31,6 +28,7 @@ const stats = [
     statusDot: false,
     statusText: "Businesses Served",
     statusColor: "#64748b",
+    neon: "#38bdf8",
     accent: null,
     icon: (
       <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth={1.5}>
@@ -48,6 +46,7 @@ const stats = [
     statusDot: true,
     statusText: "Guaranteed SLA",
     statusColor: "#22c55e",
+    neon: "#4ade80",
     accent: "rgba(34,197,94,0.45)",
     icon: (
       <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth={1.5}>
@@ -63,6 +62,7 @@ const stats = [
     statusDot: true,
     statusText: "Always Available",
     statusColor: "#14b8a6",
+    neon: "#a78bfa",
     accent: null,
     icon: (
       <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth={1.5}>
@@ -75,212 +75,130 @@ const stats = [
   },
 ];
 
-const taglines = [
-  "That Simply Work.",
-  "You Can Trust.",
-  "Built to Last.",
-  "Around the Clock.",
-  "Designed to Scale.",
-];
-
-function RotatingTagline() {
-  const [index, setIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    const t = setInterval(() => {
-      // Fade out, swap text, fade in — no DOM node destruction
-      setVisible(false);
-      setTimeout(() => {
-        setIndex((i) => (i + 1) % taglines.length);
-        setVisible(true);
-      }, 280);
-    }, 3500);
-    return () => clearInterval(t);
-  }, []);
-
-  return (
-    <span className="block min-h-[2.16em] lg:min-h-[1.12em] overflow-hidden">
-      <span
-        className="block bg-linear-to-r from-primary-700 via-primary-600 to-primary-500 bg-clip-text text-transparent"
-        style={{
-          opacity: visible ? 1 : 0,
-          transform: visible ? "translateY(0)" : "translateY(6px)",
-          transition: "opacity 0.28s ease, transform 0.28s ease",
-        }}
-      >
-        {taglines[index]}
-      </span>
-    </span>
-  );
-}
-
 export function Hero() {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
 
   return (
-    <section className="relative overflow-hidden" aria-label="Hero">
-      {/* ── Full-bleed background image ── */}
-      <Image
-        src="/itguru-img4.png"
-        alt=""
-        fill
-        priority
-        className="object-cover object-center"
-        aria-hidden="true"
-      />
-
-      {/* ── Overlays — dark: dramatic dark wash / light: bright airy wash ── */}
-      {isDark ? (
-        <>
-          <div className="absolute inset-0 bg-linear-to-b from-gray-950/82 via-gray-950/75 to-gray-950/88" aria-hidden="true" />
-          <div className="absolute inset-0 bg-linear-to-r from-gray-950/65 via-gray-950/30 to-transparent" aria-hidden="true" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-primary-900/20 to-transparent" aria-hidden="true" />
-        </>
-      ) : (
-        <>
-          <div className="absolute inset-0 bg-linear-to-b from-white/70 via-slate-50/55 to-white/65" aria-hidden="true" />
-          <div className="absolute inset-0 bg-linear-to-r from-white/60 via-white/25 to-transparent" aria-hidden="true" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-primary-100/40 to-transparent" aria-hidden="true" />
-        </>
-      )}
+    <section className="relative overflow-hidden min-h-screen flex flex-col" aria-label="Hero">
 
       {/* ── Content ── */}
-      <div className="relative flex flex-col justify-center">
+      <div className="relative flex flex-col justify-center flex-1">
         <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20">
-          {/* ═══ Two-column split ═══ */}
+          {/* ═══ Two-column layout ═══ */}
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-            {/* ── Left: Content ── */}
+
+            {/* Left: text */}
             <div className="animate-fade-in-up">
-              <h1 className={`text-5xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+              <h1 className="text-5xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl text-white">
                 IT Solutions
-                <RotatingTagline />
+                <span
+                  className="block bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: "linear-gradient(135deg, #bfdbfe 0%, #60a5fa 30%, #2563eb 60%, #1d4ed8 80%, #1e3a8a 100%)",
+                  }}
+                >
+                  Built to Last.
+                </span>
               </h1>
 
               {/* Accent rule */}
-              <div className="mt-6 h-1 w-20 rounded-full bg-primary-500 animation-delay-100" />
+              <div className="mt-6 h-1 w-20 rounded-full animation-delay-100" style={{ background: "linear-gradient(90deg, #2563eb, #60a5fa)" }} />
 
-              <p className={`mt-6 max-w-xl text-lg leading-relaxed animate-fade-in-up animation-delay-200 ${isDark ? "text-gray-300" : "text-slate-600"}`}>
+              <p className="mt-6 max-w-xl text-lg leading-relaxed animate-fade-in-up animation-delay-200 text-slate-300">
                 Domains. Hosting. Networks. Support. — We handle the technology
                 so you can focus on growing your business.
               </p>
-
-              {/* Domain Checker */}
-              <div className="mt-8 max-w-lg animate-fade-in-up animation-delay-300">
-                <p className={`mb-3 text-sm font-semibold uppercase tracking-widest ${isDark ? "text-primary-400/70" : "text-primary-700"}`}>
-                  Find your perfect domain
-                </p>
-                <DomainChecker />
-              </div>
 
               {/* CTAs */}
               <div className="mt-8 flex flex-wrap gap-4 animate-fade-in-up animation-delay-400">
                 <Link
                   href="/services"
-                  className={`btn-metallic inline-flex h-12 items-center justify-center px-7 text-base font-bold focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 ${isDark ? "text-slate-900 focus:ring-offset-gray-900" : "text-white focus:ring-offset-white"}`}
+                  className="btn-metallic inline-flex h-9 items-center justify-center px-5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-transparent"
                 >
                   Explore Services
                 </Link>
                 <Link
                   href="/contact"
-                  className={`btn-glass inline-flex h-12 items-center justify-center px-7 text-base font-semibold focus:outline-none focus:ring-2 focus:ring-teal-400/50 focus:ring-offset-2 ${isDark ? "text-teal-300 focus:ring-offset-gray-900" : "text-primary-700 focus:ring-offset-white"}`}
+                  className="btn-glass inline-flex h-9 items-center justify-center px-5 text-sm focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-transparent"
                 >
                   Get in Touch
                 </Link>
               </div>
             </div>
 
-            {/* ── Right: Process carousel ── */}
-            <div className="flex justify-center lg:justify-end animate-fade-in-right animation-delay-200">
-              <div className="w-full max-w-sm sm:max-w-md lg:max-w-none">
-                <ProcessCarousel />
+            {/* Right: signage image card */}
+            <div className="hidden lg:block animate-fade-in-up animation-delay-200">
+              <div
+                className="overflow-hidden rounded-2xl"
+                style={{
+                  background: "#07080d",
+                  border: "1px solid rgba(255,255,255,0.10)",
+                  boxShadow: "0 25px 60px -10px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.05)",
+                }}
+              >
+                <Image
+                  src="/itgurusignage.png"
+                  alt="IT-Guru Online neon signage"
+                  width={2317}
+                  height={1408}
+                  className="w-full h-auto object-contain"
+                  priority
+                />
               </div>
             </div>
+
           </div>
         </div>
 
         {/* ── Stats strip ── */}
         <div
-          className={`relative mt-auto backdrop-blur-sm animate-fade-in-up animation-delay-500 ${isDark ? "border-t border-white/8" : "border-t border-black/8"}`}
-          style={isDark ? {
-            backgroundColor: "rgba(8,15,26,0.75)",
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          } : {
-            backgroundColor: "rgba(248,250,252,0.88)",
-            backgroundImage:
-              "linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
+          className="relative mt-auto backdrop-blur-sm animate-fade-in-up animation-delay-500"
         >
-          <div className="mx-auto flex max-w-7xl justify-center gap-3 px-4 py-5 sm:gap-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-3 py-5 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 gap-3 sm:flex sm:justify-center sm:gap-4">
             {stats.map((stat) => (
               <div
                 key={stat.label}
-                className="relative flex w-36 flex-col justify-between rounded-xl p-3.5 sm:w-44 sm:p-4"
-                style={isDark ? {
-                  background: "rgba(255,255,255,0.035)",
-                  borderTop: "1px solid rgba(255,255,255,0.08)",
-                  borderRight: "1px solid rgba(255,255,255,0.08)",
-                  borderBottom: "1px solid rgba(255,255,255,0.08)",
-                  borderLeft: stat.accent ? `2px solid ${stat.accent}` : "1px solid rgba(255,255,255,0.08)",
-                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
-                } : {
-                  background: "rgba(255,255,255,0.85)",
-                  borderTop: "1px solid rgba(0,0,0,0.08)",
-                  borderRight: "1px solid rgba(0,0,0,0.08)",
-                  borderBottom: "1px solid rgba(0,0,0,0.08)",
-                  borderLeft: stat.accent ? `2px solid ${stat.accent}` : "1px solid rgba(0,0,0,0.08)",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,1)",
-                }}
+                className="relative flex flex-col justify-between p-3.5 sm:w-44 sm:p-4"
               >
                 {/* Icon + label row */}
                 <div className="flex items-center gap-1.5 mb-2">
                   <span
                     className="shrink-0 rounded-md p-1"
-                    style={isDark ? {
-                      color: stat.accent ? stat.accent : "rgba(148,163,184,0.7)",
-                      background: stat.accent
-                        ? `${stat.accent.replace("0.55", "0.10").replace("0.45", "0.10")}`
-                        : "rgba(255,255,255,0.05)",
-                    } : {
-                      color: stat.accent ? stat.accent.replace("0.55", "0.85").replace("0.45", "0.85") : "rgba(100,116,139,0.8)",
-                      background: stat.accent
-                        ? `${stat.accent.replace("0.55", "0.08").replace("0.45", "0.08")}`
-                        : "rgba(0,0,0,0.04)",
-                    }}
+                    style={{ color: "rgba(45,212,191,0.90)", background: "rgba(13,148,136,0.15)" }}
                   >
                     {stat.icon}
                   </span>
-                  <span className={`text-[9px] font-bold uppercase tracking-[0.15em] ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+                  <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-slate-300">
                     {stat.label}
                   </span>
                 </div>
 
                 {/* Value */}
-                <div className={`text-2xl font-bold tracking-tight sm:text-3xl ${isDark ? "text-white" : "text-slate-900"}`}>
+                <div className="text-2xl font-bold tracking-tight sm:text-3xl text-white">
                   <AnimatedCounter end={stat.value} suffix={stat.suffix} />
                 </div>
+
+                {/* Neon underline */}
+                <div
+                  className="mt-2 h-0.5 w-full rounded-full"
+                  style={{
+                    background: stat.neon,
+                    boxShadow: `0 0 8px 3px ${stat.neon}80`,
+                  }}
+                />
 
                 {/* Status row */}
                 <div className="mt-2 flex items-center gap-1">
                   {stat.statusDot && (
-                    <span
-                      className="h-1.5 w-1.5 shrink-0 rounded-full"
-                      style={{ backgroundColor: stat.statusColor }}
-                    />
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary-400" />
                   )}
-                  <span
-                    className="text-[9px] font-medium uppercase tracking-[0.12em]"
-                    style={{ color: stat.statusColor }}
-                  >
+                  <span className="text-[9px] font-medium uppercase tracking-[0.12em] text-slate-300">
                     {stat.statusText}
                   </span>
                 </div>
               </div>
             ))}
+            </div>
           </div>
         </div>
       </div>

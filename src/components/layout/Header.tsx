@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -12,7 +11,6 @@ const navLinks = [
   { href: "/about", label: "About" },
   { href: "/domain-checker", label: "Domain Checker" },
   { href: "/contact", label: "Contact" },
-  { href: "/register", label: "Register" },
 ];
 
 export function Header() {
@@ -20,91 +18,62 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-(--border-color) bg-gray-100/95 dark:bg-(--bg-primary)/95 backdrop-blur-sm">
-      <div className="mx-auto flex h-24 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 border-b border-white/15 bg-white/8 backdrop-blur-xl">
+      <div className="relative mx-auto flex h-24 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <Image
-            src="/FullLogo_Transparentwhite.png"
-            alt="IT-Guru Online"
-            width={360}
-            height={120}
-            priority
-            className="h-28 w-auto saturate-200 contrast-125 dark:hidden"
-          />
           <Image
             src="/FullLogo_Transparent.png"
             alt="IT-Guru Online"
             width={360}
             height={120}
             priority
-            className="h-28 w-auto saturate-200 contrast-125 hidden dark:block"
+            className="h-28 w-auto saturate-200 contrast-125"
           />
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-current={pathname === link.href ? "page" : undefined}
-              className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                link.href === "/register"
-                  ? pathname === "/register"
-                    ? "text-white bg-primary-700"
-                    : "text-primary-600 dark:text-primary-400 hover:text-white hover:bg-primary-700"
-                  : pathname === link.href
-                  ? "text-primary-700 bg-primary-700/10"
-                  : "text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--bg-surface)"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
+        {/* Desktop nav — absolutely centered */}
+        <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                className={`relative px-3 py-2.5 text-sm font-medium transition-colors ${
+                  isActive ? "text-white" : "text-white/70 hover:text-white"
+                }`}
+              >
+                {link.label}
+                {isActive && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute bottom-0.5 left-2 right-2 h-0.5 rounded-full"
+                    style={{
+                      background: "#00aaff",
+                      boxShadow: "0 0 8px 3px rgba(0,170,255,0.70)",
+                    }}
+                  />
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
-        {/* Actions */}
-        <div className="flex items-center gap-1.5">
-          {/* Remote Support icon button */}
+        {/* Right: Register CTA + mobile toggle */}
+        <div className="flex items-center gap-3">
           <Link
-            href="/contact"
-            title="Remote Support"
-            aria-label="Remote Support"
-            className="group hidden sm:inline-flex h-11 w-11 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface)/60 text-(--text-secondary) transition-colors hover:border-primary-600/50 hover:bg-primary-600/10 hover:text-primary-500"
+            href="/register"
+            className="btn-metallic hidden md:inline-flex h-7 items-center justify-center px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-transparent"
           >
-            <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
-              <rect x="2" y="3" width="16" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" />
-              <path d="M5.5 7.5 L8.5 9.75 L5.5 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M10.5 12 h3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
+            Register
           </Link>
-
-          {/* Services icon button */}
-          <Link
-            href="/services"
-            title="Our Services"
-            aria-label="Our Services"
-            className="group hidden sm:inline-flex h-11 w-11 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface)/60 text-(--text-secondary) transition-colors hover:border-primary-600/50 hover:bg-primary-600/10 hover:text-primary-500"
-          >
-            <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
-              <line x1="3" y1="5" x2="17" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              <circle cx="7" cy="5" r="2" fill="currentColor" />
-              <line x1="3" y1="10" x2="17" y2="10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              <circle cx="13" cy="10" r="2" fill="currentColor" />
-              <line x1="3" y1="15" x2="17" y2="15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              <circle cx="9" cy="15" r="2" fill="currentColor" />
-            </svg>
-          </Link>
-
-          <div className="hidden sm:block w-px h-5 bg-(--border-color) mx-1" aria-hidden="true" />
-
-          <ThemeToggle />
 
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-lg hover:bg-(--bg-surface) transition-colors md:hidden cursor-pointer"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-white/70 hover:bg-white/15 hover:text-white transition-colors md:hidden cursor-pointer"
             aria-label="Toggle menu"
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav"
@@ -122,22 +91,45 @@ export function Header() {
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <nav id="mobile-nav" className="border-t border-(--border-color) px-4 py-2 md:hidden">
-          {navLinks.map((link) => (
+        <nav id="mobile-nav" className="border-t border-white/15 bg-black/40 backdrop-blur-xl px-4 py-2 md:hidden">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                aria-current={isActive ? "page" : undefined}
+                className={`block px-3 py-2.5 text-sm font-medium transition-colors ${
+                  isActive ? "text-white" : "text-white/70 hover:text-white"
+                }`}
+              >
+                <span className="relative inline-block">
+                  {link.label}
+                  {isActive && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute -bottom-0.5 left-0 right-0 h-0.5 rounded-full"
+                      style={{
+                        background: "#00aaff",
+                        boxShadow: "0 0 8px 3px rgba(0,170,255,0.70)",
+                      }}
+                    />
+                  )}
+                </span>
+              </Link>
+            );
+          })}
+          {/* Register CTA in mobile nav */}
+          <div className="px-3 py-3">
             <Link
-              key={link.href}
-              href={link.href}
+              href="/register"
               onClick={() => setMobileOpen(false)}
-              aria-current={pathname === link.href ? "page" : undefined}
-              className={`block rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                pathname === link.href
-                  ? "text-primary-700 bg-primary-700/10"
-                  : "text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--bg-surface)"
-              }`}
+              className="btn-metallic inline-flex w-full h-10 items-center justify-center px-5 text-sm focus:outline-none"
             >
-              {link.label}
+              Register
             </Link>
-          ))}
+          </div>
         </nav>
       )}
     </header>

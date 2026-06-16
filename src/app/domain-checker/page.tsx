@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { DomainChecker } from "@/components/forms/DomainChecker";
+import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "Domain Availability Checker",
@@ -9,29 +11,39 @@ export const metadata: Metadata = {
 
 export default function DomainCheckerPage() {
   return (
-    <div className="bg-[var(--bg-secondary)] min-h-screen">
-      {/* Hero section */}
-      <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 text-center">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          Find Your Perfect{" "}
-          <span className="text-primary-700">Domain Name</span>
-        </h1>
-        <p className="mt-4 text-lg text-[var(--text-secondary)]">
-          Search across .co.za, .com, .net, .org, .online, and .africa — all at once.
-          When you find the right one, register it directly with IT-Guru Online.
-        </p>
+    <div className="relative overflow-hidden min-h-screen">
+      <div className="fixed inset-0 -z-10">
+        <Image src="/bg-image.jpg" alt="" fill className="object-cover object-center" aria-hidden="true" priority />
+      </div>
 
-        <div className="mt-10">
-          <DomainChecker />
-        </div>
+      {/* Hero section */}
+      <section className="relative overflow-hidden py-16 sm:py-24" aria-label="Domain checker hero">
+        <Reveal className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
+          <p className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-primary-400">
+            ~/domains
+          </p>
+          <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+            Find Your Perfect Domain
+          </h1>
+          <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-primary-500" />
+          <p className="mt-6 text-lg text-slate-300">
+            Search across .co.za, .com, .net, .org, .online, and .africa — all at once.
+            When you find the right one, register it directly with IT-Guru Online.
+          </p>
+          <div className="mt-10">
+            <DomainChecker />
+          </div>
+        </Reveal>
       </section>
 
       {/* Why register with us */}
-      <section className="py-12 sm:py-16">
+      <section className="relative py-12 sm:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-2xl font-bold tracking-tight mb-8">
-            Why Register With IT-Guru Online?
-          </h2>
+          <Reveal>
+            <h2 className="text-center text-2xl font-bold tracking-tight mb-8">
+              Why Register With IT-Guru Online?
+            </h2>
+          </Reveal>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {[
               {
@@ -61,25 +73,26 @@ export default function DomainCheckerPage() {
                 title: "Local Support",
                 desc: "Real South African support — call or WhatsApp +27 72 962 7608.",
               },
-            ].map((item) => (
-              <div
+            ].map((item, i) => (
+              <Reveal
                 key={item.title}
-                className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] p-6 text-center"
+                delayMs={i * 80}
+                className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-primary)] p-6 text-center"
               >
                 <div className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-700/10 text-primary-700">
                   {item.icon}
                 </div>
                 <h3 className="mt-3 font-semibold">{item.title}</h3>
                 <p className="mt-2 text-sm text-[var(--text-secondary)]">{item.desc}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* TLD info table */}
-      <section className="py-12 sm:py-16">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden py-12 sm:py-16">
+        <Reveal className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-2xl font-bold tracking-tight mb-8">
             Domain Extensions We Support
           </h2>
@@ -145,7 +158,7 @@ export default function DomainCheckerPage() {
               </tbody>
             </table>
           </div>
-        </div>
+        </Reveal>
       </section>
     </div>
   );
