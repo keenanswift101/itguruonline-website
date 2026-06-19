@@ -115,9 +115,9 @@ const services = [
       </svg>
     ),
     title: "Web Design",
-    tagline: "Professional sites by Swift Designz",
+    tagline: "Professional websites built for your business",
     description:
-      "Through our partnership with Swift Designz, we offer professional website design and development services. From simple brochure sites to full e-commerce platforms — all built responsively and optimised for search engines.",
+      "We offer professional website design and development services tailored to your business needs. From simple brochure sites to full e-commerce platforms — all built responsively and optimised for search engines.",
     features: [
       "Responsive, mobile-first design",
       "Custom branding and layout",
@@ -125,7 +125,7 @@ const services = [
       "SEO optimisation built-in",
       "Ongoing maintenance packages",
     ],
-    cta: { label: "Get a Quote", href: "https://swiftdesignz.co.za/quote" },
+    cta: { label: "Get a Quote", href: "/contact" },
   },
 ];
 
