@@ -15,7 +15,7 @@ export function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://it-guru-online.netlify.app";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://it-guru.co.za";
 const LOGO_URL = `${BASE_URL}/FullLogo_Transparent.png`;
 const SIGNATURE_BG_URL = `${BASE_URL}/footer_bg.png`;
 
@@ -91,7 +91,7 @@ export function emailLayout(title: string, bodyHtml: string): string {
                       <a href="mailto:info@it-guru.co.za" style="color:#7dd3fc; text-decoration:none;">info@it-guru.co.za</a>
                       &middot;
                       <a href="tel:+27729627608" style="color:#7dd3fc; text-decoration:none;">+27 72 962 7608</a><br />
-                      <a href="${BASE_URL}" style="color:#7dd3fc; text-decoration:none;">it-guru.online</a>
+                      <a href="${BASE_URL}" style="color:#7dd3fc; text-decoration:none;">it-guru.co.za</a>
                     </td>
                   </tr>
                 </table>
@@ -106,7 +106,7 @@ export function emailLayout(title: string, bodyHtml: string): string {
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
             <tr>
               <td align="center" style="padding:16px 8px; font-size:11px; color:#64748b;">
-                You're receiving this email because of an enquiry or application submitted at it-guru.online.
+                You're receiving this email because of an enquiry or application submitted at it-guru.co.za.
               </td>
             </tr>
           </table>

@@ -66,7 +66,7 @@ export function StepDeclaration({ data, onSubmit, onBack, isSubmitting }: StepDP
         <p className="mt-3">
           For full terms and conditions, visit{" "}
           <Link href="/terms" className="text-primary-400 underline hover:no-underline">
-            it-guru.online/terms
+            it-guru.co.za/terms
           </Link>.
         </p>
       </div>
