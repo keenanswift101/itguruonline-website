@@ -23,14 +23,34 @@ export const PRIMARY_TLD: SupportedTld = ".co.za";
 
 export type SupportedTld = (typeof SUPPORTED_TLDS)[number];
 
-// RDAP server overrides for TLDs that have known endpoints
+// RDAP server overrides for TLDs that have known endpoints.
+// .africa endpoint comes from the IANA RDAP bootstrap (https://rdap.nic.africa/rdap/).
 export const RDAP_SERVERS: Partial<Record<SupportedTld, string>> = {
-  ".co.za": "https://rdap.registry.net.za/domain",
-  ".africa": "https://rdap.registry.africa/domain",
+  ".africa": "https://rdap.nic.africa/rdap/domain",
 };
 
 // Default fallback RDAP proxy (handles .com, .net, .org, .online via IANA bootstrap)
 export const RDAP_PROXY = "https://rdap.org/domain";
+
+/**
+ * TLDs with no usable RDAP endpoint, resolved via DNS-over-HTTPS instead.
+ *
+ * `.za` (and therefore `.co.za`) is NOT published in the IANA RDAP bootstrap,
+ * and ZA Central Registry exposes no public RDAP server reachable from a
+ * serverless function — the old `rdap.registry.net.za` host returns 404 for
+ * EVERY `.co.za` domain (registered or not), which made every result falsely
+ * read as "available". A DNS NS lookup is the pragmatic signal: an unregistered
+ * `.co.za` returns NXDOMAIN, a registered one returns its nameservers.
+ *
+ * `.online` is included too: its registry (centralnic) returns HTTP 403 to RDAP
+ * queries from serverless IPs, which left every `.online` result stuck on
+ * "Unknown". DNS gives a usable answer instead.
+ *
+ * Caveat: a registered-but-undelegated domain (no nameservers) can still return
+ * NXDOMAIN and so read as available. This is rare for active domains and is far
+ * more accurate than the previous always-available / always-unknown behaviour.
+ */
+export const DNS_LOOKUP_TLDS: readonly SupportedTld[] = [".co.za", ".online"];
 
 export interface DomainValidation {
   valid: boolean;
