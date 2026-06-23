@@ -4,7 +4,7 @@ Guidance for Claude Code when working in this repository.
 
 ## Project
 
-IT-Guru.Online — marketing site + client onboarding for a Kuils River (South Africa) IT support company. Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4. Deployed on Netlify (`@netlify/plugin-nextjs`). Transactional email via Resend.
+IT-Guru Online — marketing site + client onboarding for a Kuils River (South Africa) IT support company. Live at **https://it-guru.co.za**. Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4. Deployed on Netlify (`@netlify/plugin-nextjs`). Transactional email via Resend.
 
 See `SECURITY-AUDIT.md` for the OWASP ZAP + manual security review findings/fixes/accepted-risks — read it before touching API routes, `next.config.ts` headers, or rate limiting.
 
@@ -58,9 +58,9 @@ Only merge `dev` → `main` when explicitly asked to deploy/ship/push live — d
 
 ### `NEXT_PUBLIC_BASE_URL` — must be set on Netlify, and a fresh build is required for changes to take effect
 
-`NEXT_PUBLIC_BASE_URL` is read in `layout.tsx` (metadataBase/OG), `robots.ts`, `sitemap.ts`, and `email.ts` (logo/signature-background absolute URLs), all falling back to `https://it-guru-online.netlify.app` if unset. It was previously unset on Netlify and the old fallback was the dead domain `https://it-guru.online` (no DNS at all) — this silently broke the WhatsApp/social OG image preview *and* the logo/signature images in outgoing emails for a while. It's now set correctly via `netlify env:set NEXT_PUBLIC_BASE_URL "https://it-guru-online.netlify.app" --site 2cb84145-76d9-4916-ae7d-9df49a5a348c`. Env var changes only apply to the *next* build — if OG images or email images break again, check (a) the env var is still correct and (b) whether `main` has actually been rebuilt since the env var was set (see branch strategy above).
+`NEXT_PUBLIC_BASE_URL` is read in `layout.tsx` (metadataBase/OG), `robots.ts`, `sitemap.ts`, and `email.ts` (logo/signature-background absolute URLs), all falling back to `https://it-guru.co.za` if unset. It is currently set on Netlify to `https://it-guru.co.za` (the live custom domain). History: was previously unset (falling back to the dead domain `https://it-guru.online`) which silently broke OG image previews and email logo images for a while.
 
-If `it-guru.online` (the real custom domain) ever gets DNS pointed at this Netlify site, update `NEXT_PUBLIC_BASE_URL` to that domain instead and redeploy.
+Env var changes only apply to the *next* build — if OG images or email images break, check (a) the env var is still correct (`netlify env:list --site 2cb84145-76d9-4916-ae7d-9df49a5a348c`) and (b) whether `main` has been rebuilt since the env var was set.
 
 ## Conventions
 
