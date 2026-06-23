@@ -11,7 +11,7 @@
     "lint": "next lint",
     "scrape": "node scripts/scraper.js"
   },
-  "author": "Swift Designz & IT-Guru Online",
+  "author": "IT-Guru Online",
   "license": "UNLICENSED",
   "dependencies": {
     "next": "^16.2.1",
