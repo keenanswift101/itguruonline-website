@@ -23,13 +23,19 @@ export const PRIMARY_TLD: SupportedTld = ".co.za";
 
 export type SupportedTld = (typeof SUPPORTED_TLDS)[number];
 
-// RDAP server overrides for TLDs that have known endpoints.
-// .africa endpoint comes from the IANA RDAP bootstrap (https://rdap.nic.africa/rdap/).
+// RDAP server overrides pointing directly at each registry's RDAP host.
+// Going direct avoids the rdap.org bootstrap proxy's 302 redirect, whose
+// two-hop chain intermittently exceeded the 6s timeout from Netlify's
+// serverless region and surfaced as "Unknown". Direct hosts respond in <1s.
+//   .com/.net -> Verisign, .org -> PIR, .africa -> IANA bootstrap (rdap.nic.africa)
 export const RDAP_SERVERS: Partial<Record<SupportedTld, string>> = {
+  ".com": "https://rdap.verisign.com/com/v1/domain",
+  ".net": "https://rdap.verisign.com/net/v1/domain",
+  ".org": "https://rdap.publicinterestregistry.org/rdap/domain",
   ".africa": "https://rdap.nic.africa/rdap/domain",
 };
 
-// Default fallback RDAP proxy (handles .com, .net, .org, .online via IANA bootstrap)
+// Default fallback RDAP proxy (IANA bootstrap) for any TLD without a direct host.
 export const RDAP_PROXY = "https://rdap.org/domain";
 
 /**
