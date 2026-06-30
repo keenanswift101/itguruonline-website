@@ -1,4 +1,4 @@
-# Requirements: IT-Guru Online — v2.0 Admin Portal
+| AUTOMATE-04 | Phase 5 | Pending || AUTOMATE-03 | Phase 5 | Pending || AUTOMATE-02 | Phase 5 | Pending || AUTOMATE-01 | Phase 5 | Pending || INVOICE-07 | Phase 4 | Pending || INVOICE-06 | Phase 4 | Pending || INVOICE-05 | Phase 4 | Pending || INVOICE-04 | Phase 4 | Pending || INVOICE-03 | Phase 4 | Pending || INVOICE-02 | Phase 4 | Pending || INVOICE-01 | Phase 4 | Pending || PRICE-05 | Phase 3 | Pending || PRICE-04 | Phase 3 | Pending || PRICE-03 | Phase 3 | Pending || PRICE-02 | Phase 3 | Pending || PRICE-01 | Phase 3 | Pending || CRM-07 | Phase 2 | Pending || CRM-06 | Phase 2 | Pending || CRM-05 | Phase 2 | Pending || CRM-04 | Phase 2 | Pending || CRM-03 | Phase 2 | Pending || CRM-02 | Phase 2 | Pending || CRM-01 | Phase 2 | Pending || AUTH-04 | Phase 1 | Pending || AUTH-03 | Phase 1 | Pending || AUTH-02 | Phase 1 | Pending || AUTH-01 | Phase 1 | Pending |# Requirements: IT-Guru Online — v2.0 Admin Portal
 
 **Defined:** 2026-06-30
 **Core Value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
@@ -87,39 +87,39 @@ Filled in by the roadmapper during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | TBD | Pending |
-| AUTH-02 | TBD | Pending |
-| AUTH-03 | TBD | Pending |
-| AUTH-04 | TBD | Pending |
-| CRM-01 | TBD | Pending |
-| CRM-02 | TBD | Pending |
-| CRM-03 | TBD | Pending |
-| CRM-04 | TBD | Pending |
-| CRM-05 | TBD | Pending |
-| CRM-06 | TBD | Pending |
-| CRM-07 | TBD | Pending |
-| PRICE-01 | TBD | Pending |
-| PRICE-02 | TBD | Pending |
-| PRICE-03 | TBD | Pending |
-| PRICE-04 | TBD | Pending |
-| PRICE-05 | TBD | Pending |
-| INVOICE-01 | TBD | Pending |
-| INVOICE-02 | TBD | Pending |
-| INVOICE-03 | TBD | Pending |
-| INVOICE-04 | TBD | Pending |
-| INVOICE-05 | TBD | Pending |
-| INVOICE-06 | TBD | Pending |
-| INVOICE-07 | TBD | Pending |
-| AUTOMATE-01 | TBD | Pending |
-| AUTOMATE-02 | TBD | Pending |
-| AUTOMATE-03 | TBD | Pending |
-| AUTOMATE-04 | TBD | Pending |
+| AUTH-01 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Pending |
+| AUTH-03 | Phase 1 | Pending |
+| AUTH-04 | Phase 1 | Pending |
+| CRM-01 | Phase 2 | Pending |
+| CRM-02 | Phase 2 | Pending |
+| CRM-03 | Phase 2 | Pending |
+| CRM-04 | Phase 2 | Pending |
+| CRM-05 | Phase 2 | Pending |
+| CRM-06 | Phase 2 | Pending |
+| CRM-07 | Phase 2 | Pending |
+| PRICE-01 | Phase 3 | Pending |
+| PRICE-02 | Phase 3 | Pending |
+| PRICE-03 | Phase 3 | Pending |
+| PRICE-04 | Phase 3 | Pending |
+| PRICE-05 | Phase 3 | Pending |
+| INVOICE-01 | Phase 4 | Pending |
+| INVOICE-02 | Phase 4 | Pending |
+| INVOICE-03 | Phase 4 | Pending |
+| INVOICE-04 | Phase 4 | Pending |
+| INVOICE-05 | Phase 4 | Pending |
+| INVOICE-06 | Phase 4 | Pending |
+| INVOICE-07 | Phase 4 | Pending |
+| AUTOMATE-01 | Phase 5 | Pending |
+| AUTOMATE-02 | Phase 5 | Pending |
+| AUTOMATE-03 | Phase 5 | Pending |
+| AUTOMATE-04 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 27 total
-- Mapped to phases: 0 (pending roadmap creation)
-- Unmapped: 27 ⚠️ (expected before roadmap step)
+- Mapped to phases: 27/27 ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-06-30*
-*Last updated: 2026-06-30 after initial definition*
+*Last updated: 2026-06-30 after roadmap creation (5 phases, full coverage)*
