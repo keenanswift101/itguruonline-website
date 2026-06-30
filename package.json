@@ -6,7 +6,7 @@
   "description": "IT-Guru.Online — Automated website for domain registration, client onboarding, and IT services",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --no-turbopack",
     "start": "next start",
     "lint": "next lint",
     "scrape": "node scripts/scraper.js",
