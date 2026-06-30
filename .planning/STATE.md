@@ -50,7 +50,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None yet.
+- Remove leftover `include:zoho.com` from the apex SPF TXT record (`it-guru.co.za`) — confirmed unused (no MX points to Zoho), but owner wants to defer cleanup until Phase 4 (Invoicing) is live and sending invoices, not before. Exact edit: change `v=spf1 ip4:102.216.79.206 +a +mx include:zoho.com include:it-guru.co.za ~all` to `v=spf1 ip4:102.216.79.206 +a +mx include:it-guru.co.za ~all`.
 
 ### Blockers/Concerns
 
