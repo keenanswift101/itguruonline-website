@@ -6,11 +6,14 @@
 
 ## OQ1 — proxy.ts fires under @netlify/plugin-nextjs on a real Netlify build
 
-**Status:** PENDING — requires a real Netlify build (not `next dev`)
+**Status:** RESOLVED — DOES NOT WORK. proxy.ts removed from codebase.
 
-VERIFIED: <yes/no>, deploy URL: <fill in after Task 4 checkpoint>
+VERIFIED: **no** — proxy.ts causes a hard build failure; it cannot be used.
 
-**Context:** Local `next dev` does not exercise the adapter. A Netlify deploy-preview or production build is required.
+**Root cause (confirmed 2026-06-30):**
+Next.js 16 uses Turbopack by default for **both** dev and production builds. When proxy.ts (Next.js 16's rename of middleware.ts) is present, `next build` compiles it to `.next/server/middleware.js` which references `./chunks/[turbopack]_runtime.js`. The Netlify edge function bundler (inside `@netlify/plugin-nextjs@5.15.12`, the latest release) cannot resolve this Turbopack-specific chunk and throws `MODULE_NOT_FOUND`. Attempted `next build --no-turbopack` — the flag does not exist in Next.js 16. Turbopack is not opt-in; it is the default and cannot be disabled via CLI.
+
+**Impact on Plan 03:** The `/admin/*` auth boundary must be enforced **exclusively** via page-level `requireAdmin()` calls (server component + route handler guard pattern). There is no proxy-layer pre-check. This is the documented fallback from the Plan 01 checkpoint: "page-level requireAdmin() becomes the sole boundary." Defence-in-depth is maintained by calling `requireAdmin()` in every `/admin/*` layout and every `/api/admin/*` route handler.
 
 ---
 
