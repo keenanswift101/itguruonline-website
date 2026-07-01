@@ -3,6 +3,8 @@ import { checkRateLimit } from "@/lib/rate-limiter";
 import { isTrustedOrigin } from "@/lib/csrf";
 import { getClientIp } from "@/lib/client-ip";
 import { sendEmail, emailLayout, escapeHtml, ADMIN_EMAIL } from "@/lib/email";
+import { db } from "@/lib/db/index";
+import { contactEnquiries } from "@/lib/db/schema";
 
 interface ContactPayload {
   name: string;
@@ -98,6 +100,20 @@ export async function POST(req: NextRequest) {
   const errors = validateContact(payload);
   if (Object.keys(errors).length > 0) {
     return NextResponse.json({ error: "Validation failed.", fields: errors }, { status: 422 });
+  }
+
+  // CRM capture — MUST precede email send (so capture survives an email failure)
+  try {
+    await db.insert(contactEnquiries).values({
+      status: "new",
+      name: payload.name,
+      email: payload.email,
+      phone: payload.phone ?? null,
+      subject: payload.subject,
+      message: payload.message,
+    });
+  } catch (err) {
+    console.error("[contact] DB insert failed:", err);
   }
 
   // ── Send admin notification email ───────────────────────────────────────

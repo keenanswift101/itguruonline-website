@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 3 context gathered
-last_updated: "2026-07-01T09:51:16Z"
-last_activity: 2026-07-01 -- Phase 02 Plan 02 complete (admin sidebar + CRM list view)
+stopped_at: Phase 02, Plan 01 complete
+last_updated: "2026-07-01T09:47:03Z"
+last_activity: 2026-07-01 — Phase 02 Plan 01 complete (CRM capture foundation)
 progress:
   total_phases: 5
   completed_phases: 1
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
-**Current focus:** Phase 02 — crm-capture-viewing
+**Current focus:** Phase 02 — crm-capture-viewing (executing)
 
 ## Current Position
 
 Phase: 02 (crm-capture-viewing) — EXECUTING
-Plan: 2 of 4 (complete)
+Plan: 2 of 4 (Plan 01 complete)
 Status: Executing Phase 02
-Last activity: 2026-07-01 -- Phase 02 Plan 02 complete — sidebar layout + CRM list view
+Last activity: 2026-07-01 — Phase 02 Plan 01 complete (CRM capture foundation — 3 CRM tables, DB inserts in register + contact routes)
 
-Progress: [██░░░░░░░░] 20%
+Progress: [███░░░░░░░] 23%
 
 ## Performance Metrics
 
@@ -48,8 +48,8 @@ Progress: [██░░░░░░░░] 20%
 
 **Recent Trend:**
 
-- Last 5 plans: Phase 1 (4 plans) + Phase 2 Plan 02 complete
-- Trend: ~30 min/plan (UI + routes)
+- Last 5 plans: Plan 01 complete
+- Trend: -
 
 *Updated after each plan completion*
 
@@ -67,8 +67,6 @@ Recent decisions affecting current work:
 - IT-Guru is not VAT-registered — invoices must use plain "Invoice" labeling, no VAT fields or "Tax Invoice" wording.
 - POPIA data-region: no region prompt offered by Netlify — non-configurable, inherited from platform default. Documented in PROVISIONING-NOTES.md.
 - **proxy.ts REMOVED** — Next.js 16 Turbopack emits chunks Netlify's edge bundler cannot resolve. `/admin/*` auth enforced exclusively via page-level `requireAdmin()` (layout + route handler calls). No proxy layer. See PROVISIONING-NOTES.md OQ1.
-- **crm-query.ts extracted** — `getMergedCrmRecords()` shared helper in src/lib/crm-query.ts is the single source of truth for the merged CRM list; used by the page SSR and importable by Plan 04 export route.
-- **encodeCrmId/parseCrmId prefixed-ID scheme** — CRM detail URLs use `registration-{id}` / `enquiry-{id}` prefix format defined in crm-types.ts; Plans 03/04 must parse via parseCrmId.
 
 ### Pending Todos
 
@@ -82,6 +80,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-01T09:51:16Z
-Stopped at: Completed 02-02-PLAN.md — admin sidebar layout + CRM list view
-Resume file: .planning/phases/02-crm-capture-viewing/02-03-PLAN.md
+Last session: 2026-07-01T09:47:03Z
+Stopped at: Phase 02, Plan 01 complete — 02-01-SUMMARY.md created
+Resume file: .planning/phases/02-crm-capture-viewing/02-02-PLAN.md

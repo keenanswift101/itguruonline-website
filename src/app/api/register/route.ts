@@ -11,6 +11,8 @@ import {
 import type { RegistrationFormData } from "@/lib/registration-types";
 import { HOSTING_PACKAGES } from "@/lib/registration-types";
 import { sendEmail, emailLayout, escapeHtml, ADMIN_EMAIL } from "@/lib/email";
+import { db } from "@/lib/db/index";
+import { clientRegistrations } from "@/lib/db/schema";
 
 /** Strip HTML/script tags and dangerous URI schemes to prevent stored XSS */
 function sanitize(value: string): string {
@@ -118,9 +120,36 @@ export async function POST(req: NextRequest) {
   // ── Generate reference ID ──────────────────────────────────────────────
   const referenceId = generateReferenceId();
 
-  // ── TODO: Persist to DB (Supabase) ────────────────────────────────────
-  // When DATABASE_URL/SUPABASE_URL is configured, insert here:
-  // await supabase.from("registrations").insert({ reference_id: referenceId, ...clean, created_at: new Date() });
+  // CRM capture — MUST precede email send (so capture survives an email failure)
+  try {
+    await db.insert(clientRegistrations).values({
+      referenceId,
+      status: "new",
+      firstName: clean.stepA.firstName,
+      surname: clean.stepA.surname,
+      email: clean.stepA.email,
+      cellPhone: clean.stepA.cellPhone,
+      telephone: clean.stepA.telephone,
+      physicalAddress: clean.stepA.physicalAddress,
+      postalAddress: clean.stepA.postalAddress,
+      domainName: clean.stepB.domainName,
+      nameserver1: clean.stepB.nameserver1,
+      nameserver2: clean.stepB.nameserver2,
+      hostingPackage: clean.stepC.hostingPackage,
+      domainRegistration: clean.stepC.domainRegistration,
+      sslCertificate: clean.stepC.sslCertificate,
+      emailHosting: clean.stepC.emailHosting,
+      websiteDesign: clean.stepC.websiteDesign,
+      additionalServices: clean.stepC.additionalServices,
+      termsAccepted: clean.stepD.termsAccepted,
+      signature: clean.stepD.signature,
+      signatureDate: clean.stepD.signatureDate,
+    });
+  } catch (err) {
+    // Intentional trade-off: prioritise the user's confirmation over perfect capture.
+    // A transient DB error must not make a successful registration disappear for the user.
+    console.error("[register] DB insert failed:", err);
+  }
 
   // ── Send confirmation email to client + notification to admin ──────────
   const hostingPackageName =
