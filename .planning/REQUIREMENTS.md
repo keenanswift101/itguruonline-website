@@ -9,15 +9,15 @@ Requirements for the v2.0 Admin Portal milestone. Each maps to roadmap phases.
 
 ### Auth
 
-- [ ] **AUTH-01**: Owner can log in with a single admin account (email/password)
-- [ ] **AUTH-02**: Owner's session persists across browser refresh via secure cookie
-- [ ] **AUTH-03**: Unauthenticated visitors are redirected away from any `/admin/*` route
-- [ ] **AUTH-04**: Repeated failed login attempts are throttled/locked out (DB-backed, not in-memory)
+- [x] **AUTH-01**: Owner can log in with a single admin account (email/password)
+- [x] **AUTH-02**: Owner's session persists across browser refresh via secure cookie
+- [x] **AUTH-03**: Unauthenticated visitors are redirected away from any `/admin/*` route
+- [x] **AUTH-04**: Repeated failed login attempts are throttled/locked out (DB-backed, not in-memory)
 
 ### CRM
 
-- [ ] **CRM-01**: Every registration wizard submission is automatically saved as a client record
-- [ ] **CRM-02**: Every contact form submission is automatically saved as an enquiry record
+- [x] **CRM-01**: Every registration wizard submission is automatically saved as a client record
+- [x] **CRM-02**: Every contact form submission is automatically saved as an enquiry record
 - [ ] **CRM-03**: Owner can view a searchable, filterable list of all enquiries/clients
 - [ ] **CRM-04**: Owner can open a record to see full submitted details
 - [ ] **CRM-05**: Owner can set a record's status (New, Contacted, In Progress, Completed)

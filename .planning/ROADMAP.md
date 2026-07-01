@@ -12,7 +12,7 @@ v2.0 (Admin Portal) takes IT-Guru Online from a static marketing site with no ba
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Auth + Database Foundation** - Owner can log in to a private, secured admin area backed by a real database
+- [x] **Phase 1: Auth + Database Foundation** - Owner can log in to a private, secured admin area backed by a real database
 - [ ] **Phase 2: CRM Capture + Viewing** - Every enquiry/registration is automatically captured and the owner can view, search, filter, and annotate records
 - [ ] **Phase 3: Live Pricing Migration** - Owner can edit hosting and domain pricing live, with no code deploy, in one single source of truth
 - [ ] **Phase 4: Invoicing** - Owner can create, edit, track, and export client invoices with SARS-compliant numbering
@@ -46,7 +46,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   7. Owner can export the current enquiry/client list as a CSV file
 **Plans**: 4 plans (2 waves)
 Plans:
-- [ ] 02-01-PLAN.md — DB schema (3 CRM tables) + capture: DB insert before email in register/contact routes (CRM-01, CRM-02)
+- [x] 02-01-PLAN.md — DB schema (3 CRM tables) + capture: DB insert before email in register/contact routes (CRM-01, CRM-02)
 - [ ] 02-02-PLAN.md — Admin sidebar shell + CRM list page + GET list route + filterable table (CRM-03)
 - [ ] 02-03-PLAN.md — CRM detail page + status PATCH + append-only notes POST (CRM-04, CRM-05, CRM-06)
 - [ ] 02-04-PLAN.md — CSV export route + reusable csvEscape helper (CRM-07)
@@ -108,8 +108,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Auth + Database Foundation | 0/TBD | Not started | - |
-| 2. CRM Capture + Viewing | 0/4 | Planned | - |
+| 1. Auth + Database Foundation | 4/4 | Complete | 2026-06-30 |
+| 2. CRM Capture + Viewing | 1/4 | Executing | - |
 | 3. Live Pricing Migration | 0/3 | Planned | - |
 | 4. Invoicing | 0/5 | Planned | - |
 | 5. Scheduled Automation | 0/TBD | Not started | - |
