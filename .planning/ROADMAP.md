@@ -81,7 +81,13 @@ Plans:
   5. Owner can mark an invoice as paid manually, with no payment gateway involved
   6. Owner can download a single invoice as a PDF suitable for sending to the client
   7. Owner can export the invoice list as CSV or PDF for their own review/record-keeping
-**Plans**: TBD
+**Plans**: 5 plans (2 waves)
+Plans:
+- [ ] 04-01-PLAN.md — DB schema (invoices + invoice_line_items) + 0002 migration + @react-pdf/renderer install + Wave 0 test stubs + PDF smoke-test route
+- [ ] 04-02-PLAN.md — POST create + PUT update (409 edit lock) + DELETE draft API routes
+- [ ] 04-03-PLAN.md — PATCH status (gapless numbering, mark paid) + PDF document/route + CSV export
+- [ ] 04-04-PLAN.md — Admin invoice list page (filter + overdue badge + CSV export) + create form
+- [ ] 04-05-PLAN.md — Admin invoice detail page (edit Draft / read-only + status actions + PDF download)
 **UI hint**: yes
 
 ### Phase 5: Scheduled Automation
@@ -105,5 +111,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Auth + Database Foundation | 0/TBD | Not started | - |
 | 2. CRM Capture + Viewing | 0/4 | Planned | - |
 | 3. Live Pricing Migration | 0/3 | Planned | - |
-| 4. Invoicing | 0/TBD | Not started | - |
+| 4. Invoicing | 0/5 | Planned | - |
 | 5. Scheduled Automation | 0/TBD | Not started | - |
