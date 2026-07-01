@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 1 Plan 01 complete
-last_updated: "2026-06-30T12:30:00.000Z"
-last_activity: 2026-06-30 — Plan 01 complete (foundation, DB, vitest, deploy verified)
+stopped_at: Phase 1 complete (all 4 plans done)
+last_updated: "2026-07-01T19:17:00.000Z"
+last_activity: 2026-07-01 — Phase 1 Plans 03 + 04 complete (login UI + password reset)
 progress:
   total_phases: 5
-  completed_phases: 0
-  total_plans: 1
-  completed_plans: 1
-  percent: 5
+  completed_phases: 1
+  total_plans: 4
+  completed_plans: 4
+  percent: 20
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
-**Current focus:** Phase 1 — Auth + Database Foundation, Plan 02
+**Current focus:** Phase 2 — CRM / Enquiry Capture (next to plan)
 
 ## Current Position
 
-Phase: 1 of 5 (Auth + Database Foundation)
-Plan: 02 — DB schema + auth helpers
-Status: Executing
-Last activity: 2026-06-30 — Plan 01 complete, draft deploy verified
+Phase: 1 of 5 COMPLETE — Auth + Database Foundation
+Plan: All 4 plans done
+Status: Phase 1 complete, ready to plan Phase 2
+Last activity: 2026-07-01 — Plans 03 (login UI) + 04 (password reset) shipped
 
-Progress: [█░░░░░░░░░] 5%
+Progress: [██░░░░░░░░] 20%
 
 ## Performance Metrics
 
