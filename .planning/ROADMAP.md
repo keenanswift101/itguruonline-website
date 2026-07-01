@@ -62,7 +62,11 @@ Plans:
   3. Owner can add or edit a per-TLD domain registration price (.co.za, .com, .net, .org, .online, .africa)
   4. The public site shows a real domain price instead of "request a quote" for any TLD with a price set
   5. Owner can update site settings (contact email, hosting setup-fee note) from the admin portal without a code change
-**Plans**: TBD
+**Plans**: 3 plans (2 waves)
+Plans:
+- [ ] 03-01-PLAN.md — DB schema (hosting_packages, domain_prices, site_settings) + seeded migration (PRICE-01, PRICE-03, PRICE-05)
+- [ ] 03-02-PLAN.md — Public reads: Services/register/domain-checker/contact from DB + delete hardcoded pricing consts (PRICE-02, PRICE-04, PRICE-05)
+- [ ] 03-03-PLAN.md — Admin /admin/pricing inline-edit portal + 3 PATCH routes (PRICE-01, PRICE-03, PRICE-05)
 **UI hint**: yes
 
 ### Phase 4: Invoicing
@@ -100,6 +104,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Auth + Database Foundation | 0/TBD | Not started | - |
 | 2. CRM Capture + Viewing | 0/4 | Planned | - |
-| 3. Live Pricing Migration | 0/TBD | Not started | - |
+| 3. Live Pricing Migration | 0/3 | Planned | - |
 | 4. Invoicing | 0/TBD | Not started | - |
 | 5. Scheduled Automation | 0/TBD | Not started | - |
