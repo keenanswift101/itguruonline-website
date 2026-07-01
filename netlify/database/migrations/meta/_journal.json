@@ -8,6 +8,13 @@
       "when": 1782834382259,
       "tag": "0000_living_mastermind",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1782898996313,
+      "tag": "0001_nosy_lady_mastermind",
+      "breakpoints": true
     }
   ]
 }
