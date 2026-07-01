@@ -9,26 +9,41 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "scrape": "node scripts/scraper.js"
+    "scrape": "node scripts/scraper.js",
+    "test": "vitest run",
+    "seed:admin": "netlify dev:exec node --experimental-strip-types scripts/seed-admin.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "netlify dev:exec drizzle-kit migrate",
+    "db:studio": "netlify dev:exec drizzle-kit studio"
   },
   "author": "IT-Guru Online",
   "license": "UNLICENSED",
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "@netlify/database": "^1.1.0",
+    "@netlify/neon": "^0.1.2",
+    "bcryptjs": "^3.0.3",
+    "drizzle-orm": "^0.45.2",
+    "jose": "^6.2.3",
     "next": "^16.2.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "resend": "^6.12.4"
+    "resend": "^6.12.4",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^5.15.9",
+    "@netlify/plugin-nextjs": "^5.15.12",
     "@tailwindcss/postcss": "^4.2.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.1",
     "postcss": "^8.5.8",
     "tailwindcss": "^4.2.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.9"
   }
 }
