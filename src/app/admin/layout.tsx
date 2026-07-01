@@ -1,8 +1,11 @@
 import Image from "next/image";
+import { AdminSidebar } from "@/components/admin/AdminSidebar";
+import { requireAdmin } from "@/lib/auth";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  const session = await requireAdmin();
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen flex">
       <div className="fixed inset-0 -z-10">
         <Image
           src="/bg-image.jpg"
@@ -13,7 +16,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           aria-hidden="true"
         />
       </div>
-      {children}
+      {session && <AdminSidebar email={session.email} />}
+      <main className="flex-1 min-w-0 min-h-screen overflow-y-auto">{children}</main>
     </div>
   );
 }
