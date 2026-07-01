@@ -1,8 +1,10 @@
+import crypto from "crypto";
+import bcrypt from "bcryptjs";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import { and, eq, gte } from "drizzle-orm";
+import { and, eq, gte, gt, isNotNull } from "drizzle-orm";
 import { db } from "@/lib/db/index";
-import { loginAttempts } from "@/lib/db/schema";
+import { adminUsers, loginAttempts } from "@/lib/db/schema";
 
 export interface SessionPayload {
   sub: string;
@@ -71,4 +73,45 @@ export async function isLockedOut(email: string): Promise<boolean> {
       )
     );
   return rows.length >= LOCKOUT_THRESHOLD;
+}
+
+// ── Password reset helpers ──────────────────────────────────────────────────
+
+const RESET_TOKEN_TTL_MINUTES = 60;
+
+export async function createResetToken(email: string): Promise<string | null> {
+  const [user] = await db.select({ id: adminUsers.id }).from(adminUsers).where(eq(adminUsers.email, email));
+  if (!user) return null;
+
+  const raw = crypto.randomBytes(32).toString("hex");
+  const tokenHash = await bcrypt.hash(raw, 12);
+  const expiresAt = new Date(Date.now() + RESET_TOKEN_TTL_MINUTES * 60_000);
+
+  await db.update(adminUsers)
+    .set({ resetToken: tokenHash, resetTokenExpiresAt: expiresAt })
+    .where(eq(adminUsers.id, user.id));
+
+  return raw;
+}
+
+export async function consumeResetToken(rawToken: string, newPassword: string): Promise<boolean> {
+  const now = new Date();
+  const candidates = await db
+    .select()
+    .from(adminUsers)
+    .where(and(isNotNull(adminUsers.resetToken), gt(adminUsers.resetTokenExpiresAt, now)));
+
+  for (const candidate of candidates) {
+    if (!candidate.resetToken) continue;
+    const matches = await bcrypt.compare(rawToken, candidate.resetToken);
+    if (matches) {
+      const newHash = await bcrypt.hash(newPassword, 12);
+      await db.update(adminUsers)
+        .set({ passwordHash: newHash, resetToken: null, resetTokenExpiresAt: null })
+        .where(eq(adminUsers.id, candidate.id));
+      return true;
+    }
+  }
+
+  return false;
 }
