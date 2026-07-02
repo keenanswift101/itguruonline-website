@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-03-PLAN.md — CRM detail view, status + notes
-last_updated: "2026-07-02T05:51:20.169Z"
+stopped_at: Completed 03-01-PLAN.md — pricing schema + migration seed
+last_updated: "2026-07-02T06:02:01.011Z"
 last_activity: 2026-07-02
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 22
-  completed_plans: 8
+  completed_plans: 9
   percent: 23
 ---
 
@@ -21,12 +21,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
-**Current focus:** Phase 02 — crm-capture-viewing (executing)
+**Current focus:** Phase 03 — live-pricing-migration
 
 ## Current Position
 
-Phase: 03
-Plan: Not started
+Phase: 03 (live-pricing-migration) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
 Last activity: 2026-07-02
 
@@ -53,6 +53,7 @@ Progress: [███░░░░░░░] 23%
 
 *Updated after each plan completion*
 | Phase 02 P03 | 1014 | 3 tasks | 10 files |
+| Phase 03 P01 | 8 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,9 @@ Recent decisions affecting current work:
 - [Phase 02]: parseCrmId used in both API routes and page to keep disambiguation logic in one place (crm-types.ts)
 - [Phase 02]: Card.tsx upgraded to Tailwind v4 canonical syntax per CLAUDE.md enforcement
 - [Phase 02]: Notes route strips HTML and javascript: URIs inline (append-only, stored XSS prevention)
+- [Phase 03]: Prices stored as INTEGER rands (not cents, not decimal) — aligns with CLAUDE.md constraint
+- [Phase 03]: Migration named 0002_pricing_tables (not 0001 as plan assumed) — worktree had 0000+0001 from Phase 1/2 already
+- [Phase 03]: db:migrate intentionally NOT run during plan execution — migration runs at Netlify deploy time, before Plan 03-02 removes TS consts
 
 ### Pending Todos
 
@@ -84,6 +88,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-02T05:24:12.652Z
-Stopped at: Completed 02-03-PLAN.md — CRM detail view, status + notes
+Last session: 2026-07-02T06:02:01.003Z
+Stopped at: Completed 03-01-PLAN.md — pricing schema + migration seed
 Resume file: None

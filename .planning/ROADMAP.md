@@ -64,7 +64,7 @@ Plans:
   5. Owner can update site settings (contact email, hosting setup-fee note) from the admin portal without a code change
 **Plans**: 3 plans (2 waves)
 Plans:
-- [ ] 03-01-PLAN.md — DB schema (hosting_packages, domain_prices, site_settings) + seeded migration (PRICE-01, PRICE-03, PRICE-05)
+- [x] 03-01-PLAN.md — DB schema (hosting_packages, domain_prices, site_settings) + seeded migration (PRICE-01, PRICE-03, PRICE-05)
 - [ ] 03-02-PLAN.md — Public reads: Services/register/domain-checker/contact from DB + delete hardcoded pricing consts (PRICE-02, PRICE-04, PRICE-05)
 - [ ] 03-03-PLAN.md — Admin /admin/pricing inline-edit portal + 3 PATCH routes (PRICE-01, PRICE-03, PRICE-05)
 **UI hint**: yes
@@ -110,6 +110,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Auth + Database Foundation | 4/4 | Complete | 2026-06-30 |
 | 2. CRM Capture + Viewing | 3/4 | In Progress|  |
-| 3. Live Pricing Migration | 0/3 | Planned | - |
+| 3. Live Pricing Migration | 1/3 | In Progress|  |
 | 4. Invoicing | 0/5 | Planned | - |
 | 5. Scheduled Automation | 0/TBD | Not started | - |
