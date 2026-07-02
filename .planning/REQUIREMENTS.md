@@ -1,4 +1,4 @@
-| AUTOMATE-04 | Phase 5 | Pending || AUTOMATE-03 | Phase 5 | Pending || AUTOMATE-02 | Phase 5 | Pending || AUTOMATE-01 | Phase 5 | Pending || INVOICE-07 | Phase 4 | Pending || INVOICE-06 | Phase 4 | Pending || INVOICE-05 | Phase 4 | Pending || INVOICE-04 | Phase 4 | Pending || INVOICE-03 | Phase 4 | Pending || INVOICE-02 | Phase 4 | Pending || INVOICE-01 | Phase 4 | Pending || PRICE-05 | Phase 3 | Complete || PRICE-04 | Phase 3 | Complete || PRICE-03 | Phase 3 | Complete || PRICE-02 | Phase 3 | Complete || PRICE-01 | Phase 3 | Complete || CRM-07 | Phase 2 | Pending || CRM-06 | Phase 2 | Complete || CRM-05 | Phase 2 | Complete || CRM-04 | Phase 2 | Complete || CRM-03 | Phase 2 | Pending || CRM-02 | Phase 2 | Pending || CRM-01 | Phase 2 | Pending || AUTH-04 | Phase 1 | Pending || AUTH-03 | Phase 1 | Pending || AUTH-02 | Phase 1 | Pending || AUTH-01 | Phase 1 | Pending |# Requirements: IT-Guru Online — v2.0 Admin Portal
+| AUTOMATE-04 | Phase 5 | Pending || AUTOMATE-03 | Phase 5 | Pending || AUTOMATE-02 | Phase 5 | Pending || AUTOMATE-01 | Phase 5 | Pending || INVOICE-07 | Phase 4 | Pending || INVOICE-06 | Phase 4 | Pending || INVOICE-05 | Phase 4 | Pending || INVOICE-04 | Phase 4 | Pending || INVOICE-03 | Phase 4 | Pending || INVOICE-02 | Phase 4 | Complete || INVOICE-01 | Phase 4 | Complete || PRICE-05 | Phase 3 | Complete || PRICE-04 | Phase 3 | Complete || PRICE-03 | Phase 3 | Complete || PRICE-02 | Phase 3 | Complete || PRICE-01 | Phase 3 | Complete || CRM-07 | Phase 2 | Pending || CRM-06 | Phase 2 | Complete || CRM-05 | Phase 2 | Complete || CRM-04 | Phase 2 | Complete || CRM-03 | Phase 2 | Pending || CRM-02 | Phase 2 | Pending || CRM-01 | Phase 2 | Pending || AUTH-04 | Phase 1 | Pending || AUTH-03 | Phase 1 | Pending || AUTH-02 | Phase 1 | Pending || AUTH-01 | Phase 1 | Pending |# Requirements: IT-Guru Online — v2.0 Admin Portal
 
 **Defined:** 2026-06-30
 **Core Value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
@@ -34,8 +34,8 @@ Requirements for the v2.0 Admin Portal milestone. Each maps to roadmap phases.
 
 ### Invoicing
 
-- [ ] **INVOICE-01**: Owner can manually create an invoice from the admin dashboard for any client (line items, amount, due date) — not only via recurring auto-generation
-- [ ] **INVOICE-02**: Owner can edit a Draft invoice's line items, amount, and due date before it's sent
+- [x] **INVOICE-01**: Owner can manually create an invoice from the admin dashboard for any client (line items, amount, due date) — not only via recurring auto-generation
+- [x] **INVOICE-02**: Owner can edit a Draft invoice's line items, amount, and due date before it's sent
 - [ ] **INVOICE-03**: Invoices use sequential, gapless numbering and plain "Invoice" labeling (no VAT fields or "Tax Invoice" wording — IT-Guru is not VAT-registered)
 - [ ] **INVOICE-04**: Owner can track invoice status (Draft, Sent, Paid); Overdue is computed automatically from the due date
 - [ ] **INVOICE-05**: Owner can mark an invoice as paid manually (no payment gateway — clients pay via existing manual EFT)
@@ -103,8 +103,8 @@ Filled in by the roadmapper during roadmap creation.
 | PRICE-03 | Phase 3 | Complete |
 | PRICE-04 | Phase 3 | Complete |
 | PRICE-05 | Phase 3 | Complete |
-| INVOICE-01 | Phase 4 | Pending |
-| INVOICE-02 | Phase 4 | Pending |
+| INVOICE-01 | Phase 4 | Complete |
+| INVOICE-02 | Phase 4 | Complete |
 | INVOICE-03 | Phase 4 | Pending |
 | INVOICE-04 | Phase 4 | Pending |
 | INVOICE-05 | Phase 4 | Pending |
