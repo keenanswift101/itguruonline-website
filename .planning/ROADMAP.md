@@ -47,8 +47,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 4 plans (2 waves)
 Plans:
 - [x] 02-01-PLAN.md — DB schema (3 CRM tables) + capture: DB insert before email in register/contact routes (CRM-01, CRM-02)
-- [ ] 02-02-PLAN.md — Admin sidebar shell + CRM list page + GET list route + filterable table (CRM-03)
-- [ ] 02-03-PLAN.md — CRM detail page + status PATCH + append-only notes POST (CRM-04, CRM-05, CRM-06)
+- [x] 02-02-PLAN.md — Admin sidebar shell + CRM list page + GET list route + filterable table (CRM-03)
+- [x] 02-03-PLAN.md — CRM detail page + status PATCH + append-only notes POST (CRM-04, CRM-05, CRM-06)
 - [ ] 02-04-PLAN.md — CSV export route + reusable csvEscape helper (CRM-07)
 **UI hint**: yes
 
@@ -109,7 +109,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Auth + Database Foundation | 4/4 | Complete | 2026-06-30 |
-| 2. CRM Capture + Viewing | 1/4 | Executing | - |
+| 2. CRM Capture + Viewing | 3/4 | In Progress|  |
 | 3. Live Pricing Migration | 0/3 | Planned | - |
 | 4. Invoicing | 0/5 | Planned | - |
 | 5. Scheduled Automation | 0/TBD | Not started | - |
