@@ -3,6 +3,9 @@ import Image from "next/image";
 import { Suspense } from "react";
 import { RegistrationWizard } from "@/components/forms/RegistrationWizard";
 import { Reveal } from "@/components/ui/Reveal";
+import { getHostingPackages } from "@/lib/pricing";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Client Registration",
@@ -10,7 +13,8 @@ export const metadata: Metadata = {
     "Register for IT-Guru Online services — domain registration, web hosting, email hosting, and IT support. Complete our simple online application.",
 };
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
+  const packages = await getHostingPackages();
   return (
     <div className="relative overflow-hidden min-h-screen">
       <div className="fixed inset-0 -z-10">
@@ -43,14 +47,14 @@ export default function RegisterPage() {
 
       {/* Form content */}
       <div className="relative mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
-        <Reveal delayMs={80} className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-primary)] p-6 sm:p-8 shadow-sm">
-          <Suspense fallback={<div className="h-64 flex items-center justify-center text-[var(--text-secondary)]">Loading form…</div>}>
-            <RegistrationWizard />
+        <Reveal delayMs={80} className="rounded-2xl border border-(--border-color) bg-(--bg-primary) p-6 sm:p-8 shadow-sm">
+          <Suspense fallback={<div className="h-64 flex items-center justify-center text-(--text-secondary)">Loading form…</div>}>
+            <RegistrationWizard packages={packages} />
           </Suspense>
         </Reveal>
 
         {/* POPIA notice */}
-        <Reveal delayMs={160} className="mt-6 text-center text-xs text-[var(--text-secondary)]">
+        <Reveal delayMs={160} className="mt-6 text-center text-xs text-(--text-secondary)">
           <p>
             Your personal information is protected under the{" "}
             <strong>Protection of Personal Information Act (POPIA)</strong>.

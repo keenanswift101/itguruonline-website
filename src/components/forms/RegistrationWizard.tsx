@@ -18,8 +18,8 @@ import {
   defaultStepB,
   defaultStepC,
   defaultStepD,
-  HOSTING_PACKAGES,
 } from "@/lib/registration-types";
+import type { HostingPackageDTO } from "@/lib/pricing";
 
 // ── State ──────────────────────────────────────────────────────────────────
 interface WizardState {
@@ -81,8 +81,8 @@ function StepIndicator({ current }: { current: number }) {
                       done
                         ? "bg-primary-700 border-primary-700 text-white"
                         : active
-                        ? "bg-[var(--bg-primary)] border-primary-700 text-primary-700"
-                        : "bg-[var(--bg-primary)] border-[var(--border-color)] text-[var(--text-secondary)]"
+                        ? "bg-(--bg-primary) border-primary-700 text-primary-700"
+                        : "bg-(--bg-primary) border-(--border-color) text-(--text-secondary)"
                     }`}
                   >
                     {done ? (
@@ -94,10 +94,10 @@ function StepIndicator({ current }: { current: number }) {
                     )}
                   </div>
                   {i < STEPS.length - 1 && (
-                    <div className={`flex-1 h-0.5 mx-1 ${done ? "bg-primary-700" : "bg-[var(--border-color)]"}`} />
+                    <div className={`flex-1 h-0.5 mx-1 ${done ? "bg-primary-700" : "bg-(--border-color)"}`} />
                   )}
                 </div>
-                <span className={`mt-1 text-xs font-medium hidden sm:block ${active ? "text-primary-700" : "text-[var(--text-secondary)]"}`}>
+                <span className={`mt-1 text-xs font-medium hidden sm:block ${active ? "text-primary-700" : "text-(--text-secondary)"}`}>
                   {label}
                 </span>
               </div>
@@ -142,7 +142,7 @@ function SuccessView({ referenceId, name }: { referenceId: string; name: string 
 }
 
 // ── Wizard ─────────────────────────────────────────────────────────────────
-export function RegistrationWizard() {
+export function RegistrationWizard({ packages }: { packages: HostingPackageDTO[] }) {
   const searchParams = useSearchParams();
   const prefilledDomain = searchParams.get("domain") ?? "";
   const wizardRef = useRef<HTMLDivElement>(null);
@@ -232,7 +232,7 @@ export function RegistrationWizard() {
     );
   }
 
-  const selectedPkg = HOSTING_PACKAGES.find((p) => p.id === state.data.stepC.hostingPackage);
+  const selectedPkg = packages.find((p) => p.slug === state.data.stepC.hostingPackage);
 
   return (
     <div ref={wizardRef}>
@@ -260,6 +260,7 @@ export function RegistrationWizard() {
       {state.step === 2 && (
         <StepServiceSelection
           data={state.data.stepC}
+          packages={packages}
           onNext={(d) => dispatch({ type: "NEXT_C", payload: d })}
           onBack={() => dispatch({ type: "BACK" })}
         />
@@ -295,7 +296,7 @@ export function RegistrationWizard() {
             {selectedPkg && (
               <div className="flex justify-between">
                 <dt>Package:</dt>
-                <dd className="font-medium text-white">{selectedPkg.name} — {selectedPkg.price}</dd>
+                <dd className="font-medium text-white">{selectedPkg.name} — R{selectedPkg.priceRands}/{selectedPkg.pricePeriod}</dd>
               </div>
             )}
           </dl>
