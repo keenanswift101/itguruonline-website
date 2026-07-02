@@ -4,8 +4,8 @@ milestone: v2.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 4 waves 1-2 merged to dev (04-01/02/03 done). NEXT - execute 04-04 then 04-05, verify phase 4, then execute phase 5
-last_updated: "2026-07-02T07:13:59.171Z"
-last_activity: 2026-07-02
+last_updated: "2026-07-02T07:38:10.103Z"
+last_activity: 2026-07-02 -- Phase 04 execution started
 progress:
   total_phases: 5
   completed_phases: 3
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
-**Current focus:** Phase 02 — crm-capture-viewing (executing)
+**Current focus:** Phase 04 — invoicing
 
 ## Current Position
 
-Phase: 04
-Plan: 3 of 05 complete (wave 1, parallel execution)
-Status: Ready to execute
-Last activity: 2026-07-02
+Phase: 04 (invoicing) — EXECUTING
+Plan: 1 of 5
+Status: Executing Phase 04
+Last activity: 2026-07-02 -- Phase 04 execution started
 
 Progress: [██████░░░░] 55%
 
