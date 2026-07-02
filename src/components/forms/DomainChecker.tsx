@@ -40,10 +40,12 @@ function DomainRow({
   result,
   onSelect,
   isPrimary = false,
+  domainPrices = {},
 }: {
   result: TldResult;
   onSelect: (domain: string) => void;
   isPrimary?: boolean;
+  domainPrices?: Record<string, number | null>;
 }) {
   return (
     <div
@@ -63,6 +65,9 @@ function DomainRow({
       </div>
       <div className="flex items-center gap-3 shrink-0">
         <AvailabilityBadge available={result.available} error={result.error} />
+        {result.available && !result.error && domainPrices[result.tld] != null && (
+          <span className="text-xs text-slate-300">R{domainPrices[result.tld]}/yr</span>
+        )}
         {result.available && !result.error && (
           <Button size="sm" onClick={() => onSelect(result.domain)}>
             Register
@@ -75,9 +80,9 @@ function DomainRow({
 
 function SkeletonRow() {
   return (
-    <div className="flex items-center justify-between gap-4 rounded-lg border border-[var(--border-color)] px-4 py-3 animate-pulse">
-      <div className="h-5 w-48 rounded bg-[var(--bg-surface)]" />
-      <div className="h-6 w-20 rounded-full bg-[var(--bg-surface)]" />
+    <div className="flex items-center justify-between gap-4 rounded-lg border border-(--border-color) px-4 py-3 animate-pulse">
+      <div className="h-5 w-48 rounded bg-(--bg-surface)" />
+      <div className="h-6 w-20 rounded-full bg-(--bg-surface)" />
     </div>
   );
 }
@@ -85,10 +90,12 @@ function SkeletonRow() {
 export function DomainChecker({
   initialDomain = "",
   primaryTld = PRIMARY_TLD,
+  domainPrices = {},
 }: {
   initialDomain?: string;
   /** Override the TLD shown in the input suffix and marked as "Recommended". Defaults to PRIMARY_TLD from domain-validator. */
   primaryTld?: string;
+  domainPrices?: Record<string, number | null>;
 }) {
   const [input, setInput] = useState(initialDomain);
   const [state, setState] = useState<CheckState>("idle");
@@ -198,24 +205,24 @@ export function DomainChecker({
       {state === "done" && result && (
         <div className="mt-6 flex flex-col gap-2" role="status" aria-live="polite" aria-label="Domain availability results">
       {/* Primary result (the configured primaryTld) */}
-          <DomainRow result={result.primary} onSelect={handleSelect} isPrimary />
+          <DomainRow result={result.primary} onSelect={handleSelect} isPrimary domainPrices={domainPrices} />
 
           {/* Divider */}
           {result.alternatives.length > 0 && (
-            <p className="mt-2 mb-1 text-xs font-semibold uppercase tracking-wide text-[var(--text-secondary)]">
+            <p className="mt-2 mb-1 text-xs font-semibold uppercase tracking-wide text-(--text-secondary)">
               Also available as
             </p>
           )}
 
           {/* Alternative TLDs */}
           {result.alternatives.map((alt) => (
-            <DomainRow key={alt.tld} result={alt} onSelect={handleSelect} />
+            <DomainRow key={alt.tld} result={alt} onSelect={handleSelect} domainPrices={domainPrices} />
           ))}
 
           {/* All taken nudge */}
           {!result.primary.available &&
             result.alternatives.every((a) => !a.available) && (
-              <p className="mt-3 text-sm text-[var(--text-secondary)]">
+              <p className="mt-3 text-sm text-(--text-secondary)">
                 All checked TLDs are taken. Try a variation of your name — add words
                 like your city, industry, or a keyword.
               </p>
