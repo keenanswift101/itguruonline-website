@@ -9,8 +9,8 @@ import {
   validateStepD,
 } from "@/lib/registration-validators";
 import type { RegistrationFormData } from "@/lib/registration-types";
-import { HOSTING_PACKAGES } from "@/lib/registration-types";
 import { sendEmail, emailLayout, escapeHtml, ADMIN_EMAIL } from "@/lib/email";
+import { getHostingPackages } from "@/lib/pricing";
 import { db } from "@/lib/db/index";
 import { clientRegistrations } from "@/lib/db/schema";
 
@@ -152,8 +152,15 @@ export async function POST(req: NextRequest) {
   }
 
   // ── Send confirmation email to client + notification to admin ──────────
-  const hostingPackageName =
-    HOSTING_PACKAGES.find((p) => p.id === clean.stepC.hostingPackage)?.name ?? "None selected";
+  // Look up the human-readable package name from DB (best-effort — fallback to slug if DB unavailable)
+  let hostingPackageName = clean.stepC.hostingPackage
+    ? clean.stepC.hostingPackage.charAt(0).toUpperCase() + clean.stepC.hostingPackage.slice(1)
+    : "None selected";
+  try {
+    const pkgs = await getHostingPackages();
+    const match = pkgs.find((p) => p.slug === clean.stepC.hostingPackage);
+    if (match) hostingPackageName = match.name;
+  } catch { /* DB unavailable — fallback to slug-based name */ }
 
   const selectedExtras = [
     clean.stepC.domainRegistration && "Domain Registration",

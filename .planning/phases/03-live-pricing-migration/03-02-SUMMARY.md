@@ -54,7 +54,7 @@ Migrated all four public-facing pricing reads from hardcoded TypeScript constant
 - **DTO shape (no Dates):** `HostingPackageDTO` excludes `createdAt`/`updatedAt` (Date objects) — Next.js throws when passing non-serializable values from server to `"use client"` components. The DTO is the safe boundary.
 - **`?? null` not `|| null`:** `getDomainPriceMap` uses nullish coalescing so a legitimate price of `0` is preserved; `|| null` would incorrectly treat `0` as falsy.
 - **`HostingPackage` type widened to `string`:** The old union `"startup" | "basic" | ...` was a compile-time mirror of the hardcoded array. With the DB as authority, the slug can be any string — tightening it again would require a code change whenever a package is added via admin UI.
-- **register/route.ts email lookup:** Rather than making the email hard-depend on DB availability, a best-effort `getHostingPackages()` call resolves the display name with a slug-capitalization fallback (`"startup"` → `"Startup"`). Email confirmation still sends even if the DB is momentarily unavailable.
+- **register/route.ts email lookup:** Rather than making the email hard-depend on DB availability, a best-effort `getHostingPackages()` call resolves the display name with a slug-capitalization fallback (`"startup"` -> `"Startup"`). Email confirmation still sends even if the DB is momentarily unavailable.
 - **Schema added in this plan:** `hostingPackages`, `domainPrices`, `siteSettings` table definitions were added to `schema.ts` here because the worktree was branched before Plan 03-01 ran. Plan 03-01 adds the same definitions — the merge will be a trivial no-op conflict.
 
 ## Deviations from Plan

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-01-PLAN.md — pricing schema + migration seed
-last_updated: "2026-07-02T06:02:01.011Z"
+stopped_at: Completed 03-02-PLAN.md — public pricing migration
+last_updated: "2026-07-02T06:09:48.793Z"
 last_activity: 2026-07-02
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 22
-  completed_plans: 9
+  completed_plans: 8
   percent: 23
 ---
 
@@ -21,12 +21,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
-**Current focus:** Phase 03 — live-pricing-migration
+**Current focus:** Phase 02 — crm-capture-viewing (executing)
 
 ## Current Position
 
-Phase: 03 (live-pricing-migration) — EXECUTING
-Plan: 2 of 3
+Phase: 03
+Plan: Not started
 Status: Ready to execute
 Last activity: 2026-07-02
 
@@ -53,7 +53,7 @@ Progress: [███░░░░░░░] 23%
 
 *Updated after each plan completion*
 | Phase 02 P03 | 1014 | 3 tasks | 10 files |
-| Phase 03 P01 | 8 | 2 tasks | 4 files |
+| Phase 03 P02 | 35 | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -72,9 +72,7 @@ Recent decisions affecting current work:
 - [Phase 02]: parseCrmId used in both API routes and page to keep disambiguation logic in one place (crm-types.ts)
 - [Phase 02]: Card.tsx upgraded to Tailwind v4 canonical syntax per CLAUDE.md enforcement
 - [Phase 02]: Notes route strips HTML and javascript: URIs inline (append-only, stored XSS prevention)
-- [Phase 03]: Prices stored as INTEGER rands (not cents, not decimal) — aligns with CLAUDE.md constraint
-- [Phase 03]: Migration named 0002_pricing_tables (not 0001 as plan assumed) — worktree had 0000+0001 from Phase 1/2 already
-- [Phase 03]: db:migrate intentionally NOT run during plan execution — migration runs at Netlify deploy time, before Plan 03-02 removes TS consts
+- [Phase 03]: HostingPackageDTO excludes Date fields for safe server->client serialization; HostingPackage type widened to string (DB slug is authority); getDomainPriceMap uses ?? null to preserve 0-price semantics
 
 ### Pending Todos
 
@@ -88,6 +86,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-02T06:02:01.003Z
-Stopped at: Completed 03-01-PLAN.md — pricing schema + migration seed
+Last session: 2026-07-02T06:09:48.788Z
+Stopped at: Completed 03-02-PLAN.md — public pricing migration
 Resume file: None

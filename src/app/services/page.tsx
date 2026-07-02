@@ -3,6 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { CTAPanelBackground } from "@/components/ui/CTAPanelBackground";
 import { Reveal } from "@/components/ui/Reveal";
+import { getHostingPackages, getSiteSettings } from "@/lib/pricing";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Our Services",
@@ -129,61 +132,9 @@ const services = [
   },
 ];
 
-const packages = [
-  {
-    name: "Startup",
-    price: "R85",
-    period: "/month",
-    description: "Perfect for personal sites and small businesses just getting started online.",
-    features: ["1 Website", "1 GB SSD Storage", "2 Databases", "Free SSL Certificate", "Unlimited Mailboxes", "50 Emails/hour", "Unlimited Traffic", "Free Migration"],
-    highlight: false,
-  },
-  {
-    name: "Basic",
-    price: "R99",
-    period: "/month",
-    description: "Our most popular plan — ideal for growing small businesses.",
-    features: ["3 Websites", "5 GB SSD Storage", "3 Subdomains", "6 Databases", "Free SSL Certificate", "Unlimited Mailboxes", "100 Emails/hour", "Unlimited Traffic", "Free Migration"],
-    highlight: true,
-  },
-  {
-    name: "Standard",
-    price: "R149",
-    period: "/month",
-    description: "More room to grow, with extra websites and resources.",
-    features: ["5 Websites", "10 GB SSD Storage", "5 Subdomains", "10 Databases", "Free SSL Certificate", "Unlimited Mailboxes", "200 Emails/hour", "Unlimited Traffic", "Free Migration"],
-    highlight: false,
-  },
-  {
-    name: "Advanced",
-    price: "R279",
-    period: "/month",
-    description: "For established businesses running multiple sites.",
-    features: ["10 Websites", "20 GB SSD Storage", "10 Subdomains", "20 Databases", "Free SSL Certificate", "Unlimited Mailboxes", "500 Emails/hour", "Unlimited Traffic", "Free Migration"],
-    highlight: false,
-  },
-  {
-    name: "Enterprise",
-    price: "R399",
-    period: "/month",
-    description: "Maximum resources for agencies and high-traffic businesses.",
-    features: ["20 Websites", "30 GB SSD Storage", "20 Subdomains", "40 Databases", "Free SSL Certificate", "Unlimited Mailboxes", "1000 Emails/hour", "Unlimited Traffic", "Free Migration"],
-    highlight: false,
-  },
-  {
-    name: "Parked Domain",
-    price: "R35",
-    period: "/month",
-    description: "Reserve your domain online while you plan your website — upgrade anytime.",
-    features: ["Holds your domain online", "No website hosting included", "Upgrade anytime"],
-    highlight: false,
-  },
-];
-
-const HOSTING_SETUP_FEE_NOTE =
-  "New hosting accounts include a once-off R395 cPanel account setup, configuration, and migration-assistance fee.";
-
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const packages = await getHostingPackages();
+  const settings = await getSiteSettings();
   return (
     <div className="relative">
       <div className="fixed inset-0 -z-10">
@@ -296,15 +247,15 @@ export default function ServicesPage() {
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {packages.map((pkg, i) => (
               <Reveal
-                key={pkg.name}
+                key={pkg.slug}
                 delayMs={i * 80}
                 className={`relative rounded-2xl p-6 flex flex-col ${
-                  pkg.highlight
+                  pkg.isPopular
                     ? "bg-metallic-navy text-white border-2 border-[#00aaff] shadow-[0_0_40px_-4px_rgba(0,170,255,0.65)]"
                     : "border border-white/15 bg-white/8 backdrop-blur-sm"
                 }`}
               >
-                {pkg.highlight && (
+                {pkg.isPopular && (
                   <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center rounded-full bg-[#00aaff] px-3 py-0.5 text-xs font-semibold text-white shadow-[0_0_12px_2px_rgba(0,170,255,0.7)]">
                     Most Popular
                   </span>
@@ -314,20 +265,20 @@ export default function ServicesPage() {
                 </h3>
                 <div className="mt-3 flex items-baseline gap-1">
                   <span className="text-3xl font-extrabold text-white">
-                    {pkg.price}
+                    {`R${pkg.priceRands}`}
                   </span>
-                  <span className={`text-sm ${pkg.highlight ? "text-blue-200" : "text-slate-300"}`}>
-                    {pkg.period}
+                  <span className={`text-sm ${pkg.isPopular ? "text-blue-200" : "text-slate-300"}`}>
+                    {`/${pkg.pricePeriod === "mo" ? "month" : "year"}`}
                   </span>
                 </div>
-                <p className={`mt-3 text-sm ${pkg.highlight ? "text-blue-200" : "text-slate-300"}`}>
+                <p className={`mt-3 text-sm ${pkg.isPopular ? "text-blue-200" : "text-slate-300"}`}>
                   {pkg.description}
                 </p>
                 <ul className="mt-5 space-y-2.5 flex-1">
                   {pkg.features.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-sm">
                       <svg
-                        className={`mt-0.5 h-4 w-4 shrink-0 ${pkg.highlight ? "text-[#00aaff]" : "text-primary-400"}`}
+                        className={`mt-0.5 h-4 w-4 shrink-0 ${pkg.isPopular ? "text-[#00aaff]" : "text-primary-400"}`}
                         fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"
                       >
                         <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
@@ -337,16 +288,16 @@ export default function ServicesPage() {
                   ))}
                 </ul>
                 <div className="mt-8">
-                  {pkg.highlight ? (
+                  {pkg.isPopular ? (
                     <Link
-                      href={`/register?package=${pkg.name.toLowerCase()}`}
+                      href={`/register?package=${pkg.slug}`}
                       className="inline-flex w-full items-center justify-center h-10 px-4 text-base font-medium rounded-[10px] bg-white text-blue-700 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-900"
                     >
                       Get Started
                     </Link>
                   ) : (
                     <Link
-                      href={`/register?package=${pkg.name.toLowerCase()}`}
+                      href={`/register?package=${pkg.slug}`}
                       className="inline-flex w-full items-center justify-center h-10 px-4 text-base font-medium rounded-[10px] border border-white/30 text-white hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-slate-900"
                     >
                       Get Started
@@ -358,7 +309,7 @@ export default function ServicesPage() {
           </div>
 
           <Reveal delayMs={480} className="mt-8 text-center">
-            <p className="text-sm text-slate-400">{HOSTING_SETUP_FEE_NOTE}</p>
+            <p className="text-sm text-slate-400">{settings.hosting_setup_fee_note}</p>
           </Reveal>
 
           {/* Domain registration callout */}

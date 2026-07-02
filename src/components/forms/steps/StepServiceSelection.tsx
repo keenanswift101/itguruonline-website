@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, type ChangeEvent } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import type { StepCData, HostingPackage } from "@/lib/registration-types";
-import { HOSTING_PACKAGES } from "@/lib/registration-types";
+import type { StepCData } from "@/lib/registration-types";
+import type { HostingPackageDTO } from "@/lib/pricing";
 import { validateStepC } from "@/lib/registration-validators";
 
 interface StepCProps {
   data: StepCData;
+  packages: HostingPackageDTO[];
   onNext: (data: StepCData) => void;
   onBack: () => void;
 }
@@ -19,11 +20,11 @@ const ADDONS = [
   { key: "websiteDesign" as const, label: "Website Design", desc: "Professional website design and development", price: "Quote provided" },
 ];
 
-export function StepServiceSelection({ data, onNext, onBack }: StepCProps) {
+export function StepServiceSelection({ data, packages, onNext, onBack }: StepCProps) {
   const [fields, setFields] = useState<StepCData>(data);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  function selectPackage(pkg: HostingPackage) {
+  function selectPackage(pkg: string) {
     setFields((prev) => ({ ...prev, hostingPackage: pkg }));
     if (errors.hostingPackage) setErrors((prev) => { const next = { ...prev }; delete next.hostingPackage; return next; });
   }
@@ -55,15 +56,15 @@ export function StepServiceSelection({ data, onNext, onBack }: StepCProps) {
           role="radiogroup"
           aria-labelledby="hosting-pkg-label"
         >
-          {HOSTING_PACKAGES.map((pkg) => {
-            const selected = fields.hostingPackage === pkg.id;
+          {packages.map((pkg) => {
+            const selected = fields.hostingPackage === pkg.slug;
             return (
               <button
-                key={pkg.id}
+                key={pkg.slug}
                 type="button"
                 role="radio"
                 aria-checked={selected}
-                onClick={() => selectPackage(pkg.id)}
+                onClick={() => selectPackage(pkg.slug)}
                 className={`text-left rounded-xl border-2 p-4 transition-all focus:outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer ${
                   selected
                     ? "border-primary-700 bg-primary-50/60 dark:bg-primary-900/20"
@@ -73,7 +74,7 @@ export function StepServiceSelection({ data, onNext, onBack }: StepCProps) {
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <p className="font-semibold text-(--text-primary)">{pkg.name}</p>
-                    <p className="text-primary-700 font-bold mt-0.5">{pkg.price}</p>
+                    <p className="text-primary-700 font-bold mt-0.5">R{pkg.priceRands}/{pkg.pricePeriod}</p>
                   </div>
                   <div className={`mt-0.5 h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                     selected ? "border-primary-700 bg-primary-700" : "border-(--border-color)"

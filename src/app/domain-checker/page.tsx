@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { DomainChecker } from "@/components/forms/DomainChecker";
 import { Reveal } from "@/components/ui/Reveal";
+import { getDomainPriceMap } from "@/lib/pricing";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Domain Availability Checker",
@@ -9,7 +12,8 @@ export const metadata: Metadata = {
     "Check if your perfect domain name is available. Search .co.za, .com, .net, .org, .online, and .africa domains instantly. Register directly with IT-Guru Online.",
 };
 
-export default function DomainCheckerPage() {
+export default async function DomainCheckerPage() {
+  const domainPrices = await getDomainPriceMap();
   return (
     <div className="relative overflow-hidden min-h-screen">
       <div className="fixed inset-0 -z-10">
@@ -42,7 +46,7 @@ export default function DomainCheckerPage() {
             When you find the right one, register it directly with IT-Guru Online.
           </p>
           <div className="mt-10">
-            <DomainChecker />
+            <DomainChecker domainPrices={domainPrices} />
           </div>
         </Reveal>
       </section>
