@@ -1,4 +1,4 @@
-| AUTOMATE-04 | Phase 5 | Pending || AUTOMATE-03 | Phase 5 | Pending || AUTOMATE-02 | Phase 5 | Pending || AUTOMATE-01 | Phase 5 | Pending || INVOICE-07 | Phase 4 | Pending || INVOICE-06 | Phase 4 | Pending || INVOICE-05 | Phase 4 | Pending || INVOICE-04 | Phase 4 | Pending || INVOICE-03 | Phase 4 | Pending || INVOICE-02 | Phase 4 | Pending || INVOICE-01 | Phase 4 | Pending || PRICE-05 | Phase 3 | Complete || PRICE-04 | Phase 3 | Complete || PRICE-03 | Phase 3 | Pending || PRICE-02 | Phase 3 | Complete || PRICE-01 | Phase 3 | Pending || CRM-07 | Phase 2 | Pending || CRM-06 | Phase 2 | Complete || CRM-05 | Phase 2 | Complete || CRM-04 | Phase 2 | Complete || CRM-03 | Phase 2 | Pending || CRM-02 | Phase 2 | Pending || CRM-01 | Phase 2 | Pending || AUTH-04 | Phase 1 | Pending || AUTH-03 | Phase 1 | Pending || AUTH-02 | Phase 1 | Pending || AUTH-01 | Phase 1 | Pending |# Requirements: IT-Guru Online — v2.0 Admin Portal
+| AUTOMATE-04 | Phase 5 | Pending || AUTOMATE-03 | Phase 5 | Pending || AUTOMATE-02 | Phase 5 | Pending || AUTOMATE-01 | Phase 5 | Pending || INVOICE-07 | Phase 4 | Pending || INVOICE-06 | Phase 4 | Pending || INVOICE-05 | Phase 4 | Pending || INVOICE-04 | Phase 4 | Pending || INVOICE-03 | Phase 4 | Pending || INVOICE-02 | Phase 4 | Pending || INVOICE-01 | Phase 4 | Pending || PRICE-05 | Phase 3 | Complete || PRICE-04 | Phase 3 | Complete || PRICE-03 | Phase 3 | Complete || PRICE-02 | Phase 3 | Complete || PRICE-01 | Phase 3 | Complete || CRM-07 | Phase 2 | Pending || CRM-06 | Phase 2 | Complete || CRM-05 | Phase 2 | Complete || CRM-04 | Phase 2 | Complete || CRM-03 | Phase 2 | Pending || CRM-02 | Phase 2 | Pending || CRM-01 | Phase 2 | Pending || AUTH-04 | Phase 1 | Pending || AUTH-03 | Phase 1 | Pending || AUTH-02 | Phase 1 | Pending || AUTH-01 | Phase 1 | Pending |# Requirements: IT-Guru Online — v2.0 Admin Portal
 
 **Defined:** 2026-06-30
 **Core Value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
@@ -26,9 +26,9 @@ Requirements for the v2.0 Admin Portal milestone. Each maps to roadmap phases.
 
 ### Pricing
 
-- [ ] **PRICE-01**: Owner can edit a hosting package's price, description, features, and "Most Popular" label
+- [x] **PRICE-01**: Owner can edit a hosting package's price, description, features, and "Most Popular" label
 - [x] **PRICE-02**: Hosting price edits appear on the public Services page and registration wizard within seconds, with no code deploy
-- [ ] **PRICE-03**: Owner can add/edit per-TLD domain registration prices (.co.za, .com, .net, .org, .online, .africa)
+- [x] **PRICE-03**: Owner can add/edit per-TLD domain registration prices (.co.za, .com, .net, .org, .online, .africa)
 - [x] **PRICE-04**: Domain prices appear on the public site in place of "request a quote"
 - [x] **PRICE-05**: Owner can update site settings (contact email, hosting setup-fee note) without a code change
 
@@ -98,9 +98,9 @@ Filled in by the roadmapper during roadmap creation.
 | CRM-05 | Phase 2 | Complete |
 | CRM-06 | Phase 2 | Complete |
 | CRM-07 | Phase 2 | Pending |
-| PRICE-01 | Phase 3 | Pending |
+| PRICE-01 | Phase 3 | Complete |
 | PRICE-02 | Phase 3 | Complete |
-| PRICE-03 | Phase 3 | Pending |
+| PRICE-03 | Phase 3 | Complete |
 | PRICE-04 | Phase 3 | Complete |
 | PRICE-05 | Phase 3 | Complete |
 | INVOICE-01 | Phase 4 | Pending |
