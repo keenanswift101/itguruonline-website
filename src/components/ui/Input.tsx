@@ -10,7 +10,7 @@ export function Input({ label, error, id, className = "", ...props }: InputProps
   return (
     <div className="flex flex-col gap-1">
       {label && (
-        <label htmlFor={id} className="text-sm font-medium text-[var(--text-primary)]">
+        <label htmlFor={id} className="text-sm font-medium text-(--text-primary)">
           {label}
         </label>
       )}
@@ -18,7 +18,7 @@ export function Input({ label, error, id, className = "", ...props }: InputProps
         id={id}
         aria-invalid={error ? true : undefined}
         aria-describedby={error && errorId ? errorId : undefined}
-        className={`h-10 rounded-lg border px-3 bg-[var(--bg-primary)] text-[var(--text-primary)] border-[var(--border-color)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:opacity-50 disabled:cursor-not-allowed ${
+        className={`h-10 rounded-lg border px-3 bg-(--bg-primary) text-(--text-primary) border-(--border-color) placeholder:text-(--text-secondary) focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:opacity-50 disabled:cursor-not-allowed ${
           error ? "ring-2 ring-error border-error" : ""
         } ${className}`}
         {...props}

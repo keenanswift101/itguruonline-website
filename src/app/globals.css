@@ -1,6 +1,18 @@
 @import "tailwindcss";
 
 /*
+ * Exclude documentation/planning markdown from Tailwind's automatic content
+ * scan. CLAUDE.md and .planning/**\/*.md contain literal bracket-syntax
+ * class name EXAMPLES (e.g. "text-[var(--text-secondary)]") in prose
+ * explaining what NOT to write — the JIT scanner picks these up as
+ * candidate utilities and generates unparsable CSS (`--...` placeholder
+ * token), crashing the entire dev server / build. No component code lives
+ * in these files, so excluding them is safe.
+ */
+@source not "../../CLAUDE.md";
+@source not "../../.planning/**/*.md";
+
+/*
  * IT-Guru.Online Design System Tokens
  * Based on: .github/skills/ui-ux-design/SKILL.md
  */
