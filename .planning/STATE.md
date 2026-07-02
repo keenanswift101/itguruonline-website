@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-02-PLAN.md — public pricing migration
-last_updated: "2026-07-02T06:09:48.793Z"
+stopped_at: Completed 03-03-PLAN.md — admin pricing portal
+last_updated: "2026-07-02T06:25:07.454Z"
 last_activity: 2026-07-02
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 22
-  completed_plans: 8
+  completed_plans: 10
   percent: 23
 ---
 
@@ -54,6 +54,7 @@ Progress: [███░░░░░░░] 23%
 *Updated after each plan completion*
 | Phase 02 P03 | 1014 | 3 tasks | 10 files |
 | Phase 03 P02 | 35 | 3 tasks | 10 files |
+| Phase 03 P03 | 578 | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,8 @@ Recent decisions affecting current work:
 - [Phase 02]: Card.tsx upgraded to Tailwind v4 canonical syntax per CLAUDE.md enforcement
 - [Phase 02]: Notes route strips HTML and javascript: URIs inline (append-only, stored XSS prevention)
 - [Phase 03]: HostingPackageDTO excludes Date fields for safe server->client serialization; HostingPackage type widened to string (DB slug is authority); getDomainPriceMap uses ?? null to preserve 0-price semantics
+- [Phase 03]: requireAdmin() called first in every pricing PATCH route — 401 returned before any JSON parse or DB access
+- [Phase 03]: vi.mock(next/headers) required for vitest to test routes using cookies() — same pattern as Phase 2 CRM tests
 
 ### Pending Todos
 
@@ -86,6 +89,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-02T06:09:48.788Z
-Stopped at: Completed 03-02-PLAN.md — public pricing migration
+Last session: 2026-07-02T06:25:07.448Z
+Stopped at: Completed 03-03-PLAN.md — admin pricing portal
 Resume file: None
