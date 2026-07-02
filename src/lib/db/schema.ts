@@ -72,3 +72,38 @@ export const crmNotes = pgTable("crm_notes", {
   body: text("body").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
+
+export const hostingPackages = pgTable("hosting_packages", {
+  id: serial("id").primaryKey(),
+  slug: varchar("slug", { length: 32 }).notNull().unique(),
+  name: varchar("name", { length: 64 }).notNull(),
+  priceRands: integer("price_rands").notNull(),
+  pricePeriod: varchar("price_period", { length: 8 }).notNull().default("mo"),
+  description: text("description").notNull().default(""),
+  features: text("features").notNull().default(""), // newline-separated
+  isPopular: boolean("is_popular").notNull().default(false),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
+
+export const domainPrices = pgTable("domain_prices", {
+  tld: varchar("tld", { length: 16 }).primaryKey(),
+  priceRands: integer("price_rands"), // nullable — NULL = no price shown
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
+
+export const siteSettings = pgTable("site_settings", {
+  key: varchar("key", { length: 64 }).primaryKey(),
+  value: text("value").notNull().default(""),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
