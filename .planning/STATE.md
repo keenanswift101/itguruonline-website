@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-04-PLAN.md
-last_updated: "2026-07-02T05:11:14.172Z"
+stopped_at: Completed 02-03-PLAN.md — CRM detail view, status + notes
+last_updated: "2026-07-02T05:24:12.659Z"
 last_activity: 2026-07-02
 progress:
   total_phases: 5
@@ -52,7 +52,7 @@ Progress: [███░░░░░░░] 23%
 - Trend: -
 
 *Updated after each plan completion*
-| Phase 02 P04 | 28 | 2 tasks | 4 files |
+| Phase 02 P03 | 1014 | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -68,7 +68,9 @@ Recent decisions affecting current work:
 - IT-Guru is not VAT-registered — invoices must use plain "Invoice" labeling, no VAT fields or "Tax Invoice" wording.
 - POPIA data-region: no region prompt offered by Netlify — non-configurable, inherited from platform default. Documented in PROVISIONING-NOTES.md.
 - **proxy.ts REMOVED** — Next.js 16 Turbopack emits chunks Netlify's edge bundler cannot resolve. `/admin/*` auth enforced exclusively via page-level `requireAdmin()` (layout + route handler calls). No proxy layer. See PROVISIONING-NOTES.md OQ1.
-- [Phase 02]: buildCsvBody() extracted as exported pure function to enable unit testing of header layout and RFC 4180 escaping without DB or auth
+- [Phase 02]: parseCrmId used in both API routes and page to keep disambiguation logic in one place (crm-types.ts)
+- [Phase 02]: Card.tsx upgraded to Tailwind v4 canonical syntax per CLAUDE.md enforcement
+- [Phase 02]: Notes route strips HTML and javascript: URIs inline (append-only, stored XSS prevention)
 
 ### Pending Todos
 
@@ -82,6 +84,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-02T05:11:14.166Z
-Stopped at: Completed 02-04-PLAN.md
+Last session: 2026-07-02T05:24:12.652Z
+Stopped at: Completed 02-03-PLAN.md — CRM detail view, status + notes
 Resume file: None

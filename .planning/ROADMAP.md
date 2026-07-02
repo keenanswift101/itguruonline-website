@@ -48,8 +48,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 - [x] 02-01-PLAN.md — DB schema (3 CRM tables) + capture: DB insert before email in register/contact routes (CRM-01, CRM-02)
 - [x] 02-02-PLAN.md — Admin sidebar shell + CRM list page + GET list route + filterable table (CRM-03)
-- [ ] 02-03-PLAN.md — CRM detail page + status PATCH + append-only notes POST (CRM-04, CRM-05, CRM-06)
-- [x] 02-04-PLAN.md — CSV export route + reusable csvEscape helper (CRM-07)
+- [x] 02-03-PLAN.md — CRM detail page + status PATCH + append-only notes POST (CRM-04, CRM-05, CRM-06)
+- [ ] 02-04-PLAN.md — CSV export route + reusable csvEscape helper (CRM-07)
 **UI hint**: yes
 
 ### Phase 3: Live Pricing Migration
