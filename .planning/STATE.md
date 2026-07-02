@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-03-PLAN.md — CRM detail view, status + notes
-last_updated: "2026-07-02T05:51:20.169Z"
+stopped_at: Completed 03-02-PLAN.md — public pricing migration
+last_updated: "2026-07-02T06:09:48.793Z"
 last_activity: 2026-07-02
 progress:
   total_phases: 5
@@ -53,6 +53,7 @@ Progress: [███░░░░░░░] 23%
 
 *Updated after each plan completion*
 | Phase 02 P03 | 1014 | 3 tasks | 10 files |
+| Phase 03 P02 | 35 | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,7 @@ Recent decisions affecting current work:
 - [Phase 02]: parseCrmId used in both API routes and page to keep disambiguation logic in one place (crm-types.ts)
 - [Phase 02]: Card.tsx upgraded to Tailwind v4 canonical syntax per CLAUDE.md enforcement
 - [Phase 02]: Notes route strips HTML and javascript: URIs inline (append-only, stored XSS prevention)
+- [Phase 03]: HostingPackageDTO excludes Date fields for safe server->client serialization; HostingPackage type widened to string (DB slug is authority); getDomainPriceMap uses ?? null to preserve 0-price semantics
 
 ### Pending Todos
 
@@ -84,6 +86,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-02T05:24:12.652Z
-Stopped at: Completed 02-03-PLAN.md — CRM detail view, status + notes
+Last session: 2026-07-02T06:09:48.788Z
+Stopped at: Completed 03-02-PLAN.md — public pricing migration
 Resume file: None

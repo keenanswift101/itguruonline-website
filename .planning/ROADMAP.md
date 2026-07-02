@@ -110,6 +110,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Auth + Database Foundation | 4/4 | Complete | 2026-06-30 |
 | 2. CRM Capture + Viewing | 3/4 | In Progress|  |
-| 3. Live Pricing Migration | 0/3 | Planned | - |
+| 3. Live Pricing Migration | 0/3 | Planned    |  |
 | 4. Invoicing | 0/5 | Planned | - |
 | 5. Scheduled Automation | 0/TBD | Not started | - |
