@@ -15,7 +15,9 @@ export async function GET() {
     </Document>
   );
 
-  return new Response(buffer, {
+  // new Uint8Array(...) — Buffer<ArrayBufferLike> is rejected by the DOM BodyInit
+  // type under this tsconfig even though it works at runtime; Uint8Array is clean.
+  return new Response(new Uint8Array(buffer), {
     headers: {
       "Content-Type": "application/pdf",
       "Cache-Control": "private, no-store",
