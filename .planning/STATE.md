@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-02-PLAN.md — invoice create/edit API routes
-last_updated: "2026-07-02T06:58:02.874Z"
+stopped_at: Completed 04-03-PLAN.md — status/PDF/CSV invoice routes
+last_updated: "2026-07-02T07:13:59.171Z"
 last_activity: 2026-07-02
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 22
-  completed_plans: 12
+  completed_plans: 14
   percent: 55
 ---
 
@@ -26,8 +26,8 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 04
-Plan: 02 of 05 complete (wave 1, parallel execution)
-Status: Executing phase 04
+Plan: 3 of 05 complete (wave 1, parallel execution)
+Status: Ready to execute
 Last activity: 2026-07-02
 
 Progress: [██████░░░░] 55%
@@ -56,6 +56,7 @@ Progress: [██████░░░░] 55%
 | Phase 03 P02 | 35 | 3 tasks | 10 files |
 | Phase 03 P03 | 578 | 3 tasks | 10 files |
 | Phase 04-invoicing P02 | 9min | 2 tasks | 8 files |
+| Phase 04-invoicing P03 | 8min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -79,6 +80,9 @@ Recent decisions affecting current work:
 - [Phase 03]: vi.mock(next/headers) required for vitest to test routes using cookies() — same pattern as Phase 2 CRM tests
 - [Phase 04-invoicing]: neon-http db.transaction() throws in drizzle-orm 0.45.2 — all multi-statement atomic writes must use withTxDb() (src/lib/db/tx.ts, per-request WebSocket Pool)
 - [Phase 04-invoicing]: PUT invoice 409 draft-lock re-checked inside the transaction UPDATE where-clause (EditLockError rollback) — race-proof beyond the pre-check
+- [Phase 04-invoicing]: Status transitions enforced via server-side allowed-transition map; draft->sent assigns gapless number in single atomic UPDATE with correlated MAX+1 subquery on neon-http (no FOR UPDATE)
+- [Phase 04-invoicing]: sent->draft clears fiscal_year/sequence_number — re-sending assigns a fresh invoice number (D-06 recommendation)
+- [Phase 04-invoicing]: InvoiceDocument.tsx bank footer uses bracketed placeholder EFT values — owner must fill real account details before first live invoice
 
 ### Pending Todos
 
@@ -92,6 +96,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-02T06:58:02.868Z
-Stopped at: Completed 04-02-PLAN.md — invoice create/edit API routes
+Last session: 2026-07-02T07:13:59.166Z
+Stopped at: Completed 04-03-PLAN.md — status/PDF/CSV invoice routes
 Resume file: None

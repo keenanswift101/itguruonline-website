@@ -83,9 +83,9 @@ Plans:
   7. Owner can export the invoice list as CSV or PDF for their own review/record-keeping
 **Plans**: 5 plans (2 waves)
 Plans:
-- [ ] 04-01-PLAN.md — DB schema (invoices + invoice_line_items) + 0002 migration + @react-pdf/renderer install + Wave 0 test stubs + PDF smoke-test route
+- [x] 04-01-PLAN.md — DB schema (invoices + invoice_line_items) + 0002 migration + @react-pdf/renderer install + Wave 0 test stubs + PDF smoke-test route
 - [x] 04-02-PLAN.md — POST create + PUT update (409 edit lock) + DELETE draft API routes
-- [ ] 04-03-PLAN.md — PATCH status (gapless numbering, mark paid) + PDF document/route + CSV export
+- [x] 04-03-PLAN.md — PATCH status (gapless numbering, mark paid) + PDF document/route + CSV export
 - [ ] 04-04-PLAN.md — Admin invoice list page (filter + overdue badge + CSV export) + create form
 - [ ] 04-05-PLAN.md — Admin invoice detail page (edit Draft / read-only + status actions + PDF download)
 **UI hint**: yes
