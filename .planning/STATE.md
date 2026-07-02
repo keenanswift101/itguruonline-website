@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-01-PLAN.md — invoicing foundation (schema, migration, PDF smoke test, Wave 0 stubs)
-last_updated: "2026-07-02T06:55:04.454Z"
+stopped_at: Completed 04-02-PLAN.md — invoice create/edit API routes
+last_updated: "2026-07-02T06:58:02.874Z"
 last_activity: 2026-07-02
 progress:
   total_phases: 5
@@ -26,8 +26,8 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 04
-Plan: 1 of 5 complete (04-01 invoicing foundation)
-Status: Executing
+Plan: 02 of 05 complete (wave 1, parallel execution)
+Status: Executing phase 04
 Last activity: 2026-07-02
 
 Progress: [██████░░░░] 55%
@@ -55,7 +55,7 @@ Progress: [██████░░░░] 55%
 | Phase 02 P03 | 1014 | 3 tasks | 10 files |
 | Phase 03 P02 | 35 | 3 tasks | 10 files |
 | Phase 03 P03 | 578 | 3 tasks | 10 files |
-| Phase 04-invoicing P01 | 10min | 3 tasks | 12 files |
+| Phase 04-invoicing P02 | 9min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -77,9 +77,8 @@ Recent decisions affecting current work:
 - [Phase 03]: HostingPackageDTO excludes Date fields for safe server->client serialization; HostingPackage type widened to string (DB slug is authority); getDomainPriceMap uses ?? null to preserve 0-price semantics
 - [Phase 03]: requireAdmin() called first in every pricing PATCH route — 401 returned before any JSON parse or DB access
 - [Phase 03]: vi.mock(next/headers) required for vitest to test routes using cookies() — same pattern as Phase 2 CRM tests
-- [Phase 04]: Invoice migration is 0003_invoices.sql (plan said 0002 but 0002_pricing_tables already occupied idx 2); journal tag hand-edited
-- [Phase 04]: renderToBuffer proven working on Next.js 16 (no serverExternalPackages mitigation needed); PDF routes must be route.tsx and wrap the buffer in new Uint8Array() for BodyInit type compatibility
-- [Phase 04]: Authenticated route tests use mutable sessionToken + vi.mock(next/headers) factory, token signed via signSession()
+- [Phase 04-invoicing]: neon-http db.transaction() throws in drizzle-orm 0.45.2 — all multi-statement atomic writes must use withTxDb() (src/lib/db/tx.ts, per-request WebSocket Pool)
+- [Phase 04-invoicing]: PUT invoice 409 draft-lock re-checked inside the transaction UPDATE where-clause (EditLockError rollback) — race-proof beyond the pre-check
 
 ### Pending Todos
 
@@ -93,6 +92,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-02T06:55:04.448Z
-Stopped at: Completed 04-01-PLAN.md — invoicing foundation (schema, migration, PDF smoke test, Wave 0 stubs)
+Last session: 2026-07-02T06:58:02.868Z
+Stopped at: Completed 04-02-PLAN.md — invoice create/edit API routes
 Resume file: None

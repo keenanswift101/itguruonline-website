@@ -1,4 +1,14 @@
-import { pgTable, serial, varchar, text, timestamp, boolean, smallint, integer, date } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  serial,
+  varchar,
+  text,
+  timestamp,
+  boolean,
+  integer,
+  smallint,
+  date,
+} from "drizzle-orm/pg-core";
 
 export const adminUsers = pgTable("admin_users", {
   id: serial("id").primaryKey(),
@@ -110,17 +120,19 @@ export const siteSettings = pgTable("site_settings", {
 
 export const invoices = pgTable("invoices", {
   id: serial("id").primaryKey(),
+  // Client info (free-text, no CRM FK — D-03)
   clientName: varchar("client_name", { length: 255 }).notNull(),
   clientEmail: varchar("client_email", { length: 320 }),
   billingAddress: text("billing_address"),
+  // Calendar dates (Postgres DATE — no timezone ambiguity)
   issueDate: date("issue_date").notNull(),
   dueDate: date("due_date").notNull(),
-  // 'draft' | 'sent' | 'paid' — overdue is NEVER stored, computed at read time
+  // Status: 'draft' | 'sent' | 'paid' — overdue is computed at read time (D-06)
   status: varchar("status", { length: 8 }).notNull().default("draft"),
-  // Numbering (NULL while draft — assigned atomically at draft→sent)
+  // Numbering (NULL while draft — assigned at draft→sent, D-04)
   fiscalYear: integer("fiscal_year"),
   sequenceNumber: integer("sequence_number"),
-  // Money is INTEGER rands (not cents), matching the Phase 3 convention
+  // Money: INTEGER rands, not cents (Phase 3 convention)
   totalRands: integer("total_rands").notNull().default(0),
   paidAt: timestamp("paid_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
