@@ -1,4 +1,14 @@
-import { pgTable, serial, varchar, text, timestamp, boolean, integer } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  serial,
+  varchar,
+  text,
+  timestamp,
+  boolean,
+  integer,
+  smallint,
+  date,
+} from "drizzle-orm/pg-core";
 
 export const adminUsers = pgTable("admin_users", {
   id: serial("id").primaryKey(),
@@ -106,4 +116,40 @@ export const siteSettings = pgTable("site_settings", {
     .notNull()
     .defaultNow()
     .$onUpdate(() => new Date()),
+});
+
+export const invoices = pgTable("invoices", {
+  id: serial("id").primaryKey(),
+  // Client info (free-text, no CRM FK — D-03)
+  clientName: varchar("client_name", { length: 255 }).notNull(),
+  clientEmail: varchar("client_email", { length: 320 }),
+  billingAddress: text("billing_address"),
+  // Calendar dates (Postgres DATE — no timezone ambiguity)
+  issueDate: date("issue_date").notNull(),
+  dueDate: date("due_date").notNull(),
+  // Status: 'draft' | 'sent' | 'paid' — overdue is computed at read time (D-06)
+  status: varchar("status", { length: 8 }).notNull().default("draft"),
+  // Numbering (NULL while draft — assigned at draft→sent, D-04)
+  fiscalYear: integer("fiscal_year"),
+  sequenceNumber: integer("sequence_number"),
+  // Money: INTEGER rands, not cents (Phase 3 convention)
+  totalRands: integer("total_rands").notNull().default(0),
+  paidAt: timestamp("paid_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
+
+export const invoiceLineItems = pgTable("invoice_line_items", {
+  id: serial("id").primaryKey(),
+  invoiceId: integer("invoice_id")
+    .notNull()
+    .references(() => invoices.id, { onDelete: "cascade" }),
+  description: text("description").notNull(),
+  quantity: smallint("quantity").notNull().default(1),
+  unitPriceRands: integer("unit_price_rands").notNull(),
+  lineTotalRands: integer("line_total_rands").notNull(),
+  sortOrder: smallint("sort_order").notNull().default(0),
 });
