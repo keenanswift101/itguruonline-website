@@ -35,14 +35,28 @@ export interface InvoiceDocumentProps {
   lineItems: InvoicePdfLineItem[];
 }
 
-// Static EFT banking details — hardcoded per phase context (no DB). Bracketed
-// values are placeholders the owner must replace with the real business
-// account before sending live invoices.
-const BANK_DETAILS: Array<[string, string]> = [
-  ["Bank", "[Bank Name]"],
-  ["Account Name", "IT-Guru Online"],
-  ["Account Number", "[Account Number]"],
-  ["Branch Code", "[Branch Code]"],
+// Static EFT banking details — hardcoded per phase context (no DB). Two
+// accounts are offered so the client can pay via whichever bank is more
+// convenient for them.
+const BANK_OPTIONS: Array<{ option: string; rows: Array<[string, string]> }> = [
+  {
+    option: "Option 1",
+    rows: [
+      ["Name", "A.P Isaacs"],
+      ["Bank", "Discovery Bank"],
+      ["Account Number", "124 194 760 24"],
+      ["Branch Code", "679 000"],
+    ],
+  },
+  {
+    option: "Option 2",
+    rows: [
+      ["Name", "A.P Isaacs"],
+      ["Bank", "First National Bank"],
+      ["Account Number", "628 048 039 81"],
+      ["Branch Code", "250 655"],
+    ],
+  },
 ];
 
 const NAVY = "#0a1633";
@@ -209,6 +223,19 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     marginBottom: 5,
   },
+  bankOptionsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  bankOption: {
+    width: "48%",
+  },
+  bankOptionLabel: {
+    fontFamily: "Helvetica-Bold",
+    fontSize: 9,
+    color: COBALT,
+    marginBottom: 3,
+  },
   bankRow: {
     flexDirection: "row",
     marginBottom: 2,
@@ -323,12 +350,19 @@ export function InvoiceDocument({ invoice, lineItems }: InvoiceDocumentProps) {
         {/* Footer: EFT banking details + sign-off */}
         <View style={styles.footer}>
           <Text style={styles.footerHeading}>Payment via EFT</Text>
-          {BANK_DETAILS.map(([label, value]) => (
-            <View key={label} style={styles.bankRow}>
-              <Text style={styles.bankLabel}>{label}</Text>
-              <Text style={styles.bankValue}>{value}</Text>
-            </View>
-          ))}
+          <View style={styles.bankOptionsRow}>
+            {BANK_OPTIONS.map(({ option, rows }) => (
+              <View key={option} style={styles.bankOption}>
+                <Text style={styles.bankOptionLabel}>{option}</Text>
+                {rows.map(([label, value]) => (
+                  <View key={label} style={styles.bankRow}>
+                    <Text style={styles.bankLabel}>{label}</Text>
+                    <Text style={styles.bankValue}>{value}</Text>
+                  </View>
+                ))}
+              </View>
+            ))}
+          </View>
           <View style={styles.bankRow}>
             <Text style={styles.bankLabel}>Reference</Text>
             <Text style={styles.bankValue}>{number}</Text>
