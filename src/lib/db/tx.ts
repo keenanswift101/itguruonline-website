@@ -22,7 +22,7 @@ export type TxDb = ReturnType<typeof drizzle<typeof schema>>;
  */
 export async function withTxDb<T>(fn: (db: TxDb) => Promise<T>): Promise<T> {
   neonConfig.webSocketConstructor = ws;
-  const pool = new Pool({ connectionString: process.env.NETLIFY_DATABASE_URL });
+  const pool = new Pool({ connectionString: process.env.NETLIFY_DB_URL });
   const db = drizzle({ client: pool, schema });
   try {
     return await fn(db);

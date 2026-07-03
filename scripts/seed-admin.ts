@@ -26,7 +26,7 @@ if (!rawPassword) {
   process.exit(1);
 }
 
-const db = drizzle({ client: neon(), schema: { adminUsers } });
+const db = drizzle({ client: neon(process.env.NETLIFY_DB_URL), schema: { adminUsers } });
 
 const existing = await db.select().from(adminUsers).where(eq(adminUsers.email, email));
 if (existing.length > 0) {
