@@ -101,7 +101,7 @@ Recent decisions affecting current work:
 
 - A fresh security review (OWASP-style, per existing `SECURITY-AUDIT.md` precedent) is owed once Phase 1-2 are live — don't defer to milestone end.
 - Phase 5 (Scheduled Automation) needs reminder-cadence thresholds confirmed with owner during that phase's planning.
-- Pre-existing, project-wide vitest breakage ('Vitest failed to find the runner', all 21 test files) discovered during 04-05 finalization -- unrelated to invoicing code, isolated via git stash to reproduce on a clean checkout. Needs npm ci / lockfile investigation before Phase 5 TDD work.
+- ~~Pre-existing, project-wide vitest breakage~~ -- CORRECTED same day: re-ran `npx vitest run` directly and got a clean pass (21/21 test files, 91 passed, 0 failed). Not reproducible; the 04-05 executor's git-stash isolation likely collided with a concurrently-running dev server / in-flight npm install. No action needed before Phase 5.
 
 ## Session Continuity
 
