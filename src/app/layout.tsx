@@ -1,11 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { FloatingActions } from "@/components/ui/FloatingActions";
-import { QuestionTab } from "@/components/ui/QuestionTab";
-import { DomainPromo } from "@/components/ui/DomainPromo";
-import { CookieConsent } from "@/components/ui/CookieConsent";
 import "./globals.css";
 
 const inter = Inter({
@@ -78,15 +72,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable} data-theme="dark">
       <body className="min-h-screen flex flex-col antialiased overflow-x-hidden">
-        <div className="flex min-h-screen flex-col overflow-x-hidden">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
-        <FloatingActions />
-        <QuestionTab />
-        <DomainPromo />
-        <CookieConsent />
+        {children}
       </body>
     </html>
   );
