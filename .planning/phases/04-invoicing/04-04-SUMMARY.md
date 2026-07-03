@@ -122,8 +122,15 @@ None - no external service configuration required.
 ## Next Phase Readiness
 
 - Both auto tasks (Task 1, Task 2) are complete, committed, and `tsc`-clean.
-- **This plan is NOT complete.** Task 3 is a `checkpoint:human-verify` gate — the owner must run `npm run dev`, log in, and manually verify the list page, create flow, CSV export, and overdue badge per the plan's `how-to-verify` steps. STATE.md/ROADMAP.md advancement for 04-04 is deferred until that checkpoint is approved by a resumed execution agent.
+- **Checkpoint approved.** The owner manually verified the list page (heading, filter links, New Invoice + Export CSV buttons, empty state), the create form (live per-line and invoice-total auto-sum), the create → redirect → list-shows-Draft flow, the CSV export download, and the overdue badge rendering alongside a Sent status badge — all per the plan's `how-to-verify` steps. No follow-up issues reported.
+- Plan 04-04 is now fully complete.
 - 04-05 (invoice detail page) can build on `src/lib/invoice-status.ts` directly — no changes needed there.
+
+## Checkpoint Verification
+
+**Type:** human-verify
+**Result:** Approved — no changes requested.
+**Verified:** invoice list page load + filters + empty state, create form live auto-sum, create → redirect → Draft on list, CSV export download, overdue badge alongside Sent badge.
 
 ## Self-Check: PASSED
 
@@ -134,7 +141,9 @@ None - no external service configuration required.
 - Commit `c508c61` — FOUND in git log
 - Commit `e9d5587` — FOUND in git log
 - Commit `46c6429` — FOUND in git log
+- Commit `4d4973f` — FOUND in git log
+- `npx tsc --noEmit` — exits 0 (post-checkpoint final verification)
 
 ---
 *Phase: 04-invoicing*
-*Checkpoint pending — plan not yet marked complete*
+*Plan complete — checkpoint approved*

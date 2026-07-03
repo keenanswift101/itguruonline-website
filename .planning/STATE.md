@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 4 waves 1-2 merged to dev (04-01/02/03 done). NEXT - execute 04-04 then 04-05, verify phase 4, then execute phase 5
-last_updated: "2026-07-02T07:38:10.103Z"
-last_activity: 2026-07-02 -- Phase 04 execution started
+stopped_at: Completed 04-04-PLAN.md (invoice list + create form) -- checkpoint approved. NEXT - execute 04-05 (invoice detail page), then verify phase 4, then execute phase 5
+last_updated: "2026-07-03T04:51:52.063Z"
+last_activity: 2026-07-03
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 22
-  completed_plans: 14
-  percent: 55
+  completed_plans: 15
+  percent: 68
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 04 (invoicing) — EXECUTING
-Plan: 1 of 5
-Status: Executing Phase 04
-Last activity: 2026-07-02 -- Phase 04 execution started
+Plan: 5 of 5 (04-04 complete, checkpoint approved; next up: 04-05)
+Status: Ready to execute
+Last activity: 2026-07-03
 
-Progress: [██████░░░░] 55%
+Progress: [███████░░░] 68%
 
 ## Performance Metrics
 
@@ -57,6 +57,7 @@ Progress: [██████░░░░] 55%
 | Phase 03 P03 | 578 | 3 tasks | 10 files |
 | Phase 04-invoicing P02 | 9min | 2 tasks | 8 files |
 | Phase 04-invoicing P03 | 8min | 3 tasks | 7 files |
+| Phase 04-invoicing P04 | ~30min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -83,6 +84,9 @@ Recent decisions affecting current work:
 - [Phase 04-invoicing]: Status transitions enforced via server-side allowed-transition map; draft->sent assigns gapless number in single atomic UPDATE with correlated MAX+1 subquery on neon-http (no FOR UPDATE)
 - [Phase 04-invoicing]: sent->draft clears fiscal_year/sequence_number — re-sending assigns a fresh invoice number (D-06 recommendation)
 - [Phase 04-invoicing]: InvoiceDocument.tsx bank footer uses bracketed placeholder EFT values — owner must fill real account details before first live invoice
+- [Phase 04-invoicing]: AdminSidebar already exists on this branch and already lists an active Invoices link -- kept a simple back-link on invoice pages anyway for consistency with dashboard/CRM pattern
+- [Phase 04-invoicing]: Invoice status badge colors: draft=gray glass, sent=cobalt #00aaff, paid=green, overdue=red -- overdue renders as a SECOND badge alongside the stored status badge, never replacing it
+- [Phase 04-invoicing]: InvoiceForm 422 handling maps zod fieldErrors ({field: string[]}) onto the same FieldErrors state used for client-side validation, so server and client validation errors render identically
 
 ### Pending Todos
 
@@ -96,6 +100,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-02T07:13:59.166Z
-Stopped at: Phase 4 waves 1-2 merged to dev (04-01/02/03 done). NEXT - execute 04-04 then 04-05, verify phase 4, then execute phase 5
+Last session: 2026-07-03T04:51:52.051Z
+Stopped at: Completed 04-04-PLAN.md (invoice list + create form) -- checkpoint approved. NEXT - execute 04-05 (invoice detail page), then verify phase 4, then execute phase 5
 Resume file: None
