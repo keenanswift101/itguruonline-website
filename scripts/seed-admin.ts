@@ -10,7 +10,7 @@ import bcrypt from "bcryptjs";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@netlify/neon";
 import { eq } from "drizzle-orm";
-import { adminUsers } from "../src/lib/db/schema.js";
+import { adminUsers } from "../src/lib/db/schema.ts";
 
 const SALT_ROUNDS = 12;
 
