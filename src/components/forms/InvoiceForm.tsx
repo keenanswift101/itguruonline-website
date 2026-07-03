@@ -26,6 +26,17 @@ interface FieldErrors {
   lineItems?: string;
 }
 
+interface InvoiceFormInitial extends ClientFields {
+  lineItems: LineItemRow[];
+}
+
+interface InvoiceFormProps {
+  /** When set, the form edits an existing Draft invoice (PUT) instead of creating one (POST). */
+  invoiceId?: number;
+  /** Prefill values for edit mode. */
+  initial?: InvoiceFormInitial;
+}
+
 const emptyLineItem = (): LineItemRow => ({ description: "", quantity: 1, unitPriceRands: 0 });
 
 const initialClientFields: ClientFields = {
@@ -40,12 +51,24 @@ function lineTotal(item: LineItemRow): number {
   return (Number.isFinite(item.quantity) ? item.quantity : 0) * (Number.isFinite(item.unitPriceRands) ? item.unitPriceRands : 0);
 }
 
-export default function InvoiceForm() {
+export default function InvoiceForm({ invoiceId, initial }: InvoiceFormProps) {
   const id = useId();
   const router = useRouter();
 
-  const [fields, setFields] = useState<ClientFields>(initialClientFields);
-  const [lineItems, setLineItems] = useState<LineItemRow[]>([emptyLineItem()]);
+  const [fields, setFields] = useState<ClientFields>(
+    initial
+      ? {
+          clientName: initial.clientName,
+          clientEmail: initial.clientEmail,
+          billingAddress: initial.billingAddress,
+          issueDate: initial.issueDate,
+          dueDate: initial.dueDate,
+        }
+      : initialClientFields
+  );
+  const [lineItems, setLineItems] = useState<LineItemRow[]>(
+    initial?.lineItems.length ? initial.lineItems : [emptyLineItem()]
+  );
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
   const [serverMessage, setServerMessage] = useState("");
@@ -103,28 +126,49 @@ export default function InvoiceForm() {
     setErrors({});
     setServerMessage("");
 
+    const body = JSON.stringify({
+      clientName: fields.clientName,
+      clientEmail: fields.clientEmail,
+      billingAddress: fields.billingAddress,
+      issueDate: fields.issueDate,
+      dueDate: fields.dueDate,
+      lineItems: lineItems.map((item) => ({
+        description: item.description,
+        quantity: item.quantity,
+        unitPriceRands: item.unitPriceRands,
+      })),
+    });
+
     try {
-      const res = await fetch("/api/admin/invoices", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          clientName: fields.clientName,
-          clientEmail: fields.clientEmail,
-          billingAddress: fields.billingAddress,
-          issueDate: fields.issueDate,
-          dueDate: fields.dueDate,
-          lineItems: lineItems.map((item) => ({
-            description: item.description,
-            quantity: item.quantity,
-            unitPriceRands: item.unitPriceRands,
-          })),
-        }),
-      });
+      const res = invoiceId
+        ? await fetch(`/api/admin/invoices/${invoiceId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body,
+          })
+        : await fetch("/api/admin/invoices", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body,
+          });
 
       const data = await res.json().catch(() => ({}));
 
       if (res.status === 201) {
         router.push(`/admin/invoices/${(data as { id: number }).id}`);
+        return;
+      }
+
+      if (res.ok && invoiceId) {
+        // Edit mode: stay on the detail page, just revalidate server data.
+        setStatus("idle");
+        router.refresh();
+        return;
+      }
+
+      if (res.status === 409) {
+        setStatus("error");
+        setServerMessage("This invoice can no longer be edited.");
         return;
       }
 
@@ -144,7 +188,11 @@ export default function InvoiceForm() {
       setServerMessage((data as { error?: string }).error ?? "An unexpected error occurred. Please try again.");
     } catch {
       setStatus("error");
-      setServerMessage("Unable to create the invoice. Please check your connection and try again.");
+      setServerMessage(
+        invoiceId
+          ? "Unable to save changes. Please check your connection and try again."
+          : "Unable to create the invoice. Please check your connection and try again."
+      );
     }
   }
 
@@ -337,7 +385,13 @@ export default function InvoiceForm() {
         disabled={status === "submitting"}
         className="btn-metallic text-sm px-6 py-2.5 rounded-lg disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        {status === "submitting" ? "Creating…" : "Create Invoice"}
+        {invoiceId
+          ? status === "submitting"
+            ? "Saving…"
+            : "Save Changes"
+          : status === "submitting"
+            ? "Creating…"
+            : "Create Invoice"}
       </button>
     </form>
   );
