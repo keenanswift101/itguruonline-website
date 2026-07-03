@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 04-04-PLAN.md (invoice list + create form) -- checkpoint approved. NEXT - execute 04-05 (invoice detail page), then verify phase 4, then execute phase 5
-last_updated: "2026-07-03T04:51:52.063Z"
+status: verifying
+stopped_at: Completed 04-05-PLAN.md (invoice detail page) -- checkpoint approved. Phase 04-invoicing now 5/5 plans complete. NEXT - verify phase 4, then plan/execute phase 5
+last_updated: "2026-07-03T05:56:02.786Z"
 last_activity: 2026-07-03
 progress:
   total_phases: 5
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 22
-  completed_plans: 15
+  completed_plans: 16
   percent: 68
 ---
 
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 
 ## Current Position
 
-Phase: 04 (invoicing) — EXECUTING
-Plan: 5 of 5 (04-04 complete, checkpoint approved; next up: 04-05)
-Status: Ready to execute
+Phase: 04 (invoicing) — COMPLETE (5/5 plans)
+Plan: 5 of 5 (04-05 complete, checkpoint approved — invoice detail page shipped)
+Status: Phase complete — ready for verification
 Last activity: 2026-07-03
 
-Progress: [███████░░░] 68%
+Progress: [███████░░░] 73%
 
 ## Performance Metrics
 
@@ -58,6 +58,7 @@ Progress: [███████░░░] 68%
 | Phase 04-invoicing P02 | 9min | 2 tasks | 8 files |
 | Phase 04-invoicing P03 | 8min | 3 tasks | 7 files |
 | Phase 04-invoicing P04 | ~30min | 2 tasks | 8 files |
+| Phase 04-invoicing P05 | 20min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -87,6 +88,9 @@ Recent decisions affecting current work:
 - [Phase 04-invoicing]: AdminSidebar already exists on this branch and already lists an active Invoices link -- kept a simple back-link on invoice pages anyway for consistency with dashboard/CRM pattern
 - [Phase 04-invoicing]: Invoice status badge colors: draft=gray glass, sent=cobalt #00aaff, paid=green, overdue=red -- overdue renders as a SECOND badge alongside the stored status badge, never replacing it
 - [Phase 04-invoicing]: InvoiceForm 422 handling maps zod fieldErrors ({field: string[]}) onto the same FieldErrors state used for client-side validation, so server and client validation errors render identically
+- [Phase 04-invoicing]: InvoiceStatusActions guards double-submit with a single pending flag; 409 surfaces as 'Invalid transition.' distinct from generic errors
+- [Phase 04-invoicing]: Detail page renders read-only Sent/Paid view as a dedicated block (not a disabled InvoiceForm) for unambiguous edit-lock UX, defense-in-depth on top of server 409
+- [Phase 04-invoicing]: InvoiceForm serves both create (POST) and edit (PUT) via optional initial/invoiceId props rather than a duplicate edit-form component
 
 ### Pending Todos
 
@@ -97,9 +101,10 @@ Recent decisions affecting current work:
 
 - A fresh security review (OWASP-style, per existing `SECURITY-AUDIT.md` precedent) is owed once Phase 1-2 are live — don't defer to milestone end.
 - Phase 5 (Scheduled Automation) needs reminder-cadence thresholds confirmed with owner during that phase's planning.
+- Pre-existing, project-wide vitest breakage ('Vitest failed to find the runner', all 21 test files) discovered during 04-05 finalization -- unrelated to invoicing code, isolated via git stash to reproduce on a clean checkout. Needs npm ci / lockfile investigation before Phase 5 TDD work.
 
 ## Session Continuity
 
-Last session: 2026-07-03T04:51:52.051Z
-Stopped at: Completed 04-04-PLAN.md (invoice list + create form) -- checkpoint approved. NEXT - execute 04-05 (invoice detail page), then verify phase 4, then execute phase 5
+Last session: 2026-07-03T05:55:34.046Z
+Stopped at: Completed 04-05-PLAN.md (invoice detail page) -- checkpoint approved. Phase 04-invoicing now 5/5 plans complete. NEXT - verify phase 4, then plan/execute phase 5
 Resume file: None
