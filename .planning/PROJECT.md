@@ -18,6 +18,8 @@ Every enquiry and client interaction is captured and actionable in one place, wi
 - ✓ Transactional email via Resend with branded HTML templates — pre-milestone
 - ✓ OWASP ZAP + manual OWASP Top 10 security audit, all findings resolved — pre-milestone (2026-06-16)
 - ✓ Domain availability checker (RDAP + DNS-over-HTTPS hybrid across .co.za/.com/.net/.org/.online/.africa) — pre-milestone
+- ✓ Owner can generate an invoice for a client (line items, amount, due date), edit/delete Drafts, and download a SARS-compliant PDF (no VAT fields/"Tax Invoice" wording) — Phase 4 (Invoicing)
+- ✓ Owner can track invoice status through its full lifecycle (draft → sent → paid, with gapless invoice numbering assigned on send, and a computed Overdue indicator) — Phase 4 (Invoicing)
 
 ### Active
 
@@ -31,9 +33,7 @@ Every enquiry and client interaction is captured and actionable in one place, wi
 - [ ] Owner can edit hosting package price, description, features, and "Most Popular" label, reflected live on the public site
 - [ ] Owner can add/edit per-TLD domain registration prices, shown live on the public site instead of "request a quote"
 - [ ] Owner can update site settings (contact email, hosting setup-fee note) without code changes
-- [ ] Owner can generate an invoice for a client (line items, amount, due date)
-- [ ] Owner can track invoice status (draft, sent, paid, overdue) — no online payment collection, clients pay via existing manual EFT
-- [ ] Owner can export enquiries/clients/invoices as a spreadsheet
+- [ ] Owner can export enquiries/clients/invoices as a spreadsheet (invoices ✓ Phase 4 — CRM-07 enquiry/client export still open)
 - [ ] System sends automated reminder emails for stale enquiries (no contact after N days) and overdue invoices
 - [ ] System automatically generates recurring invoices for active hosting clients on their billing cycle
 
@@ -66,7 +66,7 @@ Every enquiry and client interaction is captured and actionable in one place, wi
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
 | Single-admin auth for v2.0 (no multi-staff roles yet) | Keeps auth/permissions model simple for first build; team access can be layered on later without redesigning the data model | — Pending |
-| Invoicing generates/tracks only, no payment gateway in v2.0 | Avoids PCI/compliance and reconciliation overhead until invoicing volume justifies it; clients keep paying via existing manual EFT | — Pending |
+| Invoicing generates/tracks only, no payment gateway in v2.0 | Avoids PCI/compliance and reconciliation overhead until invoicing volume justifies it; clients keep paying via existing manual EFT | ✓ Good — shipped Phase 4, Mark Paid is a manual owner action, no gateway integration |
 | Automation scoped to reminder emails + recurring billing only (no auto status transitions) | Matches concrete pain points described, avoids speculative automation build | — Pending |
 | Invoicing/accounts/automation folded into v2.0 architecture now rather than added later | Avoids reworking auth/database/roles after the fact once CRM + pricing ship | — Pending |
 | IT-Guru is not VAT-registered — invoices must NOT use "Tax Invoice" labeling or VAT fields | Confirmed by owner; SARS rules differ by VAT-registration status, and mislabeling has compliance implications | ✓ Good |
@@ -90,4 +90,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-23 after starting milestone v2.0*
+*Last updated: 2026-07-03 after Phase 4 (Invoicing) completion*
