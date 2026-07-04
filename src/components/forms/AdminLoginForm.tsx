@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useId, type FormEvent } from "react";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 
 type Status = "idle" | "submitting" | "error:credentials" | "error:lockout" | "error:generic";
 
@@ -63,14 +64,12 @@ export default function AdminLoginForm() {
         <label htmlFor={`${id}-password`} className="text-sm font-medium text-(--text-secondary)">
           Password
         </label>
-        <input
+        <PasswordInput
           id={`${id}-password`}
-          type="password"
           autoComplete="current-password"
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="rounded-lg border border-(--border-color) bg-(--bg-primary) px-3 py-2 text-(--text-primary) text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           disabled={isSubmitting}
         />
       </div>

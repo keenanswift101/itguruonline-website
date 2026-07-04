@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useId, type FormEvent } from "react";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 
 type Status = "idle" | "submitting" | "success" | "error:invalid" | "error:mismatch" | "error:generic";
 
@@ -77,15 +78,13 @@ export default function ResetPasswordForm({ token }: Props) {
         <label htmlFor={`${id}-password`} className="text-sm font-medium text-(--text-secondary)">
           New password
         </label>
-        <input
+        <PasswordInput
           id={`${id}-password`}
-          type="password"
           autoComplete="new-password"
           required
           minLength={8}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="rounded-lg border border-(--border-color) bg-(--bg-primary) px-3 py-2 text-(--text-primary) text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           disabled={isSubmitting}
         />
       </div>
@@ -94,14 +93,12 @@ export default function ResetPasswordForm({ token }: Props) {
         <label htmlFor={`${id}-confirm`} className="text-sm font-medium text-(--text-secondary)">
           Confirm new password
         </label>
-        <input
+        <PasswordInput
           id={`${id}-confirm`}
-          type="password"
           autoComplete="new-password"
           required
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
-          className="rounded-lg border border-(--border-color) bg-(--bg-primary) px-3 py-2 text-(--text-primary) text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           disabled={isSubmitting}
         />
       </div>
