@@ -4,7 +4,7 @@ vi.mock("@/lib/db/index")
 vi.mock("resend")
 vi.mock("@/lib/email")
 
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip
 
 describe("runInvoiceReminderJob", () => {
   it.todo("sends reminder email for each overdue invoice")

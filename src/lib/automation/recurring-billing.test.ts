@@ -2,7 +2,7 @@ import { vi, describe, it } from "vitest"
 
 vi.mock("@/lib/db/index")
 
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip
 
 describe("runRecurringBillingJob", () => {
   it.todo("inserts draft invoice with billing_period_start = 1st of current month")

@@ -5,7 +5,7 @@ vi.mock("@/lib/automation/enquiry-reminder")
 vi.mock("@/lib/automation/invoice-reminder")
 vi.mock("@/lib/automation/recurring-billing")
 
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip
 
 describe("POST /api/admin/automations/[job]/run", () => {
   it.todo("returns 401 when session is missing (no admin cookie)")
