@@ -81,9 +81,9 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 | TICKET-03 | Phase 7 | Pending |
 | TICKET-04 | Phase 7 | Pending |
 | TICKET-05 | Phase 7 | Pending |
-| INVOICE-09 | Phase 8 | Pending |
-| INVOICE-10 | Phase 8 | Pending |
-| INVOICE-11 | Phase 8 | Pending |
+| INVOICE-09 | Phase 8 | In Progress (08-01 built the client_id FK + getClientsForPicker query; picker UI lands in 08-03) |
+| INVOICE-10 | Phase 8 | In Progress (08-01 migration is additive/non-destructive; end-to-end linking lands in 08-02) |
+| INVOICE-11 | Phase 8 | In Progress (08-01 built generateInvoicePdfBuffer + sendEmail attachments; email-on-send hook lands in 08-04) |
 | INVOICE-12 | Phase 8 | Pending |
 | INVOICE-13 | Phase 8 | Pending |
 | DASH-01 | Phase 9 | Pending |

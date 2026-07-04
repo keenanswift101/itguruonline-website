@@ -85,7 +85,13 @@ Plans:
   7. Owner is blocked from marking an invoice Sent when it has no client email, and prompted to add one first
   8. On a sent invoice, owner can Resend the email and can Revert to Draft (replacing "Unpublish"); reverting clears the invoice number
 **Notes**: Reuses the existing `renderToBuffer(<InvoiceDocument/>)` PDF (src/app/api/admin/invoices/[id]/pdf) and extends `sendEmail()` (src/lib/email.ts) with a Resend `attachments` option (also BCC'd to info@it-guru.co.za per the global rule). Email send happens inside/around the draft→sent transition in src/app/api/admin/invoices/[id]/status/route.ts.
-**Plans**: TBD
+**Plans**: 5 plans (3 waves)
+Plans:
+- [x] 08-01-PLAN.md — Foundation: invoices.client_id FK + 0006 migration, shared PDF helper, sendEmail attachments, picker-data query, Wave 0 stubs
+- [ ] 08-02-PLAN.md — Invoice→client linking backend (POST/PUT thread clientId + existence check)
+- [ ] 08-03-PLAN.md — Client picker UI (searchable ClientPicker + InvoiceForm auto-fill + invoice pages)
+- [ ] 08-04-PLAN.md — Send/Resend/Revert delivery (email-on-send, no-email guard, resend route, buttons)
+- [ ] 08-05-PLAN.md — Client invoice history (getClientInvoices + Invoices Card + Phase 7 tickets seam)
 **UI hint**: yes
 
 ### Phase 9: Dashboard Rework
@@ -130,6 +136,6 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10
 | 5. Scheduled Automation | v2.0 | 6/6 | Complete | 2026-07-04 |
 | 6. Clients Entity + CRM Integration | v2.1 | 5/5 | Complete | 2026-07-04 |
 | 7. Tickets | v2.1 | 0/? | Not started | - |
-| 8. Linked Invoicing & Delivery | v2.1 | 0/? | Not started | - |
+| 8. Linked Invoicing & Delivery | v2.1 | 1/5 | In Progress|  |
 | 9. Dashboard Rework | v2.1 | 0/? | Not started | - |
 | 10. Quotations | v2.1 | 0/? | Not started | - |

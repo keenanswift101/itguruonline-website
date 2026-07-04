@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
 milestone: v2.1
-milestone_name: Clients, Tickets & Linked Invoicing
-status: verifying
-stopped_at: Completed 06-05-PLAN.md
-last_updated: "2026-07-04T17:10:13.309Z"
+milestone_name: Clients, Tickets, Invoicing & Quotations
+status: executing
+stopped_at: Completed 08-01-PLAN.md
+last_updated: "2026-07-04T18:14:32.986Z"
 last_activity: 2026-07-04
 progress:
-  total_phases: 4
+  total_phases: 5
   completed_phases: 1
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 10
+  completed_plans: 6
 ---
 
 # Project State
@@ -20,7 +20,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-04)
 
 **Core value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
-**Current focus:** Phase 06 — clients-entity-crm-integration
+**Current focus:** Phase 08 — linked-invoicing-delivery
 
 **v2.1 design decisions (locked with owner):** Clients = new first-class entity (add manual OR convert enquiry/registration); build lightweight in-portal ticketing (tickets linked to clients); invoice→client via optional `client_id` FK with auto-fill (free-text one-off invoices stay valid); dashboard reworked to show open tickets + new leads + unpaid/overdue invoices + revenue-this-month + recent activity. Research skipped (standard CRUD on the established v2.0 stack).
 
@@ -33,9 +33,9 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 
 ## Current Position
 
-Phase: 7
-Plan: Not started
-Status: Phase complete — ready for verification
+Phase: 08 (linked-invoicing-delivery) — EXECUTING
+Plan: 2 of 5
+Status: Ready to execute
 Last activity: 2026-07-04
 
 Progress: v2.0 complete (22/22 plans, shipped, 5/5 phases). v2.1 roadmap defined (4 phases, 18 requirements, 0 plans yet).
@@ -77,6 +77,7 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 | Phase 06 P04 | 15min | 2 tasks | 4 files |
 | Phase 06 P03 | 13min | 2 tasks | 5 files |
 | Phase 06 P05 | 14min | 2 tasks | 4 files |
+| Phase 08 P01 | 12min | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -105,6 +106,9 @@ Recent decisions affecting current work:
 - [Phase 06]: 06-04: lead status field intentionally left untouched by convert — only convertedClientId is stamped, per 06-RESEARCH.md
 - [Phase 06]: 06-03: ClientForm built create+edit-capable from the start (clientId?+initial? props) so 06-05 reuses it verbatim for editing, mirroring InvoiceForm's dual-mode pattern
 - [Phase 06]: 06-05: Client notes route hardcodes recordType='client' string literal directly (no CrmRecordType union change needed); guard-order convention confirmed for non-numeric-id 401-before-404 case
+- [Phase 08]: Migration 0006 generated via drizzle-kit (not hand-written) to guarantee constraint-naming/style parity with 0005; verified additive-only (ADD COLUMN + ADD CONSTRAINT, no DROP)
+- [Phase 08]: invoice-pdf.tsx uses .tsx extension (not .ts) since it renders JSX directly, shared by pdf download route and future send/resend paths
+- [Phase 08]: 08-01 correction: 08-01-PLAN.md's frontmatter listed INVOICE-09/10/11 as requirements even though it only built Wave 0 foundation (schema/helper/query/test-stubs, no routes/UI). Reverted requirements mark-complete result in REQUIREMENTS.md back to unchecked/"In Progress" — they'll get marked truly Complete as 08-02..08-04 deliver the actual linking routes, picker UI, and email-on-send functionality.
 
 ### Pending Todos
 
@@ -118,7 +122,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-04T17:02:17.372Z
-Stopped at: Completed 06-05-PLAN.md
+Last session: 2026-07-04T18:13:32.789Z
+Stopped at: Completed 08-01-PLAN.md
 NEXT: Phase 06 (clients-entity-crm-integration) is fully executed (5/5 plans) — run /gsd:verify-work for the phase, then proceed to Phase 7 (Tickets) planning.
 Resume file: None
