@@ -3,7 +3,9 @@ import { contactEnquiries, siteSettings, automationRuns } from "@/lib/db/schema"
 import { eq, ne, lt, or, isNull, and, inArray, sql } from "drizzle-orm";
 import { sendEmail, emailLayout, escapeHtml } from "@/lib/email";
 
-const ADMIN_REMINDER_EMAIL = "ambrose@it-guru.co.za";
+// Overridable for local testing (.env.local); production default unchanged.
+const ADMIN_REMINDER_EMAIL =
+  process.env.ADMIN_REMINDER_EMAIL ?? "ambrose@it-guru.co.za";
 
 export interface EnquiryReminderResult {
   sent: number;

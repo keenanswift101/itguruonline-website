@@ -4,7 +4,9 @@ import { eq, lt, or, isNull, and, inArray, sql } from "drizzle-orm";
 import { sendEmail, emailLayout, escapeHtml } from "@/lib/email";
 import { formatInvoiceNumber } from "@/lib/invoices";
 
-const ADMIN_REMINDER_EMAIL = "ambrose@it-guru.co.za";
+// Overridable for local testing (.env.local); production default unchanged.
+const ADMIN_REMINDER_EMAIL =
+  process.env.ADMIN_REMINDER_EMAIL ?? "ambrose@it-guru.co.za";
 
 export interface InvoiceReminderResult {
   sent: number;
