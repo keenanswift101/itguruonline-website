@@ -42,6 +42,16 @@ export async function verifySession(token: string): Promise<SessionPayload | nul
 }
 
 export async function requireAdmin(): Promise<SessionPayload | null> {
+  // Local-testing bypass, owner-requested. Requires BOTH `next dev`
+  // (NODE_ENV is "production" in every deployed build) AND an explicit
+  // DEV_AUTH_BYPASS=1 opt-in, which lives only in .env.local — it must
+  // never be set as a Netlify env var.
+  if (
+    process.env.NODE_ENV === "development" &&
+    process.env.DEV_AUTH_BYPASS === "1"
+  ) {
+    return { sub: "0", email: "dev-bypass@local" };
+  }
   const cookieStore = await cookies();
   const token = cookieStore.get(COOKIE_NAME)?.value;
   if (!token) return null;

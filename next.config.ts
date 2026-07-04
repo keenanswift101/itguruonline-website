@@ -32,6 +32,11 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // `pg` is only used by the local-dev DB driver branch (NETLIFY_DB_DRIVER=
+  // "server", injected by `netlify dev`). Keeping it external stops Turbopack
+  // from bundling/mangling it in deployed functions — the failure mode that
+  // forced @netlify/database out of this project.
+  serverExternalPackages: ["pg"],
   async headers() {
     return [
       {

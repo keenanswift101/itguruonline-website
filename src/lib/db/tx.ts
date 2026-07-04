@@ -1,5 +1,7 @@
 import { Pool, neonConfig } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-serverless";
+import { drizzle as drizzlePg } from "drizzle-orm/node-postgres";
+import { Pool as PgPool } from "pg";
 import ws from "ws";
 import * as schema from "./schema";
 
@@ -21,6 +23,18 @@ export type TxDb = ReturnType<typeof drizzle<typeof schema>>;
  * - `pool.end()` always runs in `finally` to avoid connection exhaustion.
  */
 export async function withTxDb<T>(fn: (db: TxDb) => Promise<T>): Promise<T> {
+  // Local `netlify dev` database is plain TCP Postgres (NETLIFY_DB_DRIVER=
+  // "server") — node-postgres supports interactive transactions natively.
+  // Production is always "serverless", so this branch never runs deployed.
+  if (process.env.NETLIFY_DB_DRIVER === "server") {
+    const pgPool = new PgPool({ connectionString: process.env.NETLIFY_DB_URL });
+    const pgDb = drizzlePg({ client: pgPool, schema }) as unknown as TxDb;
+    try {
+      return await fn(pgDb);
+    } finally {
+      await pgPool.end();
+    }
+  }
   neonConfig.webSocketConstructor = ws;
   const pool = new Pool({ connectionString: process.env.NETLIFY_DB_URL });
   const db = drizzle({ client: pool, schema });
