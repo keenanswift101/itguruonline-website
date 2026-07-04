@@ -21,7 +21,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-04)
 
 **Core value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
-**Current focus:** Milestone v2.0 COMPLETE and archived (2026-07-04). Next: production deploy of Phase 5 (with migration 0004 + cron + pg-packaging verification), then `/gsd:new-milestone`. Queued: notification bell todo, security review.
+**Current focus:** Milestone v2.0 COMPLETE, archived, and **DEPLOYED TO PRODUCTION** (2026-07-04, deploy `6a48df424e5fb600089cc280`, commit `a2b22e6`, tag `v2.0` pushed). Verified on live site: public pages 200 with DB pricing (pg/serverExternalPackages safe), admin auth intact (DEV_AUTH_BYPASS confirmed NOT active in prod — /admin 307s to login), all new API routes deployed and 401-gated, three cron functions deployed, admin subdomain working, notification bell shipped (bfcb53e). REMAINING CHECKS: (1) migration 0004 on prod DB — deploy succeeded and Netlify auto-applies `netlify/database/migrations/` on deploy, but not directly observed; owner should click Run Now on /admin/automations in prod (any result incl. sent:0 proves the new tables exist), or check `netlify logs --source functions` after the next 08:00 UTC cron. (2) Security review still owed. Next milestone: `/gsd:new-milestone`.
 
 ## Current Position
 
