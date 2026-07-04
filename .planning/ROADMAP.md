@@ -106,7 +106,7 @@ Plans:
 - [x] 05-03-PLAN.md
 - [x] 05-04-PLAN.md
 - [ ] 05-05-PLAN.md
-- [ ] 05-06-PLAN.md
+- [x] 05-06-PLAN.md
 
 ## Progress
 

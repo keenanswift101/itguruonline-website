@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-04-PLAN.md
-last_updated: "2026-07-04T06:31:07.022Z"
+stopped_at: Completed 05-06-PLAN.md
+last_updated: "2026-07-04T06:36:52.400Z"
 last_activity: 2026-07-04
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 22
-  completed_plans: 20
+  completed_plans: 21
   percent: 91
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 ## Current Position
 
 Phase: 05 (scheduled-automation) — EXECUTING
-Plan: 5 of 6
+Plan: 6 of 6
 Status: Ready to execute
 Last activity: 2026-07-04
 
@@ -76,6 +76,7 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 | Phase 05 P02 | 20min | 3 tasks | 6 files |
 | Phase 05 P03 | 3min | 2 tasks | 4 files |
 | Phase 05-scheduled-automation P04 | 8min | 1 tasks | 4 files |
+| Phase 05 P06 | 10min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -121,6 +122,7 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-02: recurring-billing invoice+line-item insert wrapped in withTxDb/db.transaction (not sequential plain inserts) for atomicity, matching POST /api/admin/invoices pattern
 - [Phase 05]: 05-03: vi.mock("resend") added to route.test.ts alongside automocked job modules -- automocking still loads the real module graph (src/lib/email.ts's module-scope Resend constructor) before stubbing exports, which throws Missing API key without this
 - [Phase 05]: 05-04: Added **/*.mts to tsconfig.json include -- without it, npx tsc --noEmit silently skipped the new Netlify Scheduled Function files entirely (verified via a deliberate injected type error before/after the fix)
+- [Phase 05]: 05-06: SiteSettingsForm/route deviate from plan's assumed generic {key,value} body -- real component (src/app/admin/pricing/SiteSettingsForm.tsx) uses named-field zod schema; new fields follow that real pattern, with z.coerce.number().int().min(1).max(365) bounds added
 
 ### Pending Todos
 
@@ -138,7 +140,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-04T06:29:27.971Z
-Stopped at: Completed 05-04-PLAN.md
+Last session: 2026-07-04T06:36:52.395Z
+Stopped at: Completed 05-06-PLAN.md
 NEXT: Continue Phase 5 (Scheduled Automation) execution — Plans 01-04 complete (schema/migration, job modules, admin trigger route, Netlify Scheduled Functions). Plan 05-05 is next (2 plans remain: 05-05, 05-06). No unfinished ad-hoc work; also still open: whether the owner wants test invoice #1 deleted.
 Resume file: None
