@@ -142,7 +142,14 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-04 (Phase 5 execution session)
-Stopped at: Phase 5 (Scheduled Automation) COMPLETE and VERIFIED — 6/6 plans, 4/4 must-haves (05-VERIFICATION.md passed), owner approved the 05-05 human-verify checkpoint after live local testing (all three jobs run for real: 2 actual Resend emails received + screenshot-confirmed, recurring draft invoice generated, dedupe + idempotency proven on re-runs). ALL 5 MILESTONE PHASES DONE. Ad-hoc owner-requested work also shipped this session: local-dev DB driver branch + DEV_AUTH_BYPASS (7b21cb9), ADMIN_REMINDER_EMAIL override (a3657f9), global BCC of all Resend mail to info@it-guru.co.za (f7a5d5d).
-NEXT: (1) `/gsd:complete-milestone` — v2.0 is fully executed+verified; (2) NOT YET DEPLOYED — when shipping dev→main, verify on the real production build: cron functions actually registered/firing, and the pg/serverExternalPackages packaging change not breaking deployed functions (draft deploys untrustworthy); (3) pending todo: notification bell for new registrations (.planning/todos/pending/2026-07-04-registration-notification-bell.md — registration capture itself already exists from Phase 2, verified); (4) security review owed (STATE Blockers, pre-dates this session); (5) still open: delete test invoice #1 in PROD db?; local dev DB contains test rows (enquiry id=1, invoices 1-2, billing schedule id=1) — local only, harmless.
+Last session: 2026-07-04 (Phase 5 → milestone completion → deploy → security audit)
+Stopped at: **MILESTONE v2.0 FULLY SHIPPED AND CLOSED OUT.** Everything from this session is live in production (main @ `5686001`, tag `v2.0`, Netlify deploy ready + smoke-tested):
+- Phase 5 (Scheduled Automation) complete/verified (6/6 plans, 4/4 must-haves); all three jobs exercised live with real Resend emails.
+- Milestone archived via `/gsd:complete-milestone` (milestones/v2.0-ROADMAP.md + v2.0-REQUIREMENTS.md, RETROSPECTIVE.md created, ROADMAP collapsed, REQUIREMENTS.md deleted, tagged v2.0).
+- Notification bell (new CRM records badge, `/api/admin/crm/new-count`) shipped + verified.
+- Full v2.0 security audit done (SECURITY-AUDIT.md 2026-07-04 section) with 4 fixes: automations error-leak, login timing enumeration, JWT alg pin, billing-schedule FK validation — all deployed and smoke-tested on prod (cross-origin login 403, unknown-email 401 with dummy-compare timing).
+- Migration 0004 confirmed applied in prod (owner ran all 3 jobs on live /admin/automations).
+- Session infra additions (all owner-approved, documented in CLAUDE.md): local-dev pg driver branch + DEV_AUTH_BYPASS, ADMIN_REMINDER_EMAIL override, global BCC to info@it-guru.co.za.
+- Cleanup DONE by owner: test invoice #1 deleted; SPF `include:zoho.com` removed. Neon extension INTENTIONALLY LEFT INSTALLED (uninstall is irreversible + risks DB outage for a cosmetic warning — do not revisit).
+NEXT: nothing outstanding. Either take new ad-hoc requests, or `/gsd:new-milestone` for v2.1/v3.0 (deferred candidates: multi-staff roles/AUTH-05, auto status transitions/AUTOMATE-05, multi-stage reminder cadences/AUTOMATE-06, payment gateway). Optional: after 08:00 UTC check `netlify logs --source functions` to confirm crons fire on schedule (manual triggers already proven).
 Resume file: None
