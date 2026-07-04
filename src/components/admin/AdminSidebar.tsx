@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { NotificationBell } from "./NotificationBell";
 
 interface AdminSidebarProps {
   email: string;
@@ -44,8 +45,9 @@ export function AdminSidebar({ email }: AdminSidebarProps) {
       aria-label="Admin navigation"
       className="w-56 shrink-0 min-h-screen flex flex-col bg-(--bg-primary)/80 backdrop-blur-sm border-r border-(--border-color)"
     >
-      <div className="p-4 border-b border-(--border-color)">
+      <div className="p-4 border-b border-(--border-color) flex items-center justify-between">
         <span className="text-(--text-primary) font-semibold text-sm">IT-Guru Admin</span>
+        <NotificationBell />
       </div>
       <ul className="flex-1 py-2">
         {navLinks.map(({ href, label }) => (
