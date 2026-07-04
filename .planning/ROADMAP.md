@@ -104,7 +104,7 @@ Plans:
 - [x] 05-01-PLAN.md — DB schema (billing_schedules, automation_runs) + 0004 migration + Wave 0 test stubs
 - [x] 05-02-PLAN.md
 - [x] 05-03-PLAN.md
-- [ ] 05-04-PLAN.md
+- [x] 05-04-PLAN.md
 - [ ] 05-05-PLAN.md
 - [ ] 05-06-PLAN.md
 
