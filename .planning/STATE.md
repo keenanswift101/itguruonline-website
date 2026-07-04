@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Clients, Tickets, Invoicing & Quotations
 status: executing
-stopped_at: Completed 08-04-PLAN.md
-last_updated: "2026-07-04T18:39:23.901Z"
+stopped_at: Completed 08-02-PLAN.md
+last_updated: "2026-07-04T18:57:47.687Z"
 last_activity: 2026-07-04
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 10
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State
@@ -34,8 +34,8 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 ## Current Position
 
 Phase: 08 (linked-invoicing-delivery) — EXECUTING
-Plan: 08-04 of 5 complete (08-01, 08-04 done; 08-02, 08-03, 08-05 remaining — 08-04 ran ahead of 08-02/03 since it only depended on 08-01)
-Status: Ready to execute remaining plans
+Plan: 3 of 5 complete (08-01, 08-02, 08-04 done; 08-03, 08-05 remaining — 08-04 ran ahead of 08-02/03 since it only depended on 08-01)
+Status: Ready to execute remaining plans (08-03, 08-05)
 Last activity: 2026-07-04
 
 Progress: v2.0 complete (22/22 plans, shipped, 5/5 phases). v2.1 roadmap defined (4 phases, 18 requirements, 0 plans yet).
@@ -79,6 +79,7 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 | Phase 06 P05 | 14min | 2 tasks | 4 files |
 | Phase 08 P01 | 12min | 3 tasks | 10 files |
 | Phase 08 P04 | 12min | 3 tasks | 5 files |
+| Phase 08 P02 | 8min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -112,6 +113,8 @@ Recent decisions affecting current work:
 - [Phase 08]: 08-01 correction: 08-01-PLAN.md's frontmatter listed INVOICE-09/10/11 as requirements even though it only built Wave 0 foundation (schema/helper/query/test-stubs, no routes/UI). Reverted requirements mark-complete result in REQUIREMENTS.md back to unchecked/"In Progress" — they'll get marked truly Complete as 08-02..08-04 deliver the actual linking routes, picker UI, and email-on-send functionality.
 - [Phase 08]: [Phase 08, 08-04]: vi.mock('resend') mock factory must use a function expression not an arrow function inside vi.fn() (arrow fns can't be constructed via new Resend())
 - [Phase 08]: [Phase 08, 08-04]: INVOICE-11/12/13 delivered - Mark Sent emails PDF best-effort after numbering commits, blocked 422 no_client_email when missing, Resend + Revert to Draft replace Unpublish
+- [Phase 08]: 08-02: Client-existence guard runs as a plain db.select outside withTxDb (pre-condition read, not part of the atomic write); 422 shape reuses the existing zod fieldErrors format ({ fields: { clientId: [...] } }) rather than a new error type
+- [Phase 08]: 08-02 correction: 08-02-PLAN.md's frontmatter listed INVOICE-09 as a requirement even though it only built the POST/PUT backend route half (client-existence check + persist) — the picker UI is 08-03's job and INVOICE-09's acceptance criteria requires it. Reverted REQUIREMENTS.md's INVOICE-09 checkbox back to unchecked/In Progress; INVOICE-10 (free-text one-off) is genuinely complete end-to-end
 
 ### Pending Todos
 
@@ -125,7 +128,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-04T18:39:23.896Z
-Stopped at: Completed 08-04-PLAN.md
+Last session: 2026-07-04T18:54:51.654Z
+Stopped at: Completed 08-02-PLAN.md
 NEXT: Phase 08 (linked-invoicing-delivery) — 08-01 and 08-04 complete; 08-02 (linking routes), 08-03 (picker UI), and 08-05 (client invoice history) still remain before the phase is done.
 Resume file: None

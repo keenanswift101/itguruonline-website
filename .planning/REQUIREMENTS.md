@@ -29,7 +29,7 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 ### Linked Invoicing & Delivery
 
 - [ ] **INVOICE-09**: Owner can create an invoice by selecting a stored client from a searchable picker, which auto-fills client name/email/address and links the invoice to that client (`client_id`)
-- [ ] **INVOICE-10**: Owner can still create a one-off invoice with free-text client details (no stored client); existing free-text invoices remain valid and editable
+- [x] **INVOICE-10**: Owner can still create a one-off invoice with free-text client details (no stored client); existing free-text invoices remain valid and editable
 - [x] **INVOICE-11**: When the owner marks an invoice as Sent, the system emails the invoice PDF (as an attachment) to the invoice's client email address
 - [x] **INVOICE-12**: The owner cannot mark an invoice Sent when it has no client email — they are blocked and prompted to add a client email first (so every "sent" invoice was genuinely delivered)
 - [x] **INVOICE-13**: On a sent invoice, the owner can Resend the invoice email, and can Revert it to Draft (these replace the old "Unpublish" button); reverting to draft clears the invoice number as before
@@ -81,8 +81,8 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 | TICKET-03 | Phase 7 | Pending |
 | TICKET-04 | Phase 7 | Pending |
 | TICKET-05 | Phase 7 | Pending |
-| INVOICE-09 | Phase 8 | In Progress (08-01 built the client_id FK + getClientsForPicker query; picker UI lands in 08-03) |
-| INVOICE-10 | Phase 8 | In Progress (08-01 migration is additive/non-destructive; end-to-end linking lands in 08-02) |
+| INVOICE-09 | Phase 8 | In Progress (08-02 built the POST/PUT route linking + client-existence check; picker UI lands in 08-03) |
+| INVOICE-10 | Phase 8 | Complete (08-02: POST/PUT persist clientId or NULL for a free-text one-off; existing free-text invoices unaffected) |
 | INVOICE-11 | Phase 8 | In Progress (08-01 built generateInvoicePdfBuffer + sendEmail attachments; email-on-send hook lands in 08-04) |
 | INVOICE-12 | Phase 8 | Complete |
 | INVOICE-13 | Phase 8 | Complete |
