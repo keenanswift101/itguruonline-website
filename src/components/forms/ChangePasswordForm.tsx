@@ -1,0 +1,132 @@
+"use client";
+
+import { useState, useId, type FormEvent } from "react";
+
+type Status = "idle" | "submitting" | "success" | "error:current" | "error:mismatch" | "error:generic";
+
+export default function ChangePasswordForm() {
+  const id = useId();
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [status, setStatus] = useState<Status>("idle");
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+
+    if (newPassword !== confirm) {
+      setStatus("error:mismatch");
+      return;
+    }
+    if (newPassword.length < 8) {
+      setStatus("error:generic");
+      return;
+    }
+
+    setStatus("submitting");
+
+    try {
+      const res = await fetch("/api/admin/change-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirm("");
+        return;
+      }
+
+      if (res.status === 400) {
+        setStatus("error:current");
+      } else {
+        setStatus("error:generic");
+      }
+    } catch {
+      setStatus("error:generic");
+    }
+  }
+
+  const isSubmitting = status === "submitting";
+
+  return (
+    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor={`${id}-current`} className="text-sm font-medium text-(--text-secondary)">
+          Current password
+        </label>
+        <input
+          id={`${id}-current`}
+          type="password"
+          autoComplete="current-password"
+          required
+          value={currentPassword}
+          onChange={(e) => setCurrentPassword(e.target.value)}
+          className="rounded-lg border border-(--border-color) bg-(--bg-primary) px-3 py-2 text-(--text-primary) text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          disabled={isSubmitting}
+        />
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor={`${id}-new`} className="text-sm font-medium text-(--text-secondary)">
+          New password
+        </label>
+        <input
+          id={`${id}-new`}
+          type="password"
+          autoComplete="new-password"
+          required
+          minLength={8}
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+          className="rounded-lg border border-(--border-color) bg-(--bg-primary) px-3 py-2 text-(--text-primary) text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          disabled={isSubmitting}
+        />
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor={`${id}-confirm`} className="text-sm font-medium text-(--text-secondary)">
+          Confirm new password
+        </label>
+        <input
+          id={`${id}-confirm`}
+          type="password"
+          autoComplete="new-password"
+          required
+          value={confirm}
+          onChange={(e) => setConfirm(e.target.value)}
+          className="rounded-lg border border-(--border-color) bg-(--bg-primary) px-3 py-2 text-(--text-primary) text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          disabled={isSubmitting}
+        />
+      </div>
+
+      {status === "success" && (
+        <p role="status" className="text-green-400 text-sm">
+          Password updated.
+        </p>
+      )}
+      {status === "error:current" && (
+        <p role="alert" className="text-red-400 text-sm">
+          Current password is incorrect.
+        </p>
+      )}
+      {status === "error:mismatch" && (
+        <p role="alert" className="text-red-400 text-sm">
+          New passwords do not match.
+        </p>
+      )}
+      {status === "error:generic" && (
+        <p role="alert" className="text-red-400 text-sm">
+          Something went wrong. Please try again.
+        </p>
+      )}
+
+      <button type="submit" className="btn-metallic w-full" disabled={isSubmitting}>
+        {isSubmitting ? "Updating…" : "Change password"}
+      </button>
+    </form>
+  );
+}

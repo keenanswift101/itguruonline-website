@@ -115,3 +115,24 @@ export async function consumeResetToken(rawToken: string, newPassword: string): 
 
   return false;
 }
+
+// ── Change password (authenticated, current-password-verified) ─────────────
+
+export async function changePassword(
+  userId: string,
+  currentPassword: string,
+  newPassword: string
+): Promise<boolean> {
+  const [user] = await db
+    .select({ id: adminUsers.id, passwordHash: adminUsers.passwordHash })
+    .from(adminUsers)
+    .where(eq(adminUsers.id, Number(userId)));
+  if (!user) return false;
+
+  const matches = await bcrypt.compare(currentPassword, user.passwordHash);
+  if (!matches) return false;
+
+  const newHash = await bcrypt.hash(newPassword, 12);
+  await db.update(adminUsers).set({ passwordHash: newHash }).where(eq(adminUsers.id, user.id));
+  return true;
+}

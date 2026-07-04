@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface AdminSidebarProps {
   email: string;
@@ -17,12 +18,24 @@ const navLinks = [
 
 export function AdminSidebar({ email }: AdminSidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [loggingOut, setLoggingOut] = useState(false);
 
   function isActive(href: string): boolean {
     if (href === "/admin/dashboard") {
       return pathname === href;
     }
     return pathname === href || pathname.startsWith(href + "/");
+  }
+
+  async function handleLogout() {
+    setLoggingOut(true);
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+    } finally {
+      router.push("/admin/login");
+      router.refresh();
+    }
   }
 
   return (
@@ -50,8 +63,16 @@ export function AdminSidebar({ email }: AdminSidebarProps) {
           </li>
         ))}
       </ul>
-      <div className="p-4 border-t border-(--border-color) text-(--text-secondary) text-xs truncate">
-        {email}
+      <div className="p-4 border-t border-(--border-color)">
+        <p className="text-(--text-secondary) text-xs truncate mb-2">{email}</p>
+        <button
+          type="button"
+          onClick={handleLogout}
+          disabled={loggingOut}
+          className="w-full text-left px-2 py-1.5 text-sm rounded-lg text-(--text-secondary) hover:text-(--text-primary) hover:bg-white/5 transition-colors disabled:opacity-50"
+        >
+          {loggingOut ? "Logging out…" : "Log out"}
+        </button>
       </div>
     </nav>
   );
