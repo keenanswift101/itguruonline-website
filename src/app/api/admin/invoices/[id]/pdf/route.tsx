@@ -1,10 +1,9 @@
 import { asc, eq } from "drizzle-orm";
-import { renderToBuffer } from "@react-pdf/renderer";
 import { requireAdmin } from "@/lib/auth";
 import { db } from "@/lib/db/index";
 import { invoices, invoiceLineItems } from "@/lib/db/schema";
 import { formatInvoiceNumber } from "@/lib/invoices";
-import { InvoiceDocument } from "@/components/pdf/InvoiceDocument";
+import { generateInvoicePdfBuffer } from "@/lib/invoice-pdf";
 
 export const dynamic = "force-dynamic";
 
@@ -32,9 +31,7 @@ export async function GET(
     .where(eq(invoiceLineItems.invoiceId, numId))
     .orderBy(asc(invoiceLineItems.sortOrder), asc(invoiceLineItems.id));
 
-  const buffer = await renderToBuffer(
-    <InvoiceDocument invoice={invoice} lineItems={lineItems} />
-  );
+  const buffer = await generateInvoicePdfBuffer(invoice, lineItems);
 
   const filename =
     invoice.status === "draft"

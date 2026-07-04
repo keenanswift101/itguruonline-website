@@ -122,6 +122,7 @@ interface SendEmailOptions {
   subject: string;
   html: string;
   replyTo?: string;
+  attachments?: { filename: string; content: Buffer | string }[];
 }
 
 // Every outgoing email is BCC'd to the business inbox (owner requirement:
@@ -141,7 +142,13 @@ function bccCopyFor(to: string | string[]): string | undefined {
  * Sends an email via Resend. Failures are logged but never thrown — a missing
  * notification shouldn't fail the form submission it's attached to.
  */
-export async function sendEmail({ to, subject, html, replyTo }: SendEmailOptions): Promise<void> {
+export async function sendEmail({
+  to,
+  subject,
+  html,
+  replyTo,
+  attachments,
+}: SendEmailOptions): Promise<void> {
   if (!process.env.RESEND_API_KEY) {
     console.warn("[email] RESEND_API_KEY not set — skipping send.");
     return;
@@ -157,6 +164,7 @@ export async function sendEmail({ to, subject, html, replyTo }: SendEmailOptions
       html,
       ...(bcc ? { bcc } : {}),
       ...(replyTo ? { replyTo } : {}),
+      ...(attachments ? { attachments } : {}),
     });
 
     if (error) {
