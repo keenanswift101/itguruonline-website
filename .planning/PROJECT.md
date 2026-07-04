@@ -29,13 +29,15 @@ Every enquiry and client interaction is captured and actionable in one place, wi
 - ✓ Owner can add/edit per-TLD domain registration prices, shown live on the public site instead of "request a quote" — Phase 3
 - ✓ Owner can update site settings (contact email, hosting setup-fee note) without code changes — Phase 3
 - ✓ Owner can export enquiries/clients as a spreadsheet — Phase 2 (CRM-07, CSV). This was actually complete from Phase 2 onward but its checkbox/traceability status was never updated to match — see REQUIREMENTS.md's 2026-07-04 correction note.
+- ✓ System sends automated reminder emails for stale enquiries (configurable N days) and overdue invoices, with same-day dedupe — Phase 5, verified with real Resend sends 2026-07-04
+- ✓ System automatically generates recurring draft invoices for active hosting clients monthly, idempotent per billing period — Phase 5, verified live 2026-07-04
+- ✓ Every scheduled automation has an admin "Run Now" manual trigger + /admin/automations page with billing-schedule CRUD — Phase 5
 
 ### Active
 
 <!-- This milestone: v2.0 Admin Portal -->
 
-- [ ] System sends automated reminder emails for stale enquiries (no contact after N days) and overdue invoices
-- [ ] System automatically generates recurring invoices for active hosting clients on their billing cycle
+(none — all v2.0 milestone requirements validated; Phase 5 was the final phase. Scheduled-function cron execution still needs one production-deploy confirmation.)
 
 ### Out of Scope
 
@@ -92,4 +94,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-04 — Phases 1-4 deployed to production for the first time (after diagnosing and fixing a same-day outage), ROADMAP.md progress table corrected to match actual state, admin.it-guru.co.za subdomain work in progress*
+*Last updated: 2026-07-04 — Phase 5 (Scheduled Automation) complete and verified (4/4 must-haves, all jobs exercised live with real email sends), closing out all v2.0 milestone phases. Not yet deployed to production — cron functions and the pg/serverExternalPackages packaging change need a prod-deploy verification when shipping. Local dev story rebuilt this session (netlify dev + NETLIFY_DB_DRIVER=server branch + DEV_AUTH_BYPASS).*

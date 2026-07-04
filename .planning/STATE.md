@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 05-06-PLAN.md
-last_updated: "2026-07-04T06:36:52.400Z"
+status: completed
+stopped_at: "Phase 5 (Scheduled Automation) COMPLETE and VERIFIED — 6/6 plans, 4/4 must-haves (05-VERIFICATION.md passed), owner approved the 05-05 human-verify checkpoint after live local testing (all three jobs run for real: 2 actual Resend emails received + screenshot-confirmed, recurring draft invoice generated, dedupe + idempotency proven on re-runs). ALL 5 MILESTONE PHASES DONE. Ad-hoc owner-requested work also shipped this session: local-dev DB driver branch + DEV_AUTH_BYPASS (7b21cb9), ADMIN_REMINDER_EMAIL override (a3657f9), global BCC of all Resend mail to info@it-guru.co.za (f7a5d5d)."
+last_updated: "2026-07-04T09:31:42.924Z"
 last_activity: 2026-07-04
 progress:
   total_phases: 5
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 22
-  completed_plans: 21
-  percent: 91
+  completed_plans: 22
+  percent: 100
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-04)
 
 **Core value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
-**Current focus:** Phase 05 — scheduled-automation
+**Current focus:** Milestone v2.0 COMPLETE and archived (2026-07-04). Next: production deploy of Phase 5 (with migration 0004 + cron + pg-packaging verification), then `/gsd:new-milestone`. Queued: notification bell todo, security review.
 
 ## Current Position
 
-Phase: 05 (scheduled-automation) — EXECUTING
-Plan: 6 of 6
-Status: Ready to execute
+Phase: 05 — COMPLETE (verified 2026-07-04)
+Plan: 6/6 complete
+Status: Milestone v2.0 complete (all 5 phases, 22/22 plans)
 Last activity: 2026-07-04
 
-Progress: [█████████░] 91% (of plans; phases 1-4 of 5 complete)
+Progress: [██████████] 100% (22/22 plans; phases 1-5 of 5 complete)
 
 ## Side Task: admin.it-guru.co.za subdomain — DONE (2026-07-04)
 
@@ -123,12 +123,14 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-03: vi.mock("resend") added to route.test.ts alongside automocked job modules -- automocking still loads the real module graph (src/lib/email.ts's module-scope Resend constructor) before stubbing exports, which throws Missing API key without this
 - [Phase 05]: 05-04: Added **/*.mts to tsconfig.json include -- without it, npx tsc --noEmit silently skipped the new Netlify Scheduled Function files entirely (verified via a deliberate injected type error before/after the fix)
 - [Phase 05]: 05-06: SiteSettingsForm/route deviate from plan's assumed generic {key,value} body -- real component (src/app/admin/pricing/SiteSettingsForm.tsx) uses named-field zod schema; new fields follow that real pattern, with z.coerce.number().int().min(1).max(365) bounds added
+- **[2026-07-04, OWNER-APPROVED — supersedes the earlier "do NOT reintroduce USE_LOCAL_PG" instruction]**: Local-dev database story rebuilt on Netlify's own signal, not a homegrown flag. `netlify dev` provisions a local TCP Postgres and injects `NETLIFY_DB_DRIVER=server` + a local `NETLIFY_DB_URL`; production always injects `NETLIFY_DB_DRIVER=serverless`. `src/lib/db/index.ts` and `tx.ts` now branch on `NETLIFY_DB_DRIVER === "server"` to use `drizzle-orm/node-postgres` + `pg` locally (prod path byte-identical to before). `pg` is pinned in dependencies and listed in `serverExternalPackages` (next.config.ts) so Turbopack never bundles it — the exact failure class that killed @netlify/database here. **Must be verified on the next real production deploy** (draft deploys untrustworthy per the testing-methodology note). Local workflow: `netlify dev` (NOT `npm run dev` — bare next dev gets no DB), local schema managed via `netlify database migrations apply` (0001–0004 applied 2026-07-04).
+- **[2026-07-04, OWNER-REQUESTED]**: Dev-only auth bypass in `requireAdmin()` (`src/lib/auth.ts`): active only when `NODE_ENV === "development"` AND `DEV_AUTH_BYPASS === "1"` (set in `.env.local` only). Returns a synthetic session (`dev-bypass@local`, sub "0") so the whole admin portal is reachable locally with zero login. `DEV_AUTH_BYPASS` must NEVER be set as a Netlify env var; `NODE_ENV` is "production" in every deployed build, so the bypass is double-gated. Change-password/settings flows won't find admin id 0 locally — expected, log in for those.
 
 ### Pending Todos
 
 - Remove leftover `include:zoho.com` from the apex SPF TXT record (`it-guru.co.za`). Exact edit: change `v=spf1 ip4:102.216.79.206 +a +mx include:zoho.com include:it-guru.co.za ~all` to `v=spf1 ip4:102.216.79.206 +a +mx include:it-guru.co.za ~all`.
 - Remove old `neon` Netlify extension from team dashboard (cosmetic — it logs a warning on every build but doesn't block it).
-- Local dev now has no working local database story again: the `USE_LOCAL_PG` / Docker Postgres workaround built earlier this session was fully reverted (it was masking the real `NETLIFY_DB_URL` bug during testing — see the CRITICAL decision above). `npm run dev` / plain `next dev` currently cannot reach any database at all. Before next local DB-dependent work: either re-establish a local Postgres + explicit `NETLIFY_DB_URL` override in `.env.local` (works — same driver code path as production, since both read `NETLIFY_DB_URL`), or decide on a cleaner permanent local-dev story. Do NOT reintroduce the `USE_LOCAL_PG` branching — it's gone from the codebase now, and the confusion it caused during debugging is exactly why it was removed.
+- ~~Local dev has no working database story~~ — RESOLVED 2026-07-04, owner-approved: `netlify dev` + `NETLIFY_DB_DRIVER=server` branch in `src/lib/db/` + `DEV_AUTH_BYPASS=1` in `.env.local`. See the two OWNER decisions in the log above. Outstanding sub-item: verify the `pg`/`serverExternalPackages` addition doesn't disturb the next real production deploy.
 
 ### Blockers/Concerns
 
@@ -140,7 +142,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-04T06:36:52.395Z
-Stopped at: Completed 05-06-PLAN.md
-NEXT: Continue Phase 5 (Scheduled Automation) execution — Plans 01-04 complete (schema/migration, job modules, admin trigger route, Netlify Scheduled Functions). Plan 05-05 is next (2 plans remain: 05-05, 05-06). No unfinished ad-hoc work; also still open: whether the owner wants test invoice #1 deleted.
+Last session: 2026-07-04 (Phase 5 execution session)
+Stopped at: Phase 5 (Scheduled Automation) COMPLETE and VERIFIED — 6/6 plans, 4/4 must-haves (05-VERIFICATION.md passed), owner approved the 05-05 human-verify checkpoint after live local testing (all three jobs run for real: 2 actual Resend emails received + screenshot-confirmed, recurring draft invoice generated, dedupe + idempotency proven on re-runs). ALL 5 MILESTONE PHASES DONE. Ad-hoc owner-requested work also shipped this session: local-dev DB driver branch + DEV_AUTH_BYPASS (7b21cb9), ADMIN_REMINDER_EMAIL override (a3657f9), global BCC of all Resend mail to info@it-guru.co.za (f7a5d5d).
+NEXT: (1) `/gsd:complete-milestone` — v2.0 is fully executed+verified; (2) NOT YET DEPLOYED — when shipping dev→main, verify on the real production build: cron functions actually registered/firing, and the pg/serverExternalPackages packaging change not breaking deployed functions (draft deploys untrustworthy); (3) pending todo: notification bell for new registrations (.planning/todos/pending/2026-07-04-registration-notification-bell.md — registration capture itself already exists from Phase 2, verified); (4) security review owed (STATE Blockers, pre-dates this session); (5) still open: delete test invoice #1 in PROD db?; local dev DB contains test rows (enquiry id=1, invoices 1-2, billing schedule id=1) — local only, harmless.
 Resume file: None
