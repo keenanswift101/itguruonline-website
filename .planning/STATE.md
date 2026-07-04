@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Clients, Tickets & Linked Invoicing
 status: executing
-stopped_at: Completed 06-02-PLAN.md
-last_updated: "2026-07-04T15:05:18.880Z"
+stopped_at: Completed 06-04-PLAN.md
+last_updated: "2026-07-04T15:18:16.944Z"
 last_activity: 2026-07-04
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -34,8 +34,8 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 ## Current Position
 
 Phase: 06 (clients-entity-crm-integration) — EXECUTING
-Plan: 3 of 5
-Status: Ready to execute
+Plan: 4 of 5 (06-04 executed out of sequence — depends_on: [06-01] only, wave 1 — 06-03 (client create + list UI) is still NOT executed and remains next up)
+Status: 06-03-PLAN.md still pending; ready to execute
 Last activity: 2026-07-04
 
 Progress: v2.0 complete (22/22 plans, shipped, 5/5 phases). v2.1 roadmap defined (4 phases, 18 requirements, 0 plans yet).
@@ -73,6 +73,8 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 *Updated after each plan completion*
 | Phase 06 P01 | 12min | 3 tasks | 7 files |
 | Phase 06 P02 | 16min | 3 tasks | 5 files |
+| Phase 06 P04 | 15min | 2 tasks | 4 files |
+| Phase 06 P04 | 15min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -97,6 +99,8 @@ Recent decisions affecting current work:
 - [Phase 06, 06-01 correction]: 06-01-PLAN.md's frontmatter listed all 5 CLIENT requirements even though it only built Wave 0 foundation (schema/types/test-stubs, no routes/UI). Reverted the `requirements mark-complete` result in REQUIREMENTS.md back to unchecked/"In Progress" for CLIENT-01..05 — they'll get marked truly Complete as 06-02 through 06-05 deliver the actual create/list/edit/notes/convert functionality.
 - [Phase 06]: 06-02: Non-DB guard tests assert 401 for all unauthenticated cases (POST/GET/PUT), since requireAdmin() fires before body/id validation — matches crm/[id]/notes/route.test.ts convention.
 - [Phase 06, 06-02 correction]: 06-02-PLAN.md's frontmatter listed CLIENT-01/03/04 as requirements even though it only built the API route layer (no owner-facing UI). Reverted the `requirements mark-complete` result in REQUIREMENTS.md back to unchecked/"In Progress" for CLIENT-01/03/04 — the traceability table now notes routes done in 06-02, UI still pending in 06-03 (create/list) and 06-05 (edit).
+- [Phase 06]: 06-04: convert-from-lead uses withTxDb + AlreadyConvertedError thrown inside the tx (not pre-checked) for race-proof idempotency, mirroring the Phase 4 invoice draft-lock pattern
+- [Phase 06]: 06-04: lead status field intentionally left untouched by convert — only convertedClientId is stamped, per 06-RESEARCH.md
 
 ### Pending Todos
 
@@ -110,7 +114,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-04T15:05:18.874Z
-Stopped at: Completed 06-02-PLAN.md
-NEXT: execute 06-03-PLAN.md (client create + list UI, consumes 06-02's client-query.ts + route contracts).
+Last session: 2026-07-04T15:18:16.939Z
+Stopped at: Completed 06-04-PLAN.md
+NEXT: execute 06-03-PLAN.md (client create + list UI, consumes 06-02's client-query.ts + route contracts) — still pending; 06-04 (convert-from-lead) was executed ahead of it since it only depended on 06-01, not 06-03.
 Resume file: None
