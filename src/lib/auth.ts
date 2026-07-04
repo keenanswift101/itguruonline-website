@@ -34,7 +34,9 @@ export async function signSession(payload: SessionPayload): Promise<string> {
 
 export async function verifySession(token: string): Promise<SessionPayload | null> {
   try {
-    const { payload } = await jwtVerify(token, getSecret());
+    // Pin the algorithm explicitly — belt-and-braces against any future
+    // key-type change reintroducing algorithm-confusion room.
+    const { payload } = await jwtVerify(token, getSecret(), { algorithms: ["HS256"] });
     return { sub: payload.sub as string, email: payload["email"] as string };
   } catch {
     return null;

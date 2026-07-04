@@ -19,6 +19,11 @@ const LoginSchema = z.object({
   password: z.string().min(1),
 });
 
+// Real bcrypt hash of a random throwaway string — compared against when the
+// email doesn't exist, so unknown-email and wrong-password take the same
+// time (no account enumeration via response timing).
+const DUMMY_HASH = "$2b$12$BgfGYCEmSMsaC8N2HB/7TOYzyFZPlyHkmEDktFFDAGu0DPE..6Aom";
+
 export async function POST(req: NextRequest) {
   // 1. CSRF origin check
   if (!isTrustedOrigin(req)) {
@@ -57,8 +62,10 @@ export async function POST(req: NextRequest) {
   // 5. Look up admin
   const [user] = await db.select().from(adminUsers).where(eq(adminUsers.email, email));
 
-  // 6. Compare — identical response for unknown email and wrong password (no enumeration)
-  if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+  // 6. Compare — identical response AND timing for unknown email and wrong
+  // password (no enumeration): missing user still pays one bcrypt compare.
+  const passwordOk = await bcrypt.compare(password, user?.passwordHash ?? DUMMY_HASH);
+  if (!user || !passwordOk) {
     await recordLoginAttempt({ email, ipAddress: ip, succeeded: false });
     return NextResponse.json({ error: "Invalid credentials." }, { status: 401 });
   }

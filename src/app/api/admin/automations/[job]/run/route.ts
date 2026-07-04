@@ -28,6 +28,9 @@ export async function POST(req: NextRequest, { params }: Params) {
     }
     return NextResponse.json({ ok: true, summary: result });
   } catch (err) {
-    return NextResponse.json({ ok: false, error: String(err) }, { status: 500 });
+    // Log details server-side only — raw driver/DB errors can leak
+    // internals (hosts, SQL) even to an authenticated admin's browser.
+    console.error(`[automations] ${job} manual run failed:`, err);
+    return NextResponse.json({ ok: false, error: "Job failed — check function logs." }, { status: 500 });
   }
 }

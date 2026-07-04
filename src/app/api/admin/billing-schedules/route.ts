@@ -60,6 +60,21 @@ export async function POST(req: NextRequest) {
 
   const { clientName, clientEmail, packageId, billingStart, cycle } = parsed.data;
 
+  // Unknown packageId would otherwise surface as a raw FK violation (500);
+  // reject it as a validation error instead.
+  if (packageId !== undefined) {
+    const [pkg] = await db
+      .select({ id: hostingPackages.id })
+      .from(hostingPackages)
+      .where(eq(hostingPackages.id, packageId));
+    if (!pkg) {
+      return NextResponse.json(
+        { error: "Validation failed", fields: { packageId: ["Unknown package"] } },
+        { status: 422 }
+      );
+    }
+  }
+
   const [newSchedule] = await db
     .insert(billingSchedules)
     .values({

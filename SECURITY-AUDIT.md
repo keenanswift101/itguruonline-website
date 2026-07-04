@@ -1,3 +1,38 @@
+# Security Audit — v2.0 Admin Portal — 2026-07-04
+
+Manual OWASP Top 10 static review of the entire v2.0 admin portal (auth, CRM, live pricing, invoicing, scheduled automation) plus the same-day session additions (notification bell, global BCC, dev-only auth bypass, local pg driver branch). This is the "revisit if auth/sessions are ever added" follow-up promised in the 2026-06-16 audit below — cookie-based admin sessions now exist. `npm audit` re-run. ZAP baseline not re-run this pass (admin surface is fully auth-gated; re-run it with an authenticated session when convenient).
+
+## Result summary
+
+- **Access control**: all 17 protected `/api/admin/*` routes call `requireAdmin()` before any body parse or DB access (verified exhaustively); the 4 uncovered routes are the auth endpoints themselves (login/logout/forgot/reset), each with `isTrustedOrigin()` and — where unauthenticated — IP rate limiting. All 10 admin pages/layouts call `requireAdmin()` + redirect. Live-verified in production: unauthenticated `/admin/*` 307s to login; new API routes 401.
+- **CSRF (the promised revisit)**: session cookie is `httpOnly`, `secure` (prod), **`sameSite: "strict"`** — browsers attach it to zero cross-site requests, so every `requireAdmin()` route is CSRF-immune by construction. `isTrustedOrigin()` additionally covers the sessionless auth endpoints. No token needed.
+- **Injection**: no `dangerouslySetInnerHTML` anywhere; all Drizzle queries parameterized (the one raw `db.execute(sql\`...\`)` — gapless invoice numbering — uses drizzle's tagged template, which binds `${}` as parameters); CRM notes strip HTML/`javascript:` URIs on write; all email HTML built via `escapeHtml()`; CSV exports have RFC 4180 + formula-injection (`=+-@` prefix) defenses in `csvEscape()`.
+- **Auth internals**: bcrypt cost 12; lockout 5 fails/15 min checked *before* bcrypt; reset tokens are 32 random bytes stored bcrypt-hashed, 60-min TTL, single-use, and the reset email goes to a fixed owner address regardless of input (no email-redirect takeover); change-password requires the current password; sessions 8h HS256 JWTs.
+- **SSRF**: domain checker only ever fetches fixed hosts (`dns.google`, known RDAP endpoints) with the user's domain URL-encoded into the query string — no user-controlled host.
+- **DEV_AUTH_BYPASS** (added this session): double-gated on `NODE_ENV === "development"` AND `DEV_AUTH_BYPASS === "1"` (.env.local only). Empirically confirmed inert on production the same day it shipped (live 307-to-login test). Never set it as a Netlify env var.
+- **npm audit**: 6 moderate, all in two dev-only chains — see Accepted risk.
+
+## Fixed (2026-07-04)
+
+| Finding | Fix |
+|---|---|
+| `POST /api/admin/automations/[job]/run` returned `String(err)` in its 500 body — raw driver/DB errors can leak internals (hosts, SQL fragments) even to an authenticated admin's browser | Generic `"Job failed — check function logs."` response; full error now `console.error`'d server-side only. Test updated to assert non-leakage. |
+| Login timing enumeration: unknown email skipped the bcrypt compare (~0ms) vs wrong password (~250ms), leaking account existence via response time despite identical bodies | Dummy bcrypt compare against a real throwaway hash when the user is missing — both paths now pay one full-cost compare |
+| JWT verification didn't pin the algorithm (safe today — symmetric key restricts jose to HMAC — but fragile if the key type ever changes) | `jwtVerify(..., { algorithms: ["HS256"] })` |
+| `POST /api/admin/billing-schedules` with a nonexistent `packageId` surfaced as a raw FK violation (500) | Existence pre-check → 422 `{ packageId: ["Unknown package"] }` |
+
+## Accepted risk (2026-07-04 — reviewed, intentionally not changed)
+
+- **npm audit 6× moderate**: (a) `esbuild <=0.24.2` via drizzle-kit's `@esbuild-kit` loader — dev-time tooling only, never deployed; the advisory concerns esbuild's *dev server*, which drizzle-kit doesn't run. (b) `postcss <8.5.10` flagged via Next.js — npm's proposed "fix" is downgrading to `next@9.3.3`, which is resolver nonsense; waits on an upstream Next release. Same class as the 2 moderates accepted in the v1 audit.
+- **Password policy is min-8 only** (reset + change-password): single-owner system, lockout in place, owner uses a generated password. Add complexity/zxcvbn if staff accounts (AUTH-05) ever land.
+- **Stateless JWT logout** (no server-side revocation): documented in STATE.md — a raw stolen still-valid token works until its 8h expiry. Consistent with the app's design; revisit with multi-user.
+- **`JWT_SECRET` has no length enforcement in code**: current secret is long/random (verified set on Netlify); `getSecret()` could enforce ≥32 bytes but a hard-fail rollout risk isn't worth it right now. Recommendation only.
+- **In-memory rate limiter** still per-instance (see v1 entry) — now also relevant to `forgot-password`. Lockout for login is DB-backed (`login_attempts`), which is the endpoint that matters.
+- **Optional `packageId` on billing schedules** permits R0 draft invoices ("Hosting Package" fallback) — business-logic choice, not a security issue.
+- **Global BCC to info@it-guru.co.za** includes client-facing transactional mail — intentional owner requirement; the skip-if-direct-recipient rule prevents duplicate/looping mail, and password-reset mail already goes to the owner inbox so nothing sensitive gains new exposure.
+
+---
+
 # Security Audit — 2026-06-16
 
 Combined OWASP ZAP baseline scan + manual OWASP Top 10 static code review of the Next.js app, run against a local production build (`next build && next start`). Re-tested after fixes. Read this before making changes to API routes, headers, or rate limiting — re-run the same process if those areas change significantly.
