@@ -26,10 +26,22 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 - [ ] **TICKET-04**: Owner can view a list of all tickets, filterable by status (and see open ones first)
 - [ ] **TICKET-05**: Owner can open an individual ticket to see its full detail and history
 
-### Linked Invoicing
+### Linked Invoicing & Delivery
 
 - [ ] **INVOICE-09**: Owner can create an invoice by selecting a stored client from a searchable picker, which auto-fills client name/email/address and links the invoice to that client (`client_id`)
 - [ ] **INVOICE-10**: Owner can still create a one-off invoice with free-text client details (no stored client); existing free-text invoices remain valid and editable
+- [ ] **INVOICE-11**: When the owner marks an invoice as Sent, the system emails the invoice PDF (as an attachment) to the invoice's client email address
+- [ ] **INVOICE-12**: The owner cannot mark an invoice Sent when it has no client email — they are blocked and prompted to add a client email first (so every "sent" invoice was genuinely delivered)
+- [ ] **INVOICE-13**: On a sent invoice, the owner can Resend the invoice email, and can Revert it to Draft (these replace the old "Unpublish" button); reverting to draft clears the invoice number as before
+
+### Quotations
+
+- [ ] **QUOTE-01**: Owner can create a quotation (client via the same picker or free-text, line items, and a "valid until" date), mirroring invoice creation
+- [ ] **QUOTE-02**: Owner can edit and delete a draft quotation
+- [ ] **QUOTE-03**: Owner can mark a quotation Sent, which emails the quotation PDF (labeled "Quotation", no SARS invoice number) to the client's email
+- [ ] **QUOTE-04**: Owner can track a quotation's status through its lifecycle (draft → sent → accepted / declined)
+- [ ] **QUOTE-05**: Owner can convert an accepted quotation into a draft invoice in one click (same client + line items carried over)
+- [ ] **QUOTE-06**: Owner can view a list of all quotations, filter by status, and download a quotation PDF
 
 ### Dashboard
 
@@ -61,8 +73,8 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 | CLIENT-01 | Phase 6 | Complete (06-01 foundation + 06-02 POST/GET routes + 06-03 create UI) |
 | CLIENT-02 | Phase 6 | Complete (06-01 foundation + 06-04 convert route/UI) |
 | CLIENT-03 | Phase 6 | Complete (06-01 foundation + 06-02 GET route + 06-03 list UI) |
-| CLIENT-04 | Phase 6 | In Progress (foundation done in 06-01; GET/PUT routes done in 06-02; edit UI in 06-05) |
-| CLIENT-05 | Phase 6 | In Progress (foundation done in 06-01; notes route/UI in 06-05) |
+| CLIENT-04 | Phase 6 | Complete (06-02 GET/PUT + 06-05 edit UI) |
+| CLIENT-05 | Phase 6 | Complete (06-05 notes route/UI via crm_notes recordType "client") |
 | CLIENT-06 | Phase 8 | Pending |
 | TICKET-01 | Phase 7 | Pending |
 | TICKET-02 | Phase 7 | Pending |
@@ -71,10 +83,19 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 | TICKET-05 | Phase 7 | Pending |
 | INVOICE-09 | Phase 8 | Pending |
 | INVOICE-10 | Phase 8 | Pending |
+| INVOICE-11 | Phase 8 | Pending |
+| INVOICE-12 | Phase 8 | Pending |
+| INVOICE-13 | Phase 8 | Pending |
 | DASH-01 | Phase 9 | Pending |
 | DASH-02 | Phase 9 | Pending |
 | DASH-03 | Phase 9 | Pending |
 | DASH-04 | Phase 9 | Pending |
 | DASH-05 | Phase 9 | Pending |
+| QUOTE-01 | Phase 10 | Pending |
+| QUOTE-02 | Phase 10 | Pending |
+| QUOTE-03 | Phase 10 | Pending |
+| QUOTE-04 | Phase 10 | Pending |
+| QUOTE-05 | Phase 10 | Pending |
+| QUOTE-06 | Phase 10 | Pending |
 
-**Coverage:** 18/18 v2.1 requirements mapped to a phase. No orphans.
+**Coverage:** 27/27 v2.1 requirements mapped to a phase. No orphans. (Phase 6 CLIENT-01..05 complete; +3 invoice-delivery reqs folded into Phase 8; +6 QUOTE reqs in new Phase 10.)

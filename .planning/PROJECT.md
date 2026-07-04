@@ -15,8 +15,9 @@ Every enquiry and client interaction is captured and actionable in one place, wi
 **Target features:**
 - **Clients** — a dedicated `clients` table. Owner can add a client manually, OR convert an existing enquiry/registration into a client (carrying over their details). CRM view separates leads (enquiries + registrations) from clients.
 - **Tickets** — lightweight support-ticket tracking (new `tickets` table + admin UI): create a ticket linked to a client, set status (open / in-progress / resolved) and priority, add notes.
-- **Linked invoicing** — invoice form gets a searchable client picker that auto-fills name/email/address and stores an `invoices.client_id` link; a one-off/no-saved-client option is retained, and existing free-text invoices stay valid.
+- **Linked invoicing & delivery** — invoice form gets a searchable client picker that auto-fills name/email/address and stores an `invoices.client_id` link (one-off free-text retained); marking an invoice Sent emails the PDF to the client (blocked if no client email); "Unpublish" replaced by Resend + Revert-to-Draft.
 - **Dashboard rework** — surface open-ticket count/list plus relevant tiles (new leads, unpaid/overdue invoices, revenue this month, recent activity).
+- **Quotations** — a quotation system mirroring invoicing (create/edit/send/track with client linking, PDF, email delivery, draft→sent→accepted/declined lifecycle), plus one-click convert of an accepted quotation into a draft invoice. Separate `quotations` table (own numbering, no SARS gapless rule).
 
 **Key context / decisions (locked with owner before planning):**
 - Clients are a NEW entity, not a status on existing records — enquiries/registrations remain "leads" until promoted/converted.

@@ -4,7 +4,7 @@
 
 - ✅ **v1.0 Marketing Site & Client Onboarding** — pre-GSD (shipped; see MILESTONES.md)
 - ✅ **v2.0 Admin Portal** — Phases 1-5 (completed 2026-07-04; Phase 5 production deploy pending) — [archive](milestones/v2.0-ROADMAP.md)
-- 🚧 **v2.1 Clients, Tickets & Linked Invoicing** — Phases 6-9 (in progress)
+- 🚧 **v2.1 Clients, Tickets, Invoicing & Quotations** — Phases 6-10 (in progress; Phase 6 complete)
 
 ## Phases
 
@@ -31,10 +31,11 @@ Full details: [milestones/v2.0-ROADMAP.md](milestones/v2.0-ROADMAP.md)
 
 **Milestone Goal:** Turn the portal from lead-capture into real client management — a first-class Clients entity, lightweight support-ticket tracking, invoices linked to stored clients, and a dashboard that surfaces open work.
 
-- [ ] **Phase 6: Clients Entity + CRM Integration** - Owner can manage clients as a distinct entity, separate from leads, with full CRUD and notes
+- [x] **Phase 6: Clients Entity + CRM Integration** - Owner can manage clients as a distinct entity, separate from leads, with full CRUD and notes — completed 2026-07-04
 - [ ] **Phase 7: Tickets** - Owner can track support work for a client from creation through resolution
-- [ ] **Phase 8: Linked Invoicing** - Owner can invoice a stored client (auto-filled) or go one-off free-text, and see a client's full invoice+ticket history
+- [ ] **Phase 8: Linked Invoicing & Delivery** - Owner can invoice a stored client (auto-filled) or go one-off free-text, email the PDF to the client on send, and see a client's full invoice+ticket history
 - [ ] **Phase 9: Dashboard Rework** - Dashboard surfaces open tickets, new leads, unpaid/overdue invoices, monthly revenue, and recent activity
+- [ ] **Phase 10: Quotations** - Owner can create/send/track quotations (mirroring invoicing) and convert an accepted quote into a draft invoice
 
 ## Phase Details
 
@@ -70,16 +71,20 @@ Plans:
 **Plans**: TBD
 **UI hint**: yes
 
-### Phase 8: Linked Invoicing
-**Goal**: Owner can create an invoice tied to a stored client (auto-filled) while free-text one-off invoicing remains fully supported, and can see a client's complete invoice + ticket history in one place
+### Phase 8: Linked Invoicing & Delivery
+**Goal**: Owner can create an invoice tied to a stored client (auto-filled) while free-text one-off invoicing remains fully supported, can email the invoice PDF to the client on send, and can see a client's complete invoice + ticket history in one place
 **Depends on**: Phase 6 (clients to link to), Phase 7 (tickets must exist for the client history view)
-**Requirements**: INVOICE-09, INVOICE-10, CLIENT-06
+**Requirements**: INVOICE-09, INVOICE-10, INVOICE-11, INVOICE-12, INVOICE-13, CLIENT-06
 **Success Criteria** (what must be TRUE):
   1. Owner can search for and select a stored client from a picker when creating an invoice, and the form auto-fills that client's name/email/address
   2. An invoice created via the client picker stores a `client_id` link back to that client
   3. Owner can still create a one-off invoice by typing free-text client details, with no stored client attached
   4. Every invoice created before this phase (free-text, `client_id` null) continues to open, edit, and display correctly — no destructive migration
   5. Owner can open a client's detail page and see that client's linked invoices and tickets listed together as a history
+  6. When the owner marks an invoice Sent, the invoice PDF is emailed as an attachment to the invoice's client email
+  7. Owner is blocked from marking an invoice Sent when it has no client email, and prompted to add one first
+  8. On a sent invoice, owner can Resend the email and can Revert to Draft (replacing "Unpublish"); reverting clears the invoice number
+**Notes**: Reuses the existing `renderToBuffer(<InvoiceDocument/>)` PDF (src/app/api/admin/invoices/[id]/pdf) and extends `sendEmail()` (src/lib/email.ts) with a Resend `attachments` option (also BCC'd to info@it-guru.co.za per the global rule). Email send happens inside/around the draft→sent transition in src/app/api/admin/invoices/[id]/status/route.ts.
 **Plans**: TBD
 **UI hint**: yes
 
@@ -96,10 +101,25 @@ Plans:
 **Plans**: TBD
 **UI hint**: yes
 
+### Phase 10: Quotations
+**Goal**: Owner can create, send, and track quotations the same way as invoices — with client linking, PDF, and email delivery — and convert an accepted quotation into a draft invoice in one click
+**Depends on**: Phase 6 (client linking), Phase 8 (reuses invoice PDF/email delivery, line-item patterns; converts INTO an invoice)
+**Requirements**: QUOTE-01, QUOTE-02, QUOTE-03, QUOTE-04, QUOTE-05, QUOTE-06
+**Success Criteria** (what must be TRUE):
+  1. Owner can create a quotation with a client (picker or free-text), line items, and a "valid until" date
+  2. Owner can edit and delete a draft quotation
+  3. Marking a quotation Sent emails the quotation PDF (labeled "Quotation", no SARS invoice number) to the client; blocked with a prompt if no client email
+  4. Owner can move a quotation through draft → sent → accepted / declined and see its status
+  5. Owner can convert an accepted quotation into a draft invoice, carrying over the client and line items, in one click
+  6. Owner can list all quotations, filter by status, and download a quotation PDF
+**Notes**: Separate `quotations` + `quotation_line_items` tables (own numbering, no SARS gapless requirement, no "paid" status) — but reuses the invoice line-item UI pattern, a parameterized PDF document component, and the Phase 8 email-delivery mechanism. Convert-to-invoice inserts a draft invoice via `withTxDb()` (atomic multi-table write).
+**Plans**: TBD
+**UI hint**: yes
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 6 → 7 → 8 → 9
+Phases execute in numeric order: 6 → 7 → 8 → 9 → 10
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 | ----- | --------- | -------------- | ------ | --------- |
@@ -108,7 +128,8 @@ Phases execute in numeric order: 6 → 7 → 8 → 9
 | 3. Live Pricing Migration | v2.0 | 3/3 | Complete | 2026-07-02 |
 | 4. Invoicing | v2.0 | 5/5 | Complete | 2026-07-03 |
 | 5. Scheduled Automation | v2.0 | 6/6 | Complete | 2026-07-04 |
-| 6. Clients Entity + CRM Integration | v2.1 | 1/5 | In Progress | - |
+| 6. Clients Entity + CRM Integration | v2.1 | 5/5 | Complete | 2026-07-04 |
 | 7. Tickets | v2.1 | 0/? | Not started | - |
-| 8. Linked Invoicing | v2.1 | 0/? | Not started | - |
+| 8. Linked Invoicing & Delivery | v2.1 | 0/? | Not started | - |
 | 9. Dashboard Rework | v2.1 | 0/? | Not started | - |
+| 10. Quotations | v2.1 | 0/? | Not started | - |
