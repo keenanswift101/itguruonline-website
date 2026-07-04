@@ -8,6 +8,7 @@ import {
   integer,
   smallint,
   date,
+  unique,
 } from "drizzle-orm/pg-core";
 
 export const adminUsers = pgTable("admin_users", {
@@ -73,6 +74,8 @@ export const contactEnquiries = pgTable("contact_enquiries", {
   subject: varchar("subject", { length: 200 }).notNull(),
   message: text("message").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  // Phase 5 — stale-enquiry reminder automation (AUTOMATE-01)
+  lastRemindedAt: date("last_reminded_at"),
 });
 
 export const crmNotes = pgTable("crm_notes", {
@@ -118,6 +121,21 @@ export const siteSettings = pgTable("site_settings", {
     .$onUpdate(() => new Date()),
 });
 
+export const billingSchedules = pgTable("billing_schedules", {
+  id: serial("id").primaryKey(),
+  clientName: varchar("client_name", { length: 128 }).notNull(),
+  clientEmail: varchar("client_email", { length: 256 }),
+  packageId: integer("package_id").references(() => hostingPackages.id, { onDelete: "set null" }),
+  billingStart: date("billing_start").notNull(),
+  cycle: varchar("cycle", { length: 8 }).notNull().default("monthly"),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
+
 export const invoices = pgTable("invoices", {
   id: serial("id").primaryKey(),
   // Client info (free-text, no CRM FK — D-03)
@@ -135,12 +153,18 @@ export const invoices = pgTable("invoices", {
   // Money: INTEGER rands, not cents (Phase 3 convention)
   totalRands: integer("total_rands").notNull().default(0),
   paidAt: timestamp("paid_at", { withTimezone: true }),
+  // Phase 5 — recurring billing automation (AUTOMATE-03) and overdue reminders (AUTOMATE-02)
+  billingScheduleId: integer("billing_schedule_id").references(() => billingSchedules.id, { onDelete: "set null" }),
+  billingPeriodStart: date("billing_period_start"),
+  lastRemindedAt: date("last_reminded_at"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true })
     .notNull()
     .defaultNow()
     .$onUpdate(() => new Date()),
-});
+}, (t) => [
+  unique("invoices_recurring_unique").on(t.billingScheduleId, t.billingPeriodStart),
+]);
 
 export const invoiceLineItems = pgTable("invoice_line_items", {
   id: serial("id").primaryKey(),
@@ -152,4 +176,14 @@ export const invoiceLineItems = pgTable("invoice_line_items", {
   unitPriceRands: integer("unit_price_rands").notNull(),
   lineTotalRands: integer("line_total_rands").notNull(),
   sortOrder: smallint("sort_order").notNull().default(0),
+});
+
+export const automationRuns = pgTable("automation_runs", {
+  id: serial("id").primaryKey(),
+  jobName: varchar("job_name", { length: 32 }).notNull(),
+  ranAt: timestamp("ran_at", { withTimezone: true }).notNull(),
+  triggeredBy: varchar("triggered_by", { length: 16 }).notNull(),
+  status: varchar("status", { length: 8 }).notNull(),
+  resultSummary: text("result_summary"),
+  errorMessage: text("error_message"),
 });
