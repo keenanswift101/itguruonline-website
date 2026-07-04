@@ -1,0 +1,31 @@
+import { db } from "@/lib/db/index";
+import { clients } from "@/lib/db/schema";
+import { desc, eq } from "drizzle-orm";
+import type { ClientListItem, ClientSource } from "@/lib/client-types";
+
+/**
+ * List all clients, newest first, as serialization-safe list items.
+ *
+ * Shared by GET /api/admin/clients (list endpoint) and admin/clients/page.tsx
+ * (SSR, added in 06-03) so both always produce identical results from the
+ * same source of truth — don't re-inline this query (see the crm/route.ts
+ * duplication this pattern is explicitly avoiding).
+ */
+export async function getClients(): Promise<ClientListItem[]> {
+  const rows = await db.select().from(clients).orderBy(desc(clients.createdAt));
+  return rows.map((c) => ({
+    id: c.id,
+    name: c.name,
+    email: c.email,
+    phone: c.phone,
+    company: c.company,
+    source: c.source as ClientSource,
+    createdAt: c.createdAt.toISOString(),
+  }));
+}
+
+/** Full client row for the detail/edit page, or null if not found. */
+export async function getClientById(id: number) {
+  const [row] = await db.select().from(clients).where(eq(clients.id, id));
+  return row ?? null;
+}
