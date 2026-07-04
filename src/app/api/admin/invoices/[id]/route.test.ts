@@ -272,4 +272,7 @@ describeIfDb("PUT/DELETE /api/admin/invoices/[id] — DB integration", () => {
       .where(eq(invoiceLineItems.invoiceId, draft.id));
     expect(orphans).toHaveLength(0);
   });
+
+  it.todo("persists an edited clientId on a draft invoice");
+  it.todo("keeps client_id NULL for a free-text edit");
 });
