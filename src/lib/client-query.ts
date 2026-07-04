@@ -1,7 +1,7 @@
 import { db } from "@/lib/db/index";
 import { clients } from "@/lib/db/schema";
 import { desc, eq } from "drizzle-orm";
-import type { ClientListItem, ClientSource } from "@/lib/client-types";
+import type { ClientListItem, ClientPickerOption, ClientSource } from "@/lib/client-types";
 
 /**
  * List all clients, newest first, as serialization-safe list items.
@@ -28,4 +28,20 @@ export async function getClients(): Promise<ClientListItem[]> {
 export async function getClientById(id: number) {
   const [row] = await db.select().from(clients).where(eq(clients.id, id));
   return row ?? null;
+}
+
+/**
+ * Client rows shaped for the invoice/quotation client picker (INVOICE-09).
+ * Includes address fields so the form can auto-fill billing address on select.
+ */
+export async function getClientsForPicker(): Promise<ClientPickerOption[]> {
+  const rows = await db.select().from(clients).orderBy(desc(clients.createdAt));
+  return rows.map((c) => ({
+    id: c.id,
+    name: c.name,
+    email: c.email,
+    company: c.company,
+    physicalAddress: c.physicalAddress,
+    postalAddress: c.postalAddress,
+  }));
 }

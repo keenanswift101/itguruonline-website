@@ -2,6 +2,19 @@ import { z } from "zod";
 
 export type ClientSource = "manual" | "from_registration" | "from_enquiry";
 
+/**
+ * Client rows shaped for the invoice/quotation client picker (INVOICE-09).
+ * Includes address fields so the form can auto-fill billing address on select.
+ */
+export interface ClientPickerOption {
+  id: number;
+  name: string;
+  email: string;
+  company: string;
+  physicalAddress: string;
+  postalAddress: string;
+}
+
 export interface ClientListItem {
   id: number;
   name: string;
