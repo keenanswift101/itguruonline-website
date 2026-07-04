@@ -43,6 +43,13 @@
       "when": 1783174615460,
       "tag": "0005_clients",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1783187808700,
+      "tag": "0006_invoice_client_link",
+      "breakpoints": true
     }
   ]
 }

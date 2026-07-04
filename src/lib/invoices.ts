@@ -7,6 +7,7 @@ export const lineItemInput = z.object({
 });
 
 export const invoiceInput = z.object({
+  clientId: z.number().int().positive().nullable().optional(), // null/undefined = one-off free-text invoice
   clientName: z.string().trim().min(1).max(255),
   clientEmail: z
     .string()

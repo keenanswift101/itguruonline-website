@@ -142,6 +142,9 @@ export const billingSchedules = pgTable("billing_schedules", {
 
 export const invoices = pgTable("invoices", {
   id: serial("id").primaryKey(),
+  // Phase 8 — optional link to a stored client (INVOICE-09/10); nullable,
+  // additive-only migration so pre-existing free-text invoices stay valid.
+  clientId: integer("client_id").references(() => clients.id, { onDelete: "set null" }),
   // Client info (free-text, no CRM FK — D-03)
   clientName: varchar("client_name", { length: 255 }).notNull(),
   clientEmail: varchar("client_email", { length: 320 }),
