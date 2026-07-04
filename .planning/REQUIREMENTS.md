@@ -58,10 +58,10 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| CLIENT-01 | Phase 6 | In Progress (foundation done in 06-01; UI/routes in 06-02/03) |
+| CLIENT-01 | Phase 6 | In Progress (foundation done in 06-01; POST/GET routes done in 06-02; create UI in 06-03) |
 | CLIENT-02 | Phase 6 | In Progress (foundation done in 06-01; convert route in 06-04) |
-| CLIENT-03 | Phase 6 | In Progress (foundation done in 06-01; list UI in 06-02/03) |
-| CLIENT-04 | Phase 6 | In Progress (foundation done in 06-01; edit route/UI in 06-05) |
+| CLIENT-03 | Phase 6 | In Progress (foundation done in 06-01; GET route done in 06-02; list UI in 06-03) |
+| CLIENT-04 | Phase 6 | In Progress (foundation done in 06-01; GET/PUT routes done in 06-02; edit UI in 06-05) |
 | CLIENT-05 | Phase 6 | In Progress (foundation done in 06-01; notes route/UI in 06-05) |
 | CLIENT-06 | Phase 8 | Pending |
 | TICKET-01 | Phase 7 | Pending |

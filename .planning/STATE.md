@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Clients, Tickets & Linked Invoicing
 status: executing
-stopped_at: Completed 06-01-PLAN.md
-last_updated: "2026-07-04T14:37:34.245Z"
+stopped_at: Completed 06-02-PLAN.md
+last_updated: "2026-07-04T15:05:18.880Z"
 last_activity: 2026-07-04
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -34,7 +34,7 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 ## Current Position
 
 Phase: 06 (clients-entity-crm-integration) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-07-04
 
@@ -72,6 +72,7 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 
 *Updated after each plan completion*
 | Phase 06 P01 | 12min | 3 tasks | 7 files |
+| Phase 06 P02 | 16min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -94,6 +95,8 @@ Recent decisions affecting current work:
 - [Phase 06]: clients.email has no unique() constraint — duplicate-client tolerance is intentional, dedupe tooling out of scope
 - [Phase 06]: clients table placed at end of schema.ts (Drizzle .references() lazy thunks allow forward refs from earlier-defined lead tables)
 - [Phase 06, 06-01 correction]: 06-01-PLAN.md's frontmatter listed all 5 CLIENT requirements even though it only built Wave 0 foundation (schema/types/test-stubs, no routes/UI). Reverted the `requirements mark-complete` result in REQUIREMENTS.md back to unchecked/"In Progress" for CLIENT-01..05 — they'll get marked truly Complete as 06-02 through 06-05 deliver the actual create/list/edit/notes/convert functionality.
+- [Phase 06]: 06-02: Non-DB guard tests assert 401 for all unauthenticated cases (POST/GET/PUT), since requireAdmin() fires before body/id validation — matches crm/[id]/notes/route.test.ts convention.
+- [Phase 06, 06-02 correction]: 06-02-PLAN.md's frontmatter listed CLIENT-01/03/04 as requirements even though it only built the API route layer (no owner-facing UI). Reverted the `requirements mark-complete` result in REQUIREMENTS.md back to unchecked/"In Progress" for CLIENT-01/03/04 — the traceability table now notes routes done in 06-02, UI still pending in 06-03 (create/list) and 06-05 (edit).
 
 ### Pending Todos
 
@@ -107,7 +110,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-04T14:37:34.238Z
-Stopped at: Completed 06-01-PLAN.md
-NEXT: execute 06-02-PLAN.md (Wave 1 — manual client create + list UI, builds on this plan's schema/types/stubs).
+Last session: 2026-07-04T15:05:18.874Z
+Stopped at: Completed 06-02-PLAN.md
+NEXT: execute 06-03-PLAN.md (client create + list UI, consumes 06-02's client-query.ts + route contracts).
 Resume file: None

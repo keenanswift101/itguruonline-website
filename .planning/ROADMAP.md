@@ -51,7 +51,7 @@ Full details: [milestones/v2.0-ROADMAP.md](milestones/v2.0-ROADMAP.md)
 **Plans**: 5 plans (4 waves)
 Plans:
 - [x] 06-01-PLAN.md — Foundation: clients table + converted_client_id columns, 0005 migration, client-types contract, Wave 0 test stubs
-- [ ] 06-02-PLAN.md — Client query layer + CRUD API (create/list/get/edit)
+- [x] 06-02-PLAN.md — Client query layer + CRUD API (create/list/get/edit)
 - [ ] 06-03-PLAN.md — Clients list + manual-create UI (ClientsTable, ClientForm, nav entry)
 - [ ] 06-04-PLAN.md — Convert-from-lead (withTxDb atomic write + ConvertButton on CRM detail)
 - [ ] 06-05-PLAN.md — Client detail + edit + notes (crm_notes recordType 'client')
