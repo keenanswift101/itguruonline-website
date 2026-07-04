@@ -6,12 +6,19 @@ import { db } from "@/lib/db/index";
 import { siteSettings } from "@/lib/db/schema";
 
 // Allow-list of editable keys — reject unknown keys so the settings table can't be polluted.
-const ALLOWED_KEYS = ["contact_email", "hosting_setup_fee_note"] as const;
+const ALLOWED_KEYS = [
+  "contact_email",
+  "hosting_setup_fee_note",
+  "enquiry_stale_days",
+  "invoice_overdue_reminder_days",
+] as const;
 
 const PatchSchema = z
   .object({
     contact_email: z.string().email().optional(),
     hosting_setup_fee_note: z.string().max(500).optional(),
+    enquiry_stale_days: z.coerce.number().int().min(1).max(365).optional(),
+    invoice_overdue_reminder_days: z.coerce.number().int().min(1).max(365).optional(),
   })
   .refine((o) => Object.keys(o).length > 0, { message: "At least one field required" });
 
@@ -34,11 +41,14 @@ export async function PATCH(req: NextRequest) {
     );
   }
 
-  // Update each provided key/value row (rows were seeded by 03-01 migration).
+  // Update each provided key/value row (rows were seeded by 03-01/04-automation migrations).
   for (const key of ALLOWED_KEYS) {
     const value = parsed.data[key];
     if (value !== undefined) {
-      await db.update(siteSettings).set({ value }).where(eq(siteSettings.key, key));
+      await db
+        .update(siteSettings)
+        .set({ value: String(value) })
+        .where(eq(siteSettings.key, key));
     }
   }
   return NextResponse.json({ ok: true });

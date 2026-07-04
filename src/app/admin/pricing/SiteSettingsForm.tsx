@@ -42,6 +42,12 @@ export function SiteSettingsForm({ settings }: SiteSettingsFormProps) {
 
   const [contactEmail, setContactEmail] = useState(settings.contact_email ?? "");
   const [feeNote, setFeeNote] = useState(settings.hosting_setup_fee_note ?? "");
+  const [enquiryStaleDays, setEnquiryStaleDays] = useState(
+    settings.enquiry_stale_days ?? "7"
+  );
+  const [invoiceOverdueReminderDays, setInvoiceOverdueReminderDays] = useState(
+    settings.invoice_overdue_reminder_days ?? "1"
+  );
   const [saveStates, setSaveStates] = useState<Record<string, SaveState>>({});
 
   function setSaveState(field: string, state: SaveState) {
@@ -122,6 +128,76 @@ export function SiteSettingsForm({ settings }: SiteSettingsFormProps) {
         </div>
         <p className="text-xs text-(--text-secondary)">
           Shown as a note alongside hosting package prices in the registration wizard.
+        </p>
+      </div>
+
+      {/* Stale enquiry reminder threshold */}
+      <div className="space-y-1">
+        <label
+          htmlFor="enquiry-stale-days"
+          className="block text-xs font-medium text-(--text-secondary) uppercase tracking-wide"
+        >
+          Stale Enquiry Reminder (days)
+        </label>
+        <div className="flex items-center gap-3">
+          <input
+            id="enquiry-stale-days"
+            type="number"
+            min="1"
+            value={enquiryStaleDays}
+            onChange={(e) => setEnquiryStaleDays(e.target.value)}
+            onBlur={() => {
+              const value = String(Math.max(1, parseInt(enquiryStaleDays, 10) || 7));
+              setEnquiryStaleDays(value);
+              save(
+                "enquiry_stale_days",
+                { enquiry_stale_days: value },
+                value,
+                settings.enquiry_stale_days ?? "7"
+              );
+            }}
+            className="w-24 rounded-lg border border-(--border-color) bg-white/10 px-3 py-1.5 text-sm text-(--text-primary) focus:outline-none focus:ring-1 focus:ring-white/30"
+          />
+          <SaveIndicator state={saveStates.enquiry_stale_days ?? "idle"} />
+        </div>
+        <p className="text-xs text-(--text-secondary)">
+          Send reminder after this many days without enquiry status change.
+        </p>
+      </div>
+
+      {/* Overdue invoice reminder threshold */}
+      <div className="space-y-1">
+        <label
+          htmlFor="invoice-overdue-reminder-days"
+          className="block text-xs font-medium text-(--text-secondary) uppercase tracking-wide"
+        >
+          Overdue Invoice Reminder (days)
+        </label>
+        <div className="flex items-center gap-3">
+          <input
+            id="invoice-overdue-reminder-days"
+            type="number"
+            min="1"
+            value={invoiceOverdueReminderDays}
+            onChange={(e) => setInvoiceOverdueReminderDays(e.target.value)}
+            onBlur={() => {
+              const value = String(
+                Math.max(1, parseInt(invoiceOverdueReminderDays, 10) || 1)
+              );
+              setInvoiceOverdueReminderDays(value);
+              save(
+                "invoice_overdue_reminder_days",
+                { invoice_overdue_reminder_days: value },
+                value,
+                settings.invoice_overdue_reminder_days ?? "1"
+              );
+            }}
+            className="w-24 rounded-lg border border-(--border-color) bg-white/10 px-3 py-1.5 text-sm text-(--text-primary) focus:outline-none focus:ring-1 focus:ring-white/30"
+          />
+          <SaveIndicator state={saveStates.invoice_overdue_reminder_days ?? "idle"} />
+        </div>
+        <p className="text-xs text-(--text-secondary)">
+          Send reminder this many days after the invoice due date passes.
         </p>
       </div>
     </div>
