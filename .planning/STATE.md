@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Clients, Tickets & Linked Invoicing
-status: executing
-stopped_at: Completed 06-03-PLAN.md
-last_updated: "2026-07-04T15:37:58.547Z"
+status: verifying
+stopped_at: Completed 06-05-PLAN.md
+last_updated: "2026-07-04T17:02:17.377Z"
 last_activity: 2026-07-04
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 5
-  completed_plans: 4
+  completed_plans: 5
 ---
 
 # Project State
@@ -33,9 +33,9 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 
 ## Current Position
 
-Phase: 06 (clients-entity-crm-integration) — EXECUTING
-Plan: 5 of 5 (06-04 executed out of sequence — depends_on: [06-01] only, wave 1 — 06-03 (client create + list UI) is still NOT executed and remains next up)
-Status: Ready to execute
+Phase: 06 (clients-entity-crm-integration) — COMPLETE (5/5 plans executed: 06-01, 06-02, 06-04, 06-03, 06-05 — 06-04 ran out of sequence since it only depended on 06-01)
+Plan: 5 of 5 — all executed
+Status: Phase complete — ready for verification
 Last activity: 2026-07-04
 
 Progress: v2.0 complete (22/22 plans, shipped, 5/5 phases). v2.1 roadmap defined (4 phases, 18 requirements, 0 plans yet).
@@ -76,6 +76,7 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 | Phase 06 P04 | 15min | 2 tasks | 4 files |
 | Phase 06 P04 | 15min | 2 tasks | 4 files |
 | Phase 06 P03 | 13min | 2 tasks | 5 files |
+| Phase 06 P05 | 14min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -103,6 +104,7 @@ Recent decisions affecting current work:
 - [Phase 06]: 06-04: convert-from-lead uses withTxDb + AlreadyConvertedError thrown inside the tx (not pre-checked) for race-proof idempotency, mirroring the Phase 4 invoice draft-lock pattern
 - [Phase 06]: 06-04: lead status field intentionally left untouched by convert — only convertedClientId is stamped, per 06-RESEARCH.md
 - [Phase 06]: 06-03: ClientForm built create+edit-capable from the start (clientId?+initial? props) so 06-05 reuses it verbatim for editing, mirroring InvoiceForm's dual-mode pattern
+- [Phase 06]: 06-05: Client notes route hardcodes recordType='client' string literal directly (no CrmRecordType union change needed); guard-order convention confirmed for non-numeric-id 401-before-404 case
 
 ### Pending Todos
 
@@ -116,7 +118,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-04T15:37:58.541Z
-Stopped at: Completed 06-03-PLAN.md
-NEXT: execute 06-03-PLAN.md (client create + list UI, consumes 06-02's client-query.ts + route contracts) — still pending; 06-04 (convert-from-lead) was executed ahead of it since it only depended on 06-01, not 06-03.
+Last session: 2026-07-04T17:02:17.372Z
+Stopped at: Completed 06-05-PLAN.md
+NEXT: Phase 06 (clients-entity-crm-integration) is fully executed (5/5 plans) — run /gsd:verify-work for the phase, then proceed to Phase 7 (Tickets) planning.
 Resume file: None

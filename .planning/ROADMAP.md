@@ -54,7 +54,7 @@ Plans:
 - [x] 06-02-PLAN.md — Client query layer + CRUD API (create/list/get/edit)
 - [x] 06-03-PLAN.md — Clients list + manual-create UI (ClientsTable, ClientForm, nav entry)
 - [x] 06-04-PLAN.md — Convert-from-lead (withTxDb atomic write + ConvertButton on CRM detail)
-- [ ] 06-05-PLAN.md — Client detail + edit + notes (crm_notes recordType 'client')
+- [x] 06-05-PLAN.md — Client detail + edit + notes (crm_notes recordType 'client')
 **UI hint**: yes
 
 ### Phase 7: Tickets

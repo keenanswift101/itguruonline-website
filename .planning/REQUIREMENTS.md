@@ -14,8 +14,8 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 - [x] **CLIENT-01**: Owner can create a client record manually (name, email, phone, company, physical/postal address)
 - [x] **CLIENT-02**: Owner can convert an existing enquiry or registration into a client, carrying over the captured details
 - [x] **CLIENT-03**: Owner can view a list of clients in the CRM area, visually separated from leads (enquiries + registrations)
-- [ ] **CLIENT-04**: Owner can open and edit an individual client's details
-- [ ] **CLIENT-05**: Owner can add private notes to a client record (same notes machinery as leads)
+- [x] **CLIENT-04**: Owner can open and edit an individual client's details
+- [x] **CLIENT-05**: Owner can add private notes to a client record (same notes machinery as leads)
 - [ ] **CLIENT-06**: Owner can see a client's linked invoices and tickets on the client detail page (history view)
 
 ### Tickets
