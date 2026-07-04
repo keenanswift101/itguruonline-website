@@ -63,6 +63,8 @@ export const clientRegistrations = pgTable("client_registrations", {
   signatureDate: varchar("signature_date", { length: 10 }).notNull(),
   // Metadata
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  // Phase 6 — convert-to-client back-link (CLIENT-02)
+  convertedClientId: integer("converted_client_id").references(() => clients.id, { onDelete: "set null" }),
 });
 
 export const contactEnquiries = pgTable("contact_enquiries", {
@@ -76,11 +78,13 @@ export const contactEnquiries = pgTable("contact_enquiries", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   // Phase 5 — stale-enquiry reminder automation (AUTOMATE-01)
   lastRemindedAt: date("last_reminded_at"),
+  // Phase 6 — convert-to-client back-link (CLIENT-02)
+  convertedClientId: integer("converted_client_id").references(() => clients.id, { onDelete: "set null" }),
 });
 
 export const crmNotes = pgTable("crm_notes", {
   id: serial("id").primaryKey(),
-  recordType: varchar("record_type", { length: 20 }).notNull(), // "registration" | "enquiry"
+  recordType: varchar("record_type", { length: 20 }).notNull(), // "registration" | "enquiry" | "client"
   recordId: integer("record_id").notNull(),
   body: text("body").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
@@ -186,4 +190,24 @@ export const automationRuns = pgTable("automation_runs", {
   status: varchar("status", { length: 8 }).notNull(),
   resultSummary: text("result_summary"),
   errorMessage: text("error_message"),
+});
+
+export const clients = pgTable("clients", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 200 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  phone: varchar("phone", { length: 30 }).notNull().default(""),
+  company: varchar("company", { length: 200 }).notNull().default(""),
+  physicalAddress: text("physical_address").notNull().default(""),
+  postalAddress: text("postal_address").notNull().default(""),
+  // provenance — "manual" | "from_registration" | "from_enquiry" (CLIENT-02)
+  source: varchar("source", { length: 20 }).notNull().default("manual"),
+  // nullable back-link to the lead this client came from (no FK — pairs like crmNotes)
+  sourceRecordType: varchar("source_record_type", { length: 20 }), // "registration" | "enquiry" | null
+  sourceRecordId: integer("source_record_id"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 });
