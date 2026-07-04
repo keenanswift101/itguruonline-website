@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: verified
-stopped_at: Phase 4 verified complete and LIVE IN PRODUCTION for the first time (all of Phases 1-4). Currently mid-way through an ad-hoc, out-of-roadmap task -- serving the admin portal at admin.it-guru.co.za. Edge function + domain alias deployed; waiting on user to add a CNAME DNS record in cPanel before it resolves. NEXT (after DNS verified) - plan/execute Phase 5, OR resume the admin-subdomain verification if picking this session back up first.
-last_updated: "2026-07-04T04:31:05.000Z"
+stopped_at: Phase 4 verified complete and LIVE IN PRODUCTION (all of Phases 1-4). admin.it-guru.co.za subdomain working end-to-end. Owner account-management gaps closed (settings page, change-password, logout, password eye icons) and verified end-to-end in production. One test Draft invoice (id=1, "Test Client (Sample Invoice)") created in the LIVE production DB at the owner's request for a portal walkthrough -- real production data, not a fixture; delete or ignore it as the owner directs. No unfinished ad-hoc work. NEXT - Phase 5 (Scheduled Automation), already fully planned, ready for `/gsd:execute-phase 5`.
+last_updated: "2026-07-04T08:10:00.000Z"
 last_activity: 2026-07-04
 progress:
   total_phases: 5
@@ -21,7 +21,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-04)
 
 **Core value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
-**Current focus:** Phase 05 — scheduled automation. Already fully planned (6 plans in `.planning/phases/05-scheduled-automation/`, plus CONTEXT/RESEARCH/VALIDATION docs) but not yet executed — ready to go straight to `/gsd:execute-phase 5`. Read "In-Progress Side Task" below first, though — there's unfinished ad-hoc work from the last session.
+**Current focus:** Phase 05 — scheduled automation. Already fully planned (6 plans in `.planning/phases/05-scheduled-automation/`, plus CONTEXT/RESEARCH/VALIDATION docs) but not yet executed — ready to go straight to `/gsd:execute-phase 5`. No unfinished ad-hoc work remains from the last session (see "Side Task" and Decisions log below for what shipped).
 
 ## Current Position
 
@@ -110,6 +110,7 @@ Recent decisions affecting current work:
 - **[2026-07-04]**: `/admin/settings` built (sidebar already linked to it, page never existed) with a change-password form (`src/components/forms/ChangePasswordForm.tsx`, `POST /api/admin/change-password` — verifies current password via `changePassword()` in `auth.ts`), plus a logout button in `AdminSidebar.tsx` (`POST /api/admin/logout` clears the session cookie). Prompted directly by the owner needing to change the temporary generated password. Note: logout only clears the cookie client-side (standard for this app's stateless JWT sessions, no server-side revocation list exists) — a raw copy of an old still-valid JWT would keep working until its 8h natural expiry if replayed directly; not a bug, just how every other part of this app's auth already behaves.
 - **[2026-07-04]**: Fixed 18 test files that checked the legacy `NETLIFY_DATABASE_URL` (instead of `NETLIFY_DB_URL`) to decide whether to skip DB-dependent tests — they'd have silently skipped forever even with a correctly configured local DB.
 - **[2026-07-04]**: Added a reusable `PasswordInput` component (`src/components/ui/PasswordInput.tsx`, inline eye/eye-slash SVG toggle) and wired it into every password field (login, reset-password, change-password) — owner-requested.
+- **[2026-07-04]**: Created a real test Draft invoice in the **live production database** at the owner's request (id=1, "Test Client (Sample Invoice)", R270 total, two line items) via the actual `/api/admin/invoices` API — not a local/dev fixture. It will show up in `/admin/invoices`, CSV exports, and any future invoice-count queries until deleted. If a future session sees an unexplained invoice #1 with an obviously fake client name, this is why — check with the owner before assuming it's a bug, and offer to delete it if it's still sitting there unaddressed.
 
 ### Pending Todos
 
@@ -127,7 +128,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-04T07:46:00.000Z
-Stopped at: Phase 4 verified complete and deployed to production for real (after diagnosing and fixing a same-day production outage — see the CRITICAL NETLIFY_DB_URL decision above). admin.it-guru.co.za subdomain fully working end-to-end. Owner lost the temp production admin password once (recovered from this session's scratchpad, since it was still available) — that prompted building out proper account-management features, all shipped and verified in production this session: `/admin/settings` with a working change-password form, a logout button, and show/hide password eye icons on every password field. Full end-to-end verification passed (settings page access, password change + revert, logout cookie clearing). No known outstanding issues.
-NEXT: no unfinished ad-hoc work remains. Either take further ad-hoc requests, or move to Phase 5 (Scheduled Automation) — already fully planned/researched (6 plans, CONTEXT/RESEARCH/VALIDATION all exist in `.planning/phases/05-scheduled-automation/`) — go straight to `/gsd:execute-phase 5` unless the plan needs revisiting first.
+Last session: 2026-07-04T08:10:00.000Z
+Stopped at: Phase 4 verified complete and deployed to production for real (after diagnosing and fixing a same-day production outage — see the CRITICAL NETLIFY_DB_URL decision above). admin.it-guru.co.za subdomain fully working end-to-end. Account-management gaps closed and verified in production: `/admin/settings` with change-password, a logout button, show/hide password eye icons on every password field. Created one real test Draft invoice (id=1) in production at the owner's request, walked through it live with them (list page, detail page, line items, total all render correctly) — left in place, not deleted, pending the owner's call on whether to remove it. No known outstanding issues.
+NEXT: no unfinished ad-hoc work remains. Either take further ad-hoc requests (check whether the owner wants test invoice #1 deleted), or move to Phase 5 (Scheduled Automation) — already fully planned/researched (6 plans, CONTEXT/RESEARCH/VALIDATION all exist in `.planning/phases/05-scheduled-automation/`) — go straight to `/gsd:execute-phase 5` unless the plan needs revisiting first.
 Resume file: None
