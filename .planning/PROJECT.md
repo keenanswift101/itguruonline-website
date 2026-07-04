@@ -8,6 +8,22 @@ IT-Guru Online is the marketing site and client onboarding portal for an IT supp
 
 Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live — no more losing leads in an inbox or needing a developer to change a price.
 
+## Current Milestone: v2.1 — Clients, Tickets & Linked Invoicing
+
+**Goal:** Turn the portal from lead-capture into real client management — a first-class Clients entity, lightweight support-ticket tracking, invoices linked to stored clients, and a dashboard that surfaces open work.
+
+**Target features:**
+- **Clients** — a dedicated `clients` table. Owner can add a client manually, OR convert an existing enquiry/registration into a client (carrying over their details). CRM view separates leads (enquiries + registrations) from clients.
+- **Tickets** — lightweight support-ticket tracking (new `tickets` table + admin UI): create a ticket linked to a client, set status (open / in-progress / resolved) and priority, add notes.
+- **Linked invoicing** — invoice form gets a searchable client picker that auto-fills name/email/address and stores an `invoices.client_id` link; a one-off/no-saved-client option is retained, and existing free-text invoices stay valid.
+- **Dashboard rework** — surface open-ticket count/list plus relevant tiles (new leads, unpaid/overdue invoices, revenue this month, recent activity).
+
+**Key context / decisions (locked with owner before planning):**
+- Clients are a NEW entity, not a status on existing records — enquiries/registrations remain "leads" until promoted/converted.
+- Tickets are BUILT into the portal (not an external helpdesk integration).
+- Invoice→client is a `client_id` foreign key with auto-fill; free-text one-off invoices remain supported for backward compatibility.
+- Builds entirely on the v2.0 stack (Neon/Drizzle, `requireAdmin` auth, existing invoicing/CRM/automation patterns) — no new external services.
+
 ## Requirements
 
 ### Validated
@@ -35,9 +51,15 @@ Every enquiry and client interaction is captured and actionable in one place, wi
 
 ### Active
 
-<!-- This milestone: v2.0 Admin Portal -->
+<!-- This milestone: v2.1 Clients, Tickets & Linked Invoicing (see REQUIREMENTS.md for REQ-IDs) -->
 
-(none — all v2.0 milestone requirements validated; Phase 5 was the final phase. Scheduled-function cron execution still needs one production-deploy confirmation.)
+- [ ] Owner can create a client record manually, and convert an enquiry/registration into a client
+- [ ] Owner can view/edit clients in the CRM, separated from leads
+- [ ] Owner can create, view, update, and resolve support tickets linked to a client
+- [ ] Owner can create an invoice by picking a stored client (auto-filled), with a one-off fallback
+- [ ] Dashboard shows open tickets and other relevant business tiles
+
+<!-- v2.0 Admin Portal — all validated (see Validated above); Phase 5 cron execution confirmed live 2026-07-04 -->
 
 ### Out of Scope
 
@@ -75,6 +97,9 @@ Every enquiry and client interaction is captured and actionable in one place, wi
 | Invoicing/accounts/automation folded into v2.0 architecture now rather than added later | Avoids reworking auth/database/roles after the fact once CRM + pricing ship | ✓ Good — Phases 1-4 shipped without any auth/schema rework; Phase 5 will validate the automation half of this bet |
 | IT-Guru is not VAT-registered — invoices must NOT use "Tax Invoice" labeling or VAT fields | Confirmed by owner; SARS rules differ by VAT-registration status, and mislabeling has compliance implications | ✓ Good |
 | Database/auth provider: Netlify Database (Neon Postgres), with hand-rolled JWT/cookie auth (not a full auth framework) | Native to the existing Netlify deployment — no new vendor relationship, automatic preview-branch databases; single-admin login doesn't need multi-user auth framework overhead. Chosen over Supabase despite an existing TODO comment anticipating it. | ✓ Good — live in production 2026-07-04, but see STATE.md's CRITICAL decision note: the actual runtime env var is `NETLIFY_DB_URL`, not `NETLIFY_DATABASE_URL` as originally assumed; getting this wrong caused a real production outage on first deploy. **Also**: the research-flagged "free storage until 2026-07-01" promo window has now passed (today is past that date) — verify current Netlify Database billing/tier before invoice volume grows, this was never actually checked. |
+| [v2.1] Clients are a new first-class entity, not a status on enquiries/registrations | The owner needs walk-in/manually-added clients who never filled in a form, and invoices need a stable client to link to — a status flag on lead records can't represent either | — Pending (v2.1 Phase 6+) |
+| [v2.1] Build lightweight ticketing into the portal rather than integrate an external helpdesk | IT-Guru has no existing helpdesk tool; a simple client-linked tickets table matches the single-admin scale and keeps everything in one dashboard | — Pending (v2.1) |
+| [v2.1] Invoice→client is an optional `client_id` FK with auto-fill; free-text one-off invoices stay valid | Links a client's invoice history without a destructive migration of existing free-text invoices, and still allows quick one-off billing | — Pending (v2.1) |
 
 ## Evolution
 
@@ -94,4 +119,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-04 — Phase 5 (Scheduled Automation) complete and verified (4/4 must-haves, all jobs exercised live with real email sends), closing out all v2.0 milestone phases. Not yet deployed to production — cron functions and the pg/serverExternalPackages packaging change need a prod-deploy verification when shipping. Local dev story rebuilt this session (netlify dev + NETLIFY_DB_DRIVER=server branch + DEV_AUTH_BYPASS).*
+*Last updated: 2026-07-04 — v2.0 shipped & verified in production; started milestone v2.1 (Clients, Tickets & Linked Invoicing) — new Clients entity, lightweight ticket tracking, invoice→client linking, dashboard rework. Continues from Phase 6. Research skipped (standard CRUD on the established stack).*
