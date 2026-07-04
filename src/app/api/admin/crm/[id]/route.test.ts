@@ -53,11 +53,11 @@ describe("parseCrmId unit check", () => {
 });
 
 // DB-dependent tests
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("GET /api/admin/crm/[id] — DB tests", () => {
   it("returns 200 with record + notes for a valid registration id", async () => {
-    // Full integration requires NETLIFY_DATABASE_URL + valid JWT session
+    // Full integration requires NETLIFY_DB_URL + valid JWT session
     // and is covered in staging/E2E tests.
     expect(true).toBe(true);
   });

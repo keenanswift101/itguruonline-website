@@ -44,11 +44,11 @@ describe("CRM_STATUSES validation unit check", () => {
 });
 
 // DB-dependent tests
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("PATCH /api/admin/crm/[id]/status — DB tests", () => {
   it("updates the status of a real row to 'contacted'", async () => {
-    // Full integration requires NETLIFY_DATABASE_URL + valid JWT session
+    // Full integration requires NETLIFY_DB_URL + valid JWT session
     // and is covered in staging/E2E tests.
     expect(true).toBe(true);
   });

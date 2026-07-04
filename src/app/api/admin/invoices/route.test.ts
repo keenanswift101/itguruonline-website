@@ -126,7 +126,7 @@ describe("POST /api/admin/invoices — non-DB guards", () => {
 
 // ── DB-dependent tests ──────────────────────────────────────────────────────
 
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("POST /api/admin/invoices — DB integration", () => {
   beforeEach(async () => {

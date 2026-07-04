@@ -32,13 +32,13 @@ describe("GET /api/admin/crm — non-DB guards", () => {
 });
 
 // DB-dependent tests
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("GET /api/admin/crm — DB tests", () => {
   it("returns 200 with merged records array when authenticated", async () => {
     // The 401 guard test above proves auth check works.
     // Full integration (authenticated 200 with real DB records) requires
-    // a live NETLIFY_DATABASE_URL and valid JWT session, tested in staging.
+    // a live NETLIFY_DB_URL and valid JWT session, tested in staging.
     expect(true).toBe(true);
   });
 });

@@ -44,8 +44,8 @@ describe("signSession / verifySession", () => {
   });
 });
 
-// DB-dependent tests: skip gracefully if NETLIFY_DATABASE_URL is not available.
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+// DB-dependent tests: skip gracefully if NETLIFY_DB_URL is not available.
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("isLockedOut (DB-backed — proves AUTH-04 survives restart)", () => {
   // Unique email per run so test rows don't collide across runs.

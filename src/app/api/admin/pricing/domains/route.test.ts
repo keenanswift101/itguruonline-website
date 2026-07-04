@@ -37,11 +37,11 @@ describe("PATCH /api/admin/pricing/domains/[tld] — non-DB guards", () => {
 });
 
 // DB-dependent tests
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("PATCH /api/admin/pricing/domains/[tld] — DB tests", () => {
   it("returns 200 and sets priceRands to 120 when authenticated", async () => {
-    // Full integration requires NETLIFY_DATABASE_URL + valid JWT session
+    // Full integration requires NETLIFY_DB_URL + valid JWT session
     // and is covered in staging/E2E tests.
     expect(true).toBe(true);
   });

@@ -155,7 +155,7 @@ describe("PUT/DELETE /api/admin/invoices/[id] — draft lock (mocked db)", () =>
 
 // ── DB integration (gated) ──────────────────────────────────────────────────
 
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("PUT/DELETE /api/admin/invoices/[id] — DB integration", () => {
   beforeEach(async () => {

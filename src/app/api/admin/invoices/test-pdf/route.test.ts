@@ -29,7 +29,7 @@ describe("GET /api/admin/invoices/test-pdf — non-DB guards", () => {
 });
 
 // DB-dependent tests
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("GET /api/admin/invoices/test-pdf — renderToBuffer smoke test", () => {
   beforeAll(async () => {

@@ -133,7 +133,7 @@ describe("PATCH /api/admin/invoices/[id]/status — transitions (mocked db)", ()
 
 // ── DB integration (gated) ──────────────────────────────────────────────────
 
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("PATCH /api/admin/invoices/[id]/status — DB integration", () => {
   beforeEach(async () => {

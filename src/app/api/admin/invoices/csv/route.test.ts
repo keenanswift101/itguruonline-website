@@ -124,7 +124,7 @@ describe("GET /api/admin/invoices/csv — format (mocked db)", () => {
 
 // ── DB integration (gated) ──────────────────────────────────────────────────
 
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("GET /api/admin/invoices/csv — DB integration", () => {
   beforeEach(async () => {

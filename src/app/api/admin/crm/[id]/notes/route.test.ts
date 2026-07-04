@@ -53,11 +53,11 @@ describe("Note body validation unit check", () => {
 });
 
 // DB-dependent tests
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("POST /api/admin/crm/[id]/notes — DB tests", () => {
   it("inserts a note with correct recordType + recordId and returns 201", async () => {
-    // Full integration requires NETLIFY_DATABASE_URL + valid JWT session
+    // Full integration requires NETLIFY_DB_URL + valid JWT session
     // and is covered in staging/E2E tests.
     expect(true).toBe(true);
   });

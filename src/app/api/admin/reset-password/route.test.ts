@@ -2,7 +2,7 @@ import { describe, it, expect, beforeAll } from "vitest";
 import bcrypt from "bcryptjs";
 
 const BASE = "https://it-guru.co.za";
-const skipDB = !process.env.NETLIFY_DATABASE_URL;
+const skipDB = !process.env.NETLIFY_DB_URL;
 
 // ── Non-DB route tests (always run) ────────────────────────────────────────
 
@@ -45,7 +45,7 @@ describe("POST /api/admin/reset-password (no DB required)", () => {
   });
 });
 
-// ── DB-dependent tests (skip without NETLIFY_DATABASE_URL) ──────────────────
+// ── DB-dependent tests (skip without NETLIFY_DB_URL) ──────────────────
 
 describe.skipIf(skipDB)("reset-token helpers + route (requires DB)", () => {
   const testEmail = `reset+${Date.now()}@test.it-guru.co.za`;

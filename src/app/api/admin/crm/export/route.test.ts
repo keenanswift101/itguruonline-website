@@ -134,7 +134,7 @@ describe("buildCsvBody — header + escaping (unit, no DB/auth)", () => {
 });
 
 // DB-dependent tests
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("GET /api/admin/crm/export — DB integration", () => {
   it("returns 200 with correct Content-Type and Content-Disposition headers when authenticated", async () => {

@@ -9,7 +9,7 @@ vi.mock("@/lib/email", () => ({
   ADMIN_EMAIL: "admin@it-guru.co.za",
 }));
 
-// Mock DB so no NETLIFY_DATABASE_URL is required for non-DB tests
+// Mock DB so no NETLIFY_DB_URL is required for non-DB tests
 vi.mock("@/lib/db/index", () => ({
   db: {
     insert: vi.fn().mockReturnValue({
@@ -118,8 +118,8 @@ describe("POST /api/contact — ordering", () => {
 });
 
 // ── DB-dependent round-trip tests ──────────────────────────────────────────
-// These require NETLIFY_DATABASE_URL; run via `netlify dev:exec npm test`
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+// These require NETLIFY_DB_URL; run via `netlify dev:exec npm test`
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("POST /api/contact — DB round-trip", () => {
   it("inserts a contact_enquiries row with matching name/email/subject/message", async () => {

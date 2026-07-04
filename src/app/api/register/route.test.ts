@@ -10,7 +10,7 @@ vi.mock("@/lib/email", () => ({
   ADMIN_EMAIL: "admin@it-guru.co.za",
 }));
 
-// Mock DB so no NETLIFY_DATABASE_URL is required for non-DB tests
+// Mock DB so no NETLIFY_DB_URL is required for non-DB tests
 vi.mock("@/lib/db/index", () => ({
   db: {
     insert: vi.fn().mockReturnValue({
@@ -124,18 +124,18 @@ describe("POST /api/register — ordering", () => {
 });
 
 // ── DB-dependent round-trip tests ──────────────────────────────────────────
-// These require NETLIFY_DATABASE_URL; run via `netlify dev:exec npm test`
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+// These require NETLIFY_DB_URL; run via `netlify dev:exec npm test`
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("POST /api/register — DB round-trip", () => {
   beforeAll(() => {
     // The mocked db is still in place for the above tests.
     // In a real-DB environment the mock would be bypassed by providing
-    // NETLIFY_DATABASE_URL; these tests are intentionally skipped without it.
+    // NETLIFY_DB_URL; these tests are intentionally skipped without it.
   });
 
   it("inserts a client_registrations row with the returned referenceId", async () => {
-    // This test only runs when NETLIFY_DATABASE_URL is present.
+    // This test only runs when NETLIFY_DB_URL is present.
     // Import real DB outside the mock context via netlify dev:exec.
     const { db: realDb } = await import("@/lib/db/index");
     const { clientRegistrations } = await import("@/lib/db/schema");

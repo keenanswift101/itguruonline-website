@@ -48,7 +48,7 @@ describe("POST /api/admin/login — non-DB guards", () => {
 });
 
 // DB-dependent tests
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("POST /api/admin/login — DB tests", () => {
   const email = `admin-route-test+${Date.now()}@example.com`;

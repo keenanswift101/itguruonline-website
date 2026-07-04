@@ -42,7 +42,7 @@ describe("GET /api/admin/invoices/[id]/pdf — non-DB guards", () => {
 
 // ── DB integration (gated) ──────────────────────────────────────────────────
 
-const describeIfDb = process.env.NETLIFY_DATABASE_URL ? describe : describe.skip;
+const describeIfDb = process.env.NETLIFY_DB_URL ? describe : describe.skip;
 
 describeIfDb("GET /api/admin/invoices/[id]/pdf — DB integration", () => {
   beforeEach(async () => {
