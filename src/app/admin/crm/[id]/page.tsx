@@ -8,6 +8,7 @@ import { parseCrmId } from "@/lib/crm-types";
 import { Card } from "@/components/ui/Card";
 import { StatusSelect } from "@/components/admin/crm/StatusSelect";
 import { NoteForm } from "@/components/admin/crm/NoteForm";
+import { ConvertButton } from "@/components/admin/crm/ConvertButton";
 
 export const metadata = { title: "CRM Record — IT-Guru Admin" };
 
@@ -73,11 +74,16 @@ export default async function CrmDetailPage({
             Ref: <span className="font-semibold text-(--text-primary)">{reg.referenceId}</span>
           </p>
         )}
-        <div className="mt-4">
+        <div className="mt-4 flex items-center gap-4">
           <StatusSelect
             recordType={parsed.recordType}
             recordId={parsed.id}
             current={record.status}
+          />
+          <ConvertButton
+            recordType={parsed.recordType}
+            recordId={parsed.id}
+            convertedClientId={record.convertedClientId ?? null}
           />
         </div>
       </div>
