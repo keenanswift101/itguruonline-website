@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-01-PLAN.md (schema + migration + Wave 0 test stubs for Phase 5 automation)
-last_updated: "2026-07-04T06:06:38.875Z"
+stopped_at: Completed 05-03-PLAN.md
+last_updated: "2026-07-04T06:24:43.877Z"
 last_activity: 2026-07-04
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 22
-  completed_plans: 17
+  completed_plans: 19
   percent: 73
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 ## Current Position
 
 Phase: 05 (scheduled-automation) — EXECUTING
-Plan: 2 of 6
+Plan: 4 of 6
 Status: Ready to execute
 Last activity: 2026-07-04
 
@@ -73,6 +73,8 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 | Phase 04-invoicing P04 | ~30min | 2 tasks | 8 files |
 | Phase 04-invoicing P05 | 20min | 3 tasks | 2 files |
 | Phase 05 P01 | 10min | 3 tasks | 8 files |
+| Phase 05 P02 | 20min | 3 tasks | 6 files |
+| Phase 05 P03 | 3min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -114,6 +116,9 @@ Recent decisions affecting current work:
 - **[2026-07-04]**: Created a real test Draft invoice in the **live production database** at the owner's request (id=1, "Test Client (Sample Invoice)", R270 total, two line items) via the actual `/api/admin/invoices` API — not a local/dev fixture. It will show up in `/admin/invoices`, CSV exports, and any future invoice-count queries until deleted. If a future session sees an unexplained invoice #1 with an obviously fake client name, this is why — check with the owner before assuming it's a bug, and offer to delete it if it's still sitting there unaddressed.
 - [Phase 05]: 05-01: Migration renumbered 0004 (not 0003) since 0003_invoices.sql already exists from Phase 4
 - [Phase 05]: 05-01: Wave 0 test stubs gate describeIfDb on NETLIFY_DB_URL, not the plan's literal NETLIFY_DATABASE_URL, matching this project's actual env var convention
+- [Phase 05]: 05-02: contactEnquiries has no updatedAt column -- staleness computed from createdAt instead
+- [Phase 05]: 05-02: recurring-billing invoice+line-item insert wrapped in withTxDb/db.transaction (not sequential plain inserts) for atomicity, matching POST /api/admin/invoices pattern
+- [Phase 05]: 05-03: vi.mock("resend") added to route.test.ts alongside automocked job modules -- automocking still loads the real module graph (src/lib/email.ts's module-scope Resend constructor) before stubbing exports, which throws Missing API key without this
 
 ### Pending Todos
 
@@ -131,7 +136,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-04T06:06:38.869Z
-Stopped at: Completed 05-01-PLAN.md (schema + migration + Wave 0 test stubs for Phase 5 automation)
+Last session: 2026-07-04T06:24:43.871Z
+Stopped at: Completed 05-03-PLAN.md
 NEXT: no unfinished ad-hoc work remains. Either take further ad-hoc requests (check whether the owner wants test invoice #1 deleted), or move to Phase 5 (Scheduled Automation) — already fully planned/researched (6 plans, CONTEXT/RESEARCH/VALIDATION all exist in `.planning/phases/05-scheduled-automation/`) — go straight to `/gsd:execute-phase 5` unless the plan needs revisiting first.
 Resume file: None

@@ -44,10 +44,10 @@ Requirements for the v2.0 Admin Portal milestone. Each maps to roadmap phases.
 
 ### Automation
 
-- [ ] **AUTOMATE-01**: System sends the owner a reminder when an enquiry has had no status change/contact after a configurable number of days
-- [ ] **AUTOMATE-02**: System sends the owner a reminder when an invoice is overdue
-- [ ] **AUTOMATE-03**: System automatically generates a recurring invoice for active hosting clients on their billing cycle, without creating duplicates on retry/re-run
-- [ ] **AUTOMATE-04**: Each scheduled automation has a manually-triggerable equivalent for testing on the `dev` branch (Netlify Scheduled Functions only run on production deploys)
+- [x] **AUTOMATE-01**: System sends the owner a reminder when an enquiry has had no status change/contact after a configurable number of days
+- [x] **AUTOMATE-02**: System sends the owner a reminder when an invoice is overdue
+- [x] **AUTOMATE-03**: System automatically generates a recurring invoice for active hosting clients on their billing cycle, without creating duplicates on retry/re-run
+- [x] **AUTOMATE-04**: Each scheduled automation has a manually-triggerable equivalent for testing on the `dev` branch (Netlify Scheduled Functions only run on production deploys)
 
 ## v2 Requirements
 
@@ -110,10 +110,10 @@ Filled in by the roadmapper during roadmap creation.
 | INVOICE-05 | Phase 4 | Complete |
 | INVOICE-06 | Phase 4 | Complete |
 | INVOICE-07 | Phase 4 | Complete |
-| AUTOMATE-01 | Phase 5 | Pending |
-| AUTOMATE-02 | Phase 5 | Pending |
-| AUTOMATE-03 | Phase 5 | Pending |
-| AUTOMATE-04 | Phase 5 | Pending |
+| AUTOMATE-01 | Phase 5 | Complete |
+| AUTOMATE-02 | Phase 5 | Complete |
+| AUTOMATE-03 | Phase 5 | Complete |
+| AUTOMATE-04 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 27 total
