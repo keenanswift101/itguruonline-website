@@ -1,4 +1,4 @@
-| AUTOMATE-04 | Phase 5 | Pending || AUTOMATE-03 | Phase 5 | Pending || AUTOMATE-02 | Phase 5 | Pending || AUTOMATE-01 | Phase 5 | Pending || INVOICE-07 | Phase 4 | Complete || INVOICE-06 | Phase 4 | Complete || INVOICE-05 | Phase 4 | Complete || INVOICE-04 | Phase 4 | Complete || INVOICE-03 | Phase 4 | Complete || INVOICE-02 | Phase 4 | Complete || INVOICE-01 | Phase 4 | Complete || PRICE-05 | Phase 3 | Complete || PRICE-04 | Phase 3 | Complete || PRICE-03 | Phase 3 | Complete || PRICE-02 | Phase 3 | Complete || PRICE-01 | Phase 3 | Complete || CRM-07 | Phase 2 | Pending || CRM-06 | Phase 2 | Complete || CRM-05 | Phase 2 | Complete || CRM-04 | Phase 2 | Complete || CRM-03 | Phase 2 | Pending || CRM-02 | Phase 2 | Pending || CRM-01 | Phase 2 | Pending || AUTH-04 | Phase 1 | Pending || AUTH-03 | Phase 1 | Pending || AUTH-02 | Phase 1 | Pending || AUTH-01 | Phase 1 | Pending |# Requirements: IT-Guru Online — v2.0 Admin Portal
+# Requirements: IT-Guru Online — v2.0 Admin Portal
 
 **Defined:** 2026-06-30
 **Core Value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
@@ -18,11 +18,11 @@ Requirements for the v2.0 Admin Portal milestone. Each maps to roadmap phases.
 
 - [x] **CRM-01**: Every registration wizard submission is automatically saved as a client record
 - [x] **CRM-02**: Every contact form submission is automatically saved as an enquiry record
-- [ ] **CRM-03**: Owner can view a searchable, filterable list of all enquiries/clients
+- [x] **CRM-03**: Owner can view a searchable, filterable list of all enquiries/clients
 - [x] **CRM-04**: Owner can open a record to see full submitted details
 - [x] **CRM-05**: Owner can set a record's status (New, Contacted, In Progress, Completed)
 - [x] **CRM-06**: Owner can add free-text, timestamped notes to a record
-- [ ] **CRM-07**: Owner can export the enquiry/client list as CSV
+- [x] **CRM-07**: Owner can export the enquiry/client list as CSV
 
 ### Pricing
 
@@ -63,7 +63,7 @@ Deferred to future release. Tracked but not in current roadmap.
 
 ### Invoicing
 
-- **INVOICE-07**: Online payment collection via a South African payment gateway (e.g. PayFast, Yoco, Paystack)
+- **INVOICE-08**: Online payment collection via a South African payment gateway (e.g. PayFast, Yoco, Paystack) *(renumbered 2026-07-04 — this was originally mislabeled INVOICE-07, colliding with the v1 CSV/PDF export requirement of the same ID; no code references this ID, so renumbering is safe)*
 
 ### Automation
 
@@ -87,17 +87,17 @@ Filled in by the roadmapper during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 1 | Pending |
-| AUTH-02 | Phase 1 | Pending |
-| AUTH-03 | Phase 1 | Pending |
-| AUTH-04 | Phase 1 | Pending |
-| CRM-01 | Phase 2 | Pending |
-| CRM-02 | Phase 2 | Pending |
-| CRM-03 | Phase 2 | Pending |
+| AUTH-01 | Phase 1 | Complete |
+| AUTH-02 | Phase 1 | Complete |
+| AUTH-03 | Phase 1 | Complete |
+| AUTH-04 | Phase 1 | Complete |
+| CRM-01 | Phase 2 | Complete |
+| CRM-02 | Phase 2 | Complete |
+| CRM-03 | Phase 2 | Complete |
 | CRM-04 | Phase 2 | Complete |
 | CRM-05 | Phase 2 | Complete |
 | CRM-06 | Phase 2 | Complete |
-| CRM-07 | Phase 2 | Pending |
+| CRM-07 | Phase 2 | Complete |
 | PRICE-01 | Phase 3 | Complete |
 | PRICE-02 | Phase 3 | Complete |
 | PRICE-03 | Phase 3 | Complete |
@@ -122,4 +122,4 @@ Filled in by the roadmapper during roadmap creation.
 
 ---
 *Requirements defined: 2026-06-30*
-*Last updated: 2026-06-30 after roadmap creation (5 phases, full coverage)*
+*Last updated: 2026-07-04 — corrected against actual phase VERIFICATION.md files: AUTH-01–04, CRM-01/02/03/07 were fully implemented and verified back in their respective phases but never had their checkboxes/traceability status updated (Phase 2's own verifier flagged this discrepancy at the time — see 02-VERIFICATION.md — but it was never fixed). Also removed a corrupted duplicate traceability table that had been jammed onto line 1 before the file's own title, and renumbered a duplicate INVOICE-07 ID (v2 payment-gateway idea) to INVOICE-08 to stop colliding with the v1 CSV/PDF export requirement.*

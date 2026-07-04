@@ -20,20 +20,20 @@ Every enquiry and client interaction is captured and actionable in one place, wi
 - ✓ Domain availability checker (RDAP + DNS-over-HTTPS hybrid across .co.za/.com/.net/.org/.online/.africa) — pre-milestone
 - ✓ Owner can generate an invoice for a client (line items, amount, due date), edit/delete Drafts, and download a SARS-compliant PDF (no VAT fields/"Tax Invoice" wording) — Phase 4 (Invoicing)
 - ✓ Owner can track invoice status through its full lifecycle (draft → sent → paid, with gapless invoice numbering assigned on send, and a computed Overdue indicator) — Phase 4 (Invoicing)
+- ✓ Owner can log in to a private, secured admin area — Phase 1, live in production 2026-07-04 (also servable at admin.it-guru.co.za pending a DNS CNAME the owner is adding — see STATE.md)
+- ✓ Every registration/contact-form submission is automatically captured as a record in the portal — Phase 2
+- ✓ Owner can view, search, and filter all enquiries/clients — Phase 2
+- ✓ Owner can set a status on each client/enquiry (new, contacted, in progress, completed) — Phase 2
+- ✓ Owner can add private notes to a client/enquiry record — Phase 2
+- ✓ Owner can edit hosting package price, description, features, and "Most Popular" label, reflected live on the public site — Phase 3
+- ✓ Owner can add/edit per-TLD domain registration prices, shown live on the public site instead of "request a quote" — Phase 3
+- ✓ Owner can update site settings (contact email, hosting setup-fee note) without code changes — Phase 3
+- ✓ Owner can export enquiries/clients as a spreadsheet — Phase 2 (CRM-07, CSV). This was actually complete from Phase 2 onward but its checkbox/traceability status was never updated to match — see REQUIREMENTS.md's 2026-07-04 correction note.
 
 ### Active
 
 <!-- This milestone: v2.0 Admin Portal -->
 
-- [ ] Owner can log in to a private, secured admin area
-- [ ] Every registration/contact-form submission is automatically captured as a record in the portal
-- [ ] Owner can view, search, and filter all enquiries/clients
-- [ ] Owner can set a status on each client/enquiry (new, contacted, in progress, completed)
-- [ ] Owner can add private notes to a client/enquiry record
-- [ ] Owner can edit hosting package price, description, features, and "Most Popular" label, reflected live on the public site
-- [ ] Owner can add/edit per-TLD domain registration prices, shown live on the public site instead of "request a quote"
-- [ ] Owner can update site settings (contact email, hosting setup-fee note) without code changes
-- [ ] Owner can export enquiries/clients/invoices as a spreadsheet (invoices ✓ Phase 4 — CRM-07 enquiry/client export still open)
 - [ ] System sends automated reminder emails for stale enquiries (no contact after N days) and overdue invoices
 - [ ] System automatically generates recurring invoices for active hosting clients on their billing cycle
 
@@ -52,6 +52,8 @@ Every enquiry and client interaction is captured and actionable in one place, wi
 - Pricing currently lives in code in two places (`HOSTING_PACKAGES` in `src/lib/registration-types.ts` and `packages` array in `src/app/services/page.tsx`) kept in sync by hand — the live price-editing requirement directly replaces this manual process.
 - Domain checker (`src/app/api/domain/check/route.ts`) already surfaces real-time TLD availability but not pricing — per-TLD pricing has been a known gap since project status reporting (2026-06-23).
 - DNS/mail (`it-guru.co.za` mail flow via cPanel host `102.216.79.206`) was just repaired this session — unrelated to the portal but worth noting as recent infra work in the same window.
+- **The whole admin portal (Phases 1-4) went genuinely live in production for the first time on 2026-07-04.** `main` had been up to 97 commits behind `dev` for weeks — all of Phases 1-4 were built, tested, and verified, but never actually deployed. The first deploy caused a real customer-facing outage (public pages doing DB reads 500'd) because the production database had never been wired up; see STATE.md's Blockers/Concerns and the CRITICAL `NETLIFY_DB_URL` decision for the full incident and fix. Lesson for future phases: verify a phase's code actually reaches production, not just that it's merged to `dev` — "planned/executed" and "live" turned out to be very different states here.
+- The owner asked mid-session (unplanned, outside the roadmap) to also serve the admin portal at `admin.it-guru.co.za`. In progress — see STATE.md's "In-Progress Side Task" section for exact status (edge function deployed, DNS CNAME pending on the owner's end).
 
 ## Constraints
 
@@ -65,12 +67,12 @@ Every enquiry and client interaction is captured and actionable in one place, wi
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Single-admin auth for v2.0 (no multi-staff roles yet) | Keeps auth/permissions model simple for first build; team access can be layered on later without redesigning the data model | — Pending |
+| Single-admin auth for v2.0 (no multi-staff roles yet) | Keeps auth/permissions model simple for first build; team access can be layered on later without redesigning the data model | ✓ Good — shipped Phase 1, live in production |
 | Invoicing generates/tracks only, no payment gateway in v2.0 | Avoids PCI/compliance and reconciliation overhead until invoicing volume justifies it; clients keep paying via existing manual EFT | ✓ Good — shipped Phase 4, Mark Paid is a manual owner action, no gateway integration |
-| Automation scoped to reminder emails + recurring billing only (no auto status transitions) | Matches concrete pain points described, avoids speculative automation build | — Pending |
-| Invoicing/accounts/automation folded into v2.0 architecture now rather than added later | Avoids reworking auth/database/roles after the fact once CRM + pricing ship | — Pending |
+| Automation scoped to reminder emails + recurring billing only (no auto status transitions) | Matches concrete pain points described, avoids speculative automation build | — Pending execution (Phase 5 is fully planned — 6 plans, research, validation all done — just not yet executed) |
+| Invoicing/accounts/automation folded into v2.0 architecture now rather than added later | Avoids reworking auth/database/roles after the fact once CRM + pricing ship | ✓ Good — Phases 1-4 shipped without any auth/schema rework; Phase 5 will validate the automation half of this bet |
 | IT-Guru is not VAT-registered — invoices must NOT use "Tax Invoice" labeling or VAT fields | Confirmed by owner; SARS rules differ by VAT-registration status, and mislabeling has compliance implications | ✓ Good |
-| Database/auth provider: Netlify Database (Neon Postgres), with hand-rolled JWT/cookie auth (not a full auth framework) | Native to the existing Netlify deployment — no new vendor relationship, automatic preview-branch databases; single-admin login doesn't need multi-user auth framework overhead. Chosen over Supabase despite an existing TODO comment anticipating it. Verify current Netlify Database pricing before provisioning — research flagged free storage "until 2026-07-01" which may be a launch-promo snapshot, not a permanent tier | — Pending |
+| Database/auth provider: Netlify Database (Neon Postgres), with hand-rolled JWT/cookie auth (not a full auth framework) | Native to the existing Netlify deployment — no new vendor relationship, automatic preview-branch databases; single-admin login doesn't need multi-user auth framework overhead. Chosen over Supabase despite an existing TODO comment anticipating it. | ✓ Good — live in production 2026-07-04, but see STATE.md's CRITICAL decision note: the actual runtime env var is `NETLIFY_DB_URL`, not `NETLIFY_DATABASE_URL` as originally assumed; getting this wrong caused a real production outage on first deploy. **Also**: the research-flagged "free storage until 2026-07-01" promo window has now passed (today is past that date) — verify current Netlify Database billing/tier before invoice volume grows, this was never actually checked. |
 
 ## Evolution
 
@@ -90,4 +92,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-03 after Phase 4 (Invoicing) completion*
+*Last updated: 2026-07-04 — Phases 1-4 deployed to production for the first time (after diagnosing and fixing a same-day outage), ROADMAP.md progress table corrected to match actual state, admin.it-guru.co.za subdomain work in progress*

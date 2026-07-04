@@ -13,9 +13,9 @@ v2.0 (Admin Portal) takes IT-Guru Online from a static marketing site with no ba
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Auth + Database Foundation** - Owner can log in to a private, secured admin area backed by a real database
-- [ ] **Phase 2: CRM Capture + Viewing** - Every enquiry/registration is automatically captured and the owner can view, search, filter, and annotate records
-- [ ] **Phase 3: Live Pricing Migration** - Owner can edit hosting and domain pricing live, with no code deploy, in one single source of truth
-- [ ] **Phase 4: Invoicing** - Owner can create, edit, track, and export client invoices with SARS-compliant numbering
+- [x] **Phase 2: CRM Capture + Viewing** - Every enquiry/registration is automatically captured and the owner can view, search, filter, and annotate records
+- [x] **Phase 3: Live Pricing Migration** - Owner can edit hosting and domain pricing live, with no code deploy, in one single source of truth
+- [x] **Phase 4: Invoicing** - Owner can create, edit, track, and export client invoices with SARS-compliant numbering
 - [ ] **Phase 5: Scheduled Automation** - System sends reminder emails and auto-generates recurring invoices without manual intervention
 
 ## Phase Details
@@ -109,7 +109,9 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Auth + Database Foundation | 4/4 | Complete | 2026-06-30 |
-| 2. CRM Capture + Viewing | 3/4 | In Progress|  |
-| 3. Live Pricing Migration | 2/3 | In Progress|  |
-| 4. Invoicing | 0/5 | Planned | - |
-| 5. Scheduled Automation | 0/TBD | Not started | - |
+| 2. CRM Capture + Viewing | 4/4 | Complete | 2026-07-02 |
+| 3. Live Pricing Migration | 3/3 | Complete | 2026-07-02 |
+| 4. Invoicing | 5/5 | Complete | 2026-07-03 |
+| 5. Scheduled Automation | 0/6 | Planned (not executed) | - |
+
+*This table was found badly out of sync with actual state (2026-07-04) — phases 2-4 were fully complete and even deployed to production, but this table still showed them in-progress or not-started, most likely from parallel worktree-agent execution never syncing their local ROADMAP.md updates back. Corrected against each phase's VERIFICATION.md and SUMMARY.md files as source of truth. If this table looks wrong again, don't trust it blindly — cross-check the VERIFICATION.md and SUMMARY.md files under each phase directory directly.*
