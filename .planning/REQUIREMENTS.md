@@ -11,9 +11,9 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 
 ### Clients
 
-- [ ] **CLIENT-01**: Owner can create a client record manually (name, email, phone, company, physical/postal address)
+- [x] **CLIENT-01**: Owner can create a client record manually (name, email, phone, company, physical/postal address)
 - [x] **CLIENT-02**: Owner can convert an existing enquiry or registration into a client, carrying over the captured details
-- [ ] **CLIENT-03**: Owner can view a list of clients in the CRM area, visually separated from leads (enquiries + registrations)
+- [x] **CLIENT-03**: Owner can view a list of clients in the CRM area, visually separated from leads (enquiries + registrations)
 - [ ] **CLIENT-04**: Owner can open and edit an individual client's details
 - [ ] **CLIENT-05**: Owner can add private notes to a client record (same notes machinery as leads)
 - [ ] **CLIENT-06**: Owner can see a client's linked invoices and tickets on the client detail page (history view)
@@ -58,9 +58,9 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| CLIENT-01 | Phase 6 | In Progress (foundation done in 06-01; POST/GET routes done in 06-02; create UI in 06-03) |
+| CLIENT-01 | Phase 6 | Complete (06-01 foundation + 06-02 POST/GET routes + 06-03 create UI) |
 | CLIENT-02 | Phase 6 | Complete (06-01 foundation + 06-04 convert route/UI) |
-| CLIENT-03 | Phase 6 | In Progress (foundation done in 06-01; GET route done in 06-02; list UI in 06-03) |
+| CLIENT-03 | Phase 6 | Complete (06-01 foundation + 06-02 GET route + 06-03 list UI) |
 | CLIENT-04 | Phase 6 | In Progress (foundation done in 06-01; GET/PUT routes done in 06-02; edit UI in 06-05) |
 | CLIENT-05 | Phase 6 | In Progress (foundation done in 06-01; notes route/UI in 06-05) |
 | CLIENT-06 | Phase 8 | Pending |

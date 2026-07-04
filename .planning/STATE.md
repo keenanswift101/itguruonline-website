@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Clients, Tickets & Linked Invoicing
 status: executing
-stopped_at: Completed 06-04-PLAN.md
-last_updated: "2026-07-04T15:18:16.944Z"
+stopped_at: Completed 06-03-PLAN.md
+last_updated: "2026-07-04T15:37:58.547Z"
 last_activity: 2026-07-04
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 3
+  completed_plans: 4
 ---
 
 # Project State
@@ -34,8 +34,8 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 ## Current Position
 
 Phase: 06 (clients-entity-crm-integration) — EXECUTING
-Plan: 4 of 5 (06-04 executed out of sequence — depends_on: [06-01] only, wave 1 — 06-03 (client create + list UI) is still NOT executed and remains next up)
-Status: 06-03-PLAN.md still pending; ready to execute
+Plan: 5 of 5 (06-04 executed out of sequence — depends_on: [06-01] only, wave 1 — 06-03 (client create + list UI) is still NOT executed and remains next up)
+Status: Ready to execute
 Last activity: 2026-07-04
 
 Progress: v2.0 complete (22/22 plans, shipped, 5/5 phases). v2.1 roadmap defined (4 phases, 18 requirements, 0 plans yet).
@@ -75,6 +75,7 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 | Phase 06 P02 | 16min | 3 tasks | 5 files |
 | Phase 06 P04 | 15min | 2 tasks | 4 files |
 | Phase 06 P04 | 15min | 2 tasks | 4 files |
+| Phase 06 P03 | 13min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -101,6 +102,7 @@ Recent decisions affecting current work:
 - [Phase 06, 06-02 correction]: 06-02-PLAN.md's frontmatter listed CLIENT-01/03/04 as requirements even though it only built the API route layer (no owner-facing UI). Reverted the `requirements mark-complete` result in REQUIREMENTS.md back to unchecked/"In Progress" for CLIENT-01/03/04 — the traceability table now notes routes done in 06-02, UI still pending in 06-03 (create/list) and 06-05 (edit).
 - [Phase 06]: 06-04: convert-from-lead uses withTxDb + AlreadyConvertedError thrown inside the tx (not pre-checked) for race-proof idempotency, mirroring the Phase 4 invoice draft-lock pattern
 - [Phase 06]: 06-04: lead status field intentionally left untouched by convert — only convertedClientId is stamped, per 06-RESEARCH.md
+- [Phase 06]: 06-03: ClientForm built create+edit-capable from the start (clientId?+initial? props) so 06-05 reuses it verbatim for editing, mirroring InvoiceForm's dual-mode pattern
 
 ### Pending Todos
 
@@ -114,7 +116,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-04T15:18:16.939Z
-Stopped at: Completed 06-04-PLAN.md
+Last session: 2026-07-04T15:37:58.541Z
+Stopped at: Completed 06-03-PLAN.md
 NEXT: execute 06-03-PLAN.md (client create + list UI, consumes 06-02's client-query.ts + route contracts) — still pending; 06-04 (convert-from-lead) was executed ahead of it since it only depended on 06-01, not 06-03.
 Resume file: None
