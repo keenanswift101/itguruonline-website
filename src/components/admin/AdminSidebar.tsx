@@ -12,6 +12,7 @@ interface AdminSidebarProps {
 const navLinks = [
   { href: "/admin/dashboard", label: "Dashboard" },
   { href: "/admin/crm", label: "CRM" },
+  { href: "/admin/clients", label: "Clients" },
   { href: "/admin/pricing", label: "Pricing" },
   { href: "/admin/invoices", label: "Invoices" },
   { href: "/admin/automations", label: "Automations" },
