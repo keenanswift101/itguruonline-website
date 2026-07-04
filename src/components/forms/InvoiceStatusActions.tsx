@@ -34,9 +34,42 @@ export default function InvoiceStatusActions({ id, status }: InvoiceStatusAction
         return;
       }
 
+      if (res.status === 422) {
+        const body = await res.json().catch(() => ({}));
+        if ((body as { error?: string }).error === "no_client_email") {
+          setError("This invoice has no client email. Add a client email (edit the draft above) before marking it Sent.");
+          return;
+        }
+      }
+
       setError("An unexpected error occurred. Please try again.");
     } catch {
       setError("Unable to update the invoice. Please check your connection and try again.");
+    } finally {
+      setPending(false);
+    }
+  }
+
+  async function resend() {
+    if (pending) return;
+    setPending(true);
+    setError("");
+    try {
+      const res = await fetch(`/api/admin/invoices/${id}/resend`, { method: "POST" });
+      if (res.ok) {
+        router.refresh();
+        return;
+      }
+      if (res.status === 422) {
+        const body = await res.json().catch(() => ({}));
+        if ((body as { error?: string }).error === "no_client_email") {
+          setError("This invoice has no client email to resend to.");
+          return;
+        }
+      }
+      setError("Unable to resend the invoice. Please try again.");
+    } catch {
+      setError("Unable to resend the invoice. Please check your connection and try again.");
     } finally {
       setPending(false);
     }
@@ -97,11 +130,19 @@ export default function InvoiceStatusActions({ id, status }: InvoiceStatusAction
             </button>
             <button
               type="button"
+              onClick={resend}
+              disabled={pending}
+              className="btn-glass text-sm px-4 py-2 rounded-lg disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              Resend
+            </button>
+            <button
+              type="button"
               onClick={() => patch("draft")}
               disabled={pending}
               className="btn-glass text-sm px-4 py-2 rounded-lg disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Unpublish
+              Revert to Draft
             </button>
           </>
         )}
