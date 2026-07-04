@@ -122,6 +122,8 @@ describe("POST /api/admin/invoices — non-DB guards", () => {
     const body = await res.json();
     expect(body.fields).toHaveProperty("dueDate");
   });
+
+  it.todo("422 when clientId references a non-existent client");
 });
 
 // ── DB-dependent tests ──────────────────────────────────────────────────────
@@ -163,4 +165,7 @@ describeIfDb("POST /api/admin/invoices — DB integration", () => {
     // cleanup (line items cascade)
     await db.delete(invoices).where(eq(invoices.id, body.id));
   });
+
+  it.todo("persists client_id when a valid clientId is supplied");
+  it.todo("creates a valid one-off invoice with client_id NULL when clientId is omitted");
 });

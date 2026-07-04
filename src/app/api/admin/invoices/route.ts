@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { eq } from "drizzle-orm";
 import { requireAdmin } from "@/lib/auth";
+import { db } from "@/lib/db/index";
 import { withTxDb } from "@/lib/db/tx";
-import { invoices, invoiceLineItems } from "@/lib/db/schema";
+import { invoices, invoiceLineItems, clients } from "@/lib/db/schema";
 import { invoiceInput, computeTotals } from "@/lib/invoices";
 
 export const dynamic = "force-dynamic";
@@ -26,6 +28,20 @@ export async function POST(req: NextRequest) {
   }
 
   const data = parsed.data;
+
+  if (data.clientId != null) {
+    const [client] = await db
+      .select({ id: clients.id })
+      .from(clients)
+      .where(eq(clients.id, data.clientId));
+    if (!client) {
+      return NextResponse.json(
+        { error: "Validation failed.", fields: { clientId: ["Client not found."] } },
+        { status: 422 }
+      );
+    }
+  }
+
   const { lines, totalRands } = computeTotals(data.lineItems);
 
   // Atomic invoice + line items write. The neon-http driver cannot run
@@ -37,6 +53,7 @@ export async function POST(req: NextRequest) {
       const [invoice] = await tx
         .insert(invoices)
         .values({
+          clientId: data.clientId ?? null,
           clientName: data.clientName,
           clientEmail: data.clientEmail,
           billingAddress: data.billingAddress,
