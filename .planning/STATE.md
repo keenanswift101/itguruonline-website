@@ -1,17 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v2.0
-milestone_name: milestone
-status: completed
-stopped_at: "Phase 5 (Scheduled Automation) COMPLETE and VERIFIED — 6/6 plans, 4/4 must-haves (05-VERIFICATION.md passed), owner approved the 05-05 human-verify checkpoint after live local testing (all three jobs run for real: 2 actual Resend emails received + screenshot-confirmed, recurring draft invoice generated, dedupe + idempotency proven on re-runs). ALL 5 MILESTONE PHASES DONE. Ad-hoc owner-requested work also shipped this session: local-dev DB driver branch + DEV_AUTH_BYPASS (7b21cb9), ADMIN_REMINDER_EMAIL override (a3657f9), global BCC of all Resend mail to info@it-guru.co.za (f7a5d5d)."
-last_updated: "2026-07-04T09:31:42.924Z"
+milestone: v2.1
+milestone_name: Clients, Tickets & Linked Invoicing
+status: executing
+stopped_at: Completed 06-01-PLAN.md
+last_updated: "2026-07-04T14:37:34.245Z"
 last_activity: 2026-07-04
 progress:
-  total_phases: 5
-  completed_phases: 5
-  total_plans: 22
-  completed_plans: 22
-  percent: 100
+  total_phases: 4
+  completed_phases: 0
+  total_plans: 5
+  completed_plans: 1
 ---
 
 # Project State
@@ -21,16 +20,25 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-04)
 
 **Core value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
-**Current focus:** Milestone v2.0 COMPLETE, archived, and **DEPLOYED TO PRODUCTION** (2026-07-04, deploy `6a48df424e5fb600089cc280`, commit `a2b22e6`, tag `v2.0` pushed). Verified on live site: public pages 200 with DB pricing (pg/serverExternalPackages safe), admin auth intact (DEV_AUTH_BYPASS confirmed NOT active in prod — /admin 307s to login), all new API routes deployed and 401-gated, three cron functions deployed, admin subdomain working, notification bell shipped (bfcb53e). Migration 0004 CONFIRMED in prod 2026-07-04: owner ran all three jobs live on /admin/automations (screenshot — Success, "0 stale enquiries"/"0 overdue invoices"/"0 active billing schedules"), which reads site_settings + billing_schedules and writes automation_runs. Deploy checklist fully closed. REMAINING: security review (owed), then `/gsd:new-milestone`.
+**Current focus:** Phase 06 — clients-entity-crm-integration
+
+**v2.1 design decisions (locked with owner):** Clients = new first-class entity (add manual OR convert enquiry/registration); build lightweight in-portal ticketing (tickets linked to clients); invoice→client via optional `client_id` FK with auto-fill (free-text one-off invoices stay valid); dashboard reworked to show open tickets + new leads + unpaid/overdue invoices + revenue-this-month + recent activity. Research skipped (standard CRUD on the established v2.0 stack).
+
+**v2.1 phase structure (dependency chain: clients → tickets → linked invoicing → dashboard):**
+
+- Phase 6: Clients Entity + CRM Integration (foundation — clients table, manual create, convert from lead, list/edit/notes)
+- Phase 7: Tickets (tickets table with client_id FK, CRUD, status, notes, list/detail)
+- Phase 8: Linked Invoicing (invoices.client_id FK + searchable picker + auto-fill; free-text path stays valid; CLIENT-06 client-detail history view lands here since it needs both tickets and invoice links to exist)
+- Phase 9: Dashboard Rework (tiles reading from tickets/clients/invoices/leads)
 
 ## Current Position
 
-Phase: 05 — COMPLETE (verified 2026-07-04)
-Plan: 6/6 complete
-Status: Milestone v2.0 complete (all 5 phases, 22/22 plans)
+Phase: 06 (clients-entity-crm-integration) — EXECUTING
+Plan: 2 of 5
+Status: Ready to execute
 Last activity: 2026-07-04
 
-Progress: [██████████] 100% (22/22 plans; phases 1-5 of 5 complete)
+Progress: v2.0 complete (22/22 plans, shipped, 5/5 phases). v2.1 roadmap defined (4 phases, 18 requirements, 0 plans yet).
 
 ## Side Task: admin.it-guru.co.za subdomain — DONE (2026-07-04)
 
@@ -49,34 +57,21 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 
 **Velocity:**
 
-- Total plans completed: 1
-- Average duration: ~2h (Plan 01 had significant tooling friction — CLI upgrades, Turbopack discovery)
-- Total execution time: ~2h
+- Total plans completed: 22 (all v2.0)
+- v2.1: 0 plans completed yet (roadmap just created)
 
-**By Phase:**
+**By Phase (v2.0, historical):**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 (in progress) | 1/4 | ~2h | ~2h |
-
-**Recent Trend:**
-
-- Last 5 plans: Plan 01 complete
-- Trend: -
+| 1. Auth + DB Foundation | 4/4 | ~2h | ~2h (P01 had tooling friction) |
+| 2. CRM Capture + Viewing | 4/4 | - | - |
+| 3. Live Pricing Migration | 3/3 | - | - |
+| 4. Invoicing | 5/5 | ~67min | ~13min |
+| 5. Scheduled Automation | 6/6 | ~54min | ~9min |
 
 *Updated after each plan completion*
-| Phase 02 P03 | 1014 | 3 tasks | 10 files |
-| Phase 03 P02 | 35 | 3 tasks | 10 files |
-| Phase 03 P03 | 578 | 3 tasks | 10 files |
-| Phase 04-invoicing P02 | 9min | 2 tasks | 8 files |
-| Phase 04-invoicing P03 | 8min | 3 tasks | 7 files |
-| Phase 04-invoicing P04 | ~30min | 2 tasks | 8 files |
-| Phase 04-invoicing P05 | 20min | 3 tasks | 2 files |
-| Phase 05 P01 | 10min | 3 tasks | 8 files |
-| Phase 05 P02 | 20min | 3 tasks | 6 files |
-| Phase 05 P03 | 3min | 2 tasks | 4 files |
-| Phase 05-scheduled-automation P04 | 8min | 1 tasks | 4 files |
-| Phase 05 P06 | 10min | 2 tasks | 2 files |
+| Phase 06 P01 | 12min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -86,70 +81,33 @@ Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
 - Database/auth provider: **RESOLVED** — Netlify Database (Neon Postgres, built-in `@netlify/database`) + hand-rolled JWT/cookie auth. Provisioned 2026-06-30.
-- Schema location: `db/schema.ts` and `db/index.ts` at repo root (Netlify CLI convention, not `src/lib/db/` as originally planned). Plan 02 executor must write to `db/`.
-- Single-admin auth only for v2.0 — no multi-staff roles (deferred to v2+).
+- **CRITICAL, read before touching src/lib/db/***: connection string is `NETLIFY_DB_URL` (+ `NETLIFY_DB_DRIVER`), NOT the legacy `NETLIFY_DATABASE_URL`. Driver branches on `NETLIFY_DB_DRIVER`: `serverless` (prod, Neon HTTP) vs `server` (local `netlify dev`, node-postgres + `pg`). Never revert to a bare `neon()` call or import `@netlify/database` (breaks Turbopack packaging in deployed functions).
+- Transactions: neon-http driver throws on `db.transaction()` — any multi-statement atomic write MUST use `withTxDb()` (`src/lib/db/tx.ts`).
+- Migrations live in `netlify/database/migrations/`, auto-applied on deploy. Last applied: `0004` (automation). v2.1's new `clients`/`tickets` tables and `invoices.client_id` column will need `0005`+.
+- Single-admin auth only — no multi-staff roles (deferred).
 - Invoicing generates/tracks only, no payment gateway — clients keep paying via manual EFT.
-- IT-Guru is not VAT-registered — invoices must use plain "Invoice" labeling, no VAT fields or "Tax Invoice" wording.
-- POPIA data-region: no region prompt offered by Netlify — non-configurable, inherited from platform default. Documented in PROVISIONING-NOTES.md.
-- **proxy.ts REMOVED** — Next.js 16 Turbopack emits chunks Netlify's edge bundler cannot resolve. `/admin/*` auth enforced exclusively via page-level `requireAdmin()` (layout + route handler calls). No proxy layer. See PROVISIONING-NOTES.md OQ1.
-- [Phase 02]: parseCrmId used in both API routes and page to keep disambiguation logic in one place (crm-types.ts)
-- [Phase 02]: Card.tsx upgraded to Tailwind v4 canonical syntax per CLAUDE.md enforcement
-- [Phase 02]: Notes route strips HTML and javascript: URIs inline (append-only, stored XSS prevention)
-- [Phase 03]: HostingPackageDTO excludes Date fields for safe server->client serialization; HostingPackage type widened to string (DB slug is authority); getDomainPriceMap uses ?? null to preserve 0-price semantics
-- [Phase 03]: requireAdmin() called first in every pricing PATCH route — 401 returned before any JSON parse or DB access
-- [Phase 03]: vi.mock(next/headers) required for vitest to test routes using cookies() — same pattern as Phase 2 CRM tests
-- [Phase 04-invoicing]: neon-http db.transaction() throws in drizzle-orm 0.45.2 — all multi-statement atomic writes must use withTxDb() (src/lib/db/tx.ts, per-request WebSocket Pool)
-- [Phase 04-invoicing]: PUT invoice 409 draft-lock re-checked inside the transaction UPDATE where-clause (EditLockError rollback) — race-proof beyond the pre-check
-- [Phase 04-invoicing]: Status transitions enforced via server-side allowed-transition map; draft->sent assigns gapless number in single atomic UPDATE with correlated MAX+1 subquery on neon-http (no FOR UPDATE)
-- [Phase 04-invoicing]: sent->draft clears fiscal_year/sequence_number — re-sending assigns a fresh invoice number (D-06 recommendation)
-- [Phase 04-invoicing]: InvoiceDocument.tsx bank footer — ~~bracketed placeholders~~ RESOLVED 2026-07-04: real EFT details filled in (two options: Discovery Bank + First National Bank, both under A.P Isaacs), rendered side by side in the PDF footer.
-- [Phase 04-invoicing]: AdminSidebar already exists on this branch and already lists an active Invoices link -- kept a simple back-link on invoice pages anyway for consistency with dashboard/CRM pattern
-- [Phase 04-invoicing]: Invoice status badge colors: draft=gray glass, sent=cobalt #00aaff, paid=green, overdue=red -- overdue renders as a SECOND badge alongside the stored status badge, never replacing it
-- [Phase 04-invoicing]: InvoiceForm 422 handling maps zod fieldErrors ({field: string[]}) onto the same FieldErrors state used for client-side validation, so server and client validation errors render identically
-- [Phase 04-invoicing]: InvoiceStatusActions guards double-submit with a single pending flag; 409 surfaces as 'Invalid transition.' distinct from generic errors
-- [Phase 04-invoicing]: Detail page renders read-only Sent/Paid view as a dedicated block (not a disabled InvoiceForm) for unambiguous edit-lock UX, defense-in-depth on top of server 409
-- [Phase 04-invoicing]: InvoiceForm serves both create (POST) and edit (PUT) via optional initial/invoiceId props rather than a duplicate edit-form component
-- **[2026-07-04, CRITICAL — read before touching src/lib/db/*]**: Netlify's current database provisioning injects the connection string as **`NETLIFY_DB_URL`** (with `NETLIFY_DB_DRIVER=serverless` for this project), NOT the legacy `NETLIFY_DATABASE_URL` that `@netlify/neon`'s bare `neon()` call falls back to. The legacy var is never set, in any context, and this was the root cause of a real production outage the first time Phases 1-4 were deployed (public pages doing DB reads 500'd). Fix: `src/lib/db/index.ts` and `src/lib/db/tx.ts` now explicitly pass `process.env.NETLIFY_DB_URL` to `neon()`/`Pool`. Do NOT "helpfully" revert this back to a bare `neon()` call or to reading `NETLIFY_DATABASE_URL` — it will silently break again in production (it can look fine locally/in draft deploys and still be broken for real users). Also: do NOT import the `@netlify/database` package (`getConnectionString()`/`getDatabase()`) as an alternative fix — it statically imports `pg` even on the serverless driver path, and Turbopack mangles that into an unresolvable external module name in the deployed Netlify function (same class of bug that already forced `proxy.ts` out of this project). Confirmed only via a real git-triggered production build + `netlify logs --source functions` — local dev, `netlify dev:exec`, and `netlify deploy` draft builds all gave misleading signals (see Blockers/Concerns).
-- **[2026-07-04]**: `JWT_SECRET` and `ADMIN_SEED_PASSWORD` also had to be set as real Netlify site env vars for the `production` context — they were never configured either (this project's admin auth had literally never been exercised in production before this session). Both are now set as secrets on Netlify. The real admin login (`info@it-guru.co.za`) works end-to-end in production — password was shown once to the owner in-session; if it's lost, reset via a fresh temporary seed-style endpoint (see the pattern used in commit `8a77d2e`, since `netlify dev:exec` cannot reach the real production DB binding — only actual deployed functions can).
-- **[2026-07-04]**: Admin portal now also servable at `admin.it-guru.co.za` via a Netlify Edge Function — **DONE and verified working end-to-end**, see "Side Task" section above. Owner's first attempt used cPanel's Subdomain tool (wrong — creates A/AAAA records pointing at cPanel itself); corrected to a plain CNAME via Zone Editor.
-- **[2026-07-04]**: `/admin/settings` built (sidebar already linked to it, page never existed) with a change-password form (`src/components/forms/ChangePasswordForm.tsx`, `POST /api/admin/change-password` — verifies current password via `changePassword()` in `auth.ts`), plus a logout button in `AdminSidebar.tsx` (`POST /api/admin/logout` clears the session cookie). Prompted directly by the owner needing to change the temporary generated password. Note: logout only clears the cookie client-side (standard for this app's stateless JWT sessions, no server-side revocation list exists) — a raw copy of an old still-valid JWT would keep working until its 8h natural expiry if replayed directly; not a bug, just how every other part of this app's auth already behaves.
-- **[2026-07-04]**: Fixed 18 test files that checked the legacy `NETLIFY_DATABASE_URL` (instead of `NETLIFY_DB_URL`) to decide whether to skip DB-dependent tests — they'd have silently skipped forever even with a correctly configured local DB.
-- **[2026-07-04]**: Added a reusable `PasswordInput` component (`src/components/ui/PasswordInput.tsx`, inline eye/eye-slash SVG toggle) and wired it into every password field (login, reset-password, change-password) — owner-requested.
-- **[2026-07-04]**: Created a real test Draft invoice in the **live production database** at the owner's request (id=1, "Test Client (Sample Invoice)", R270 total, two line items) via the actual `/api/admin/invoices` API — not a local/dev fixture. It will show up in `/admin/invoices`, CSV exports, and any future invoice-count queries until deleted. If a future session sees an unexplained invoice #1 with an obviously fake client name, this is why — check with the owner before assuming it's a bug, and offer to delete it if it's still sitting there unaddressed.
-- [Phase 05]: 05-01: Migration renumbered 0004 (not 0003) since 0003_invoices.sql already exists from Phase 4
-- [Phase 05]: 05-01: Wave 0 test stubs gate describeIfDb on NETLIFY_DB_URL, not the plan's literal NETLIFY_DATABASE_URL, matching this project's actual env var convention
-- [Phase 05]: 05-02: contactEnquiries has no updatedAt column -- staleness computed from createdAt instead
-- [Phase 05]: 05-02: recurring-billing invoice+line-item insert wrapped in withTxDb/db.transaction (not sequential plain inserts) for atomicity, matching POST /api/admin/invoices pattern
-- [Phase 05]: 05-03: vi.mock("resend") added to route.test.ts alongside automocked job modules -- automocking still loads the real module graph (src/lib/email.ts's module-scope Resend constructor) before stubbing exports, which throws Missing API key without this
-- [Phase 05]: 05-04: Added **/*.mts to tsconfig.json include -- without it, npx tsc --noEmit silently skipped the new Netlify Scheduled Function files entirely (verified via a deliberate injected type error before/after the fix)
-- [Phase 05]: 05-06: SiteSettingsForm/route deviate from plan's assumed generic {key,value} body -- real component (src/app/admin/pricing/SiteSettingsForm.tsx) uses named-field zod schema; new fields follow that real pattern, with z.coerce.number().int().min(1).max(365) bounds added
-- **[2026-07-04, OWNER-APPROVED — supersedes the earlier "do NOT reintroduce USE_LOCAL_PG" instruction]**: Local-dev database story rebuilt on Netlify's own signal, not a homegrown flag. `netlify dev` provisions a local TCP Postgres and injects `NETLIFY_DB_DRIVER=server` + a local `NETLIFY_DB_URL`; production always injects `NETLIFY_DB_DRIVER=serverless`. `src/lib/db/index.ts` and `tx.ts` now branch on `NETLIFY_DB_DRIVER === "server"` to use `drizzle-orm/node-postgres` + `pg` locally (prod path byte-identical to before). `pg` is pinned in dependencies and listed in `serverExternalPackages` (next.config.ts) so Turbopack never bundles it — the exact failure class that killed @netlify/database here. **Must be verified on the next real production deploy** (draft deploys untrustworthy per the testing-methodology note). Local workflow: `netlify dev` (NOT `npm run dev` — bare next dev gets no DB), local schema managed via `netlify database migrations apply` (0001–0004 applied 2026-07-04).
-- **[2026-07-04, OWNER-REQUESTED]**: Dev-only auth bypass in `requireAdmin()` (`src/lib/auth.ts`): active only when `NODE_ENV === "development"` AND `DEV_AUTH_BYPASS === "1"` (set in `.env.local` only). Returns a synthetic session (`dev-bypass@local`, sub "0") so the whole admin portal is reachable locally with zero login. `DEV_AUTH_BYPASS` must NEVER be set as a Netlify env var; `NODE_ENV` is "production" in every deployed build, so the bypass is double-gated. Change-password/settings flows won't find admin id 0 locally — expected, log in for those.
+- IT-Guru is not VAT-registered — invoices use plain "Invoice" labeling, no VAT fields.
+- Local dev: `netlify dev` (NOT `npm run dev`) + `DEV_AUTH_BYPASS=1` in `.env.local` for zero-login local testing.
+- Every outgoing email is BCC'd to `info@it-guru.co.za` centrally in `sendEmail()`.
+- [v2.1, roadmap]: Clients-first dependency chain locked: Phase 6 (clients) → Phase 7 (tickets, client_id FK) → Phase 8 (invoices.client_id FK + CLIENT-06 history, needs both prior phases) → Phase 9 (dashboard, needs all three).
+- [v2.1, roadmap]: CLIENT-06 (client detail shows linked invoices+tickets) placed in Phase 8 rather than Phase 6, since it depends on tickets (Phase 7) and invoice linking (Phase 8 itself) both existing first.
+- [Phase 06]: clients.email has no unique() constraint — duplicate-client tolerance is intentional, dedupe tooling out of scope
+- [Phase 06]: clients table placed at end of schema.ts (Drizzle .references() lazy thunks allow forward refs from earlier-defined lead tables)
+- [Phase 06, 06-01 correction]: 06-01-PLAN.md's frontmatter listed all 5 CLIENT requirements even though it only built Wave 0 foundation (schema/types/test-stubs, no routes/UI). Reverted the `requirements mark-complete` result in REQUIREMENTS.md back to unchecked/"In Progress" for CLIENT-01..05 — they'll get marked truly Complete as 06-02 through 06-05 deliver the actual create/list/edit/notes/convert functionality.
 
 ### Pending Todos
 
-- Remove leftover `include:zoho.com` from the apex SPF TXT record (`it-guru.co.za`). Exact edit: change `v=spf1 ip4:102.216.79.206 +a +mx include:zoho.com include:it-guru.co.za ~all` to `v=spf1 ip4:102.216.79.206 +a +mx include:it-guru.co.za ~all`.
-- Remove old `neon` Netlify extension from team dashboard (cosmetic — it logs a warning on every build but doesn't block it).
-- ~~Local dev has no working database story~~ — RESOLVED 2026-07-04, owner-approved: `netlify dev` + `NETLIFY_DB_DRIVER=server` branch in `src/lib/db/` + `DEV_AUTH_BYPASS=1` in `.env.local`. See the two OWNER decisions in the log above. Outstanding sub-item: verify the `pg`/`serverExternalPackages` addition doesn't disturb the next real production deploy.
+- Remove leftover `include:zoho.com` from the apex SPF TXT record — RESOLVED by owner (see Session Continuity below).
+- Remove old `neon` Netlify extension from team dashboard — INTENTIONALLY left installed (uninstall is irreversible + risks DB outage for a cosmetic warning; do not revisit).
 
 ### Blockers/Concerns
 
-- ~~A fresh security review (OWASP-style) is owed~~ — DONE 2026-07-04 (commit `20f2eb1`). Full v2.0 admin-portal audit appended to `SECURITY-AUDIT.md`; 4 hardening fixes shipped (error-leak, login timing enumeration, JWT alg pin, billing-schedule FK validation). All routes confirmed requireAdmin-gated, session cookie sameSite=strict (CSRF-immune), no injection sinks. NOT YET DEPLOYED — on `dev` only, ship with next deploy. Remaining accepted risks documented in SECURITY-AUDIT.md (npm dev-only moderates, min-8 password policy, stateless-JWT logout).
-- Phase 5 (Scheduled Automation) needs reminder-cadence thresholds confirmed with owner during that phase's planning (already researched/planned — 6 plans exist — but confirm this was addressed before executing).
-- ~~Pre-existing, project-wide vitest breakage~~ -- CORRECTED 2026-07-03: re-ran `npx vitest run` directly and got a clean pass (21/21 test files, 91 passed, 0 failed). Not reproducible; the 04-05 executor's git-stash isolation likely collided with a concurrently-running dev server / in-flight npm install. No action needed before Phase 5.
-- **Testing methodology trap (learned the hard way, 2026-07-04):** `netlify deploy` (draft/CLI deploys) builds *locally* on the developer's machine and can leak local `.env.local` values into the deployed function's environment, producing false-positive test results. `netlify dev:exec` runs a bare script, not a real deployed function, and does NOT receive the same database/runtime bindings a real deployed function gets. The ONLY reliable way to test Netlify-Database-dependent behavior is a real git-triggered build (push to `main`) or an actual deployed function endpoint called over HTTPS. Budget for this — draft-deploy "verification" of DB-touching code is not trustworthy on this project.
-- Netlify CLI (`gh`) on this machine has three logged-in GitHub accounts; pushes to this repo need the `keenanswift101` account active (`gh auth switch --user keenanswift101`) or `git push` 403s. This reset at least once mid-session — check `gh auth status` if a push unexpectedly fails with a permission error.
+- None currently blocking v2.1 roadmap/planning. Full historical blocker log preserved in git history of this file (v2.0 security audit, testing-methodology traps, etc. — all resolved).
+- Reminder for Phase 6 planning: new `clients` table migration will be `0005` (0000 initial, 0001 CRM, 0002 pricing, 0003 invoices, 0004 automation).
 
 ## Session Continuity
 
-Last session: 2026-07-04 (Phase 5 → milestone completion → deploy → security audit)
-Stopped at: **MILESTONE v2.0 FULLY SHIPPED AND CLOSED OUT.** Everything from this session is live in production (main @ `5686001`, tag `v2.0`, Netlify deploy ready + smoke-tested):
-- Phase 5 (Scheduled Automation) complete/verified (6/6 plans, 4/4 must-haves); all three jobs exercised live with real Resend emails.
-- Milestone archived via `/gsd:complete-milestone` (milestones/v2.0-ROADMAP.md + v2.0-REQUIREMENTS.md, RETROSPECTIVE.md created, ROADMAP collapsed, REQUIREMENTS.md deleted, tagged v2.0).
-- Notification bell (new CRM records badge, `/api/admin/crm/new-count`) shipped + verified.
-- Full v2.0 security audit done (SECURITY-AUDIT.md 2026-07-04 section) with 4 fixes: automations error-leak, login timing enumeration, JWT alg pin, billing-schedule FK validation — all deployed and smoke-tested on prod (cross-origin login 403, unknown-email 401 with dummy-compare timing).
-- Migration 0004 confirmed applied in prod (owner ran all 3 jobs on live /admin/automations).
-- Session infra additions (all owner-approved, documented in CLAUDE.md): local-dev pg driver branch + DEV_AUTH_BYPASS, ADMIN_REMINDER_EMAIL override, global BCC to info@it-guru.co.za.
-- Cleanup DONE by owner: test invoice #1 deleted; SPF `include:zoho.com` removed. Neon extension INTENTIONALLY LEFT INSTALLED (uninstall is irreversible + risks DB outage for a cosmetic warning — do not revisit).
-NEXT: nothing outstanding. Either take new ad-hoc requests, or `/gsd:new-milestone` for v2.1/v3.0 (deferred candidates: multi-staff roles/AUTH-05, auto status transitions/AUTOMATE-05, multi-stage reminder cadences/AUTOMATE-06, payment gateway). Optional: after 08:00 UTC check `netlify logs --source functions` to confirm crons fire on schedule (manual triggers already proven).
+Last session: 2026-07-04T14:37:34.238Z
+Stopped at: Completed 06-01-PLAN.md
+NEXT: execute 06-02-PLAN.md (Wave 1 — manual client create + list UI, builds on this plan's schema/types/stubs).
 Resume file: None
