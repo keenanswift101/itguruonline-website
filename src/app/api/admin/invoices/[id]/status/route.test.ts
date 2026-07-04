@@ -10,6 +10,15 @@ vi.mock("next/headers", () => ({
   }),
 }));
 
+// Keeps the draft→sent email-on-send path inert for all mocked-db and
+// DB-integration tests in this file (INVOICE-11). Must be a `function`
+// (not an arrow) so vitest can invoke it as a constructor via `new Resend()`.
+vi.mock("resend", () => ({
+  Resend: vi.fn(function () {
+    return { emails: { send: vi.fn().mockResolvedValue({ error: null }) } };
+  }),
+}));
+
 beforeAll(() => {
   if (!process.env.JWT_SECRET) {
     process.env.JWT_SECRET = "test-secret-32-bytes-minimum-len!";
@@ -51,7 +60,7 @@ describe("PATCH /api/admin/invoices/[id]/status — non-DB guards", () => {
 
 // ── Transition validation with mocked db (always runs) ──────────────────────
 
-let selectRows: Array<{ status: string; issueDate: string }> = [];
+let selectRows: Array<{ status: string; issueDate: string; clientEmail?: string | null }> = [];
 
 describe("PATCH /api/admin/invoices/[id]/status — transitions (mocked db)", () => {
   beforeAll(() => {
@@ -129,6 +138,15 @@ describe("PATCH /api/admin/invoices/[id]/status — transitions (mocked db)", ()
     const res = await PATCH(makeRequest({ status: "draft" }) as never, params("1"));
     expect(res.status).toBe(409);
   });
+
+  it("422 no_client_email on draft→sent when clientEmail is missing", async () => {
+    selectRows = [{ status: "draft", issueDate: "2026-07-02", clientEmail: null }];
+    const { PATCH } = await import("./route");
+    const res = await PATCH(makeRequest({ status: "sent" }) as never, params("1"));
+    expect(res.status).toBe(422);
+    const body = await res.json();
+    expect(body.error).toBe("no_client_email");
+  });
 });
 
 // ── DB integration (gated) ──────────────────────────────────────────────────
@@ -150,6 +168,7 @@ describeIfDb("PATCH /api/admin/invoices/[id]/status — DB integration", () => {
       .insert(invoices)
       .values({
         clientName: "Numbering Test",
+        clientEmail: "numbering-test@example.com",
         issueDate: "2026-07-02",
         dueDate: "2026-07-31",
         totalRands: 100,
@@ -171,6 +190,8 @@ describeIfDb("PATCH /api/admin/invoices/[id]/status — DB integration", () => {
 
     await db.delete(invoices).where(eq(invoices.id, draft.id));
   });
+
+  it.todo("emails the PDF attachment on a successful draft→sent");
 
   it("sets paid_at on →paid (DB)", async () => {
     const { db } = await import("@/lib/db/index");

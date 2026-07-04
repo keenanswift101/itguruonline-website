@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { eq, sql } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 import { requireAdmin } from "@/lib/auth";
 import { db } from "@/lib/db/index";
-import { invoices } from "@/lib/db/schema";
+import { invoices, invoiceLineItems } from "@/lib/db/schema";
+import { generateInvoicePdfBuffer } from "@/lib/invoice-pdf";
+import { sendEmail, emailLayout } from "@/lib/email";
+import { formatInvoiceNumber } from "@/lib/invoices";
 
 export const dynamic = "force-dynamic";
 
@@ -53,7 +56,7 @@ export async function PATCH(
   const target = parsed.data.status;
 
   const [inv] = await db
-    .select({ status: invoices.status, issueDate: invoices.issueDate })
+    .select({ status: invoices.status, issueDate: invoices.issueDate, clientEmail: invoices.clientEmail })
     .from(invoices)
     .where(eq(invoices.id, numId));
   if (!inv) {
@@ -65,6 +68,12 @@ export async function PATCH(
   }
 
   if (inv.status === "draft" && target === "sent") {
+    // INVOICE-12: block before any write if there's no client email — every
+    // sent invoice must have somewhere to actually send the PDF to.
+    if (!inv.clientEmail) {
+      return NextResponse.json({ error: "no_client_email" }, { status: 422 });
+    }
+
     // Gapless number assignment (D-04, INVOICE-03): single atomic UPDATE with
     // a correlated subquery — the MAX(sequence_number)+1 read and the write
     // happen in one statement, so deleted drafts never consume a number and
@@ -83,6 +92,26 @@ export async function PATCH(
           )
       WHERE id = ${numId} AND status = 'draft'
     `);
+
+    // INVOICE-11: email the PDF AFTER the number is committed. sendEmail never
+    // throws (fire-and-forget), so a Resend hiccup cannot roll back the sent state.
+    const [updated] = await db.select().from(invoices).where(eq(invoices.id, numId));
+    const lineItems = await db
+      .select()
+      .from(invoiceLineItems)
+      .where(eq(invoiceLineItems.invoiceId, numId))
+      .orderBy(asc(invoiceLineItems.sortOrder), asc(invoiceLineItems.id));
+    const pdfBuffer = await generateInvoicePdfBuffer(updated, lineItems);
+    const invoiceNumber = formatInvoiceNumber(updated.fiscalYear, updated.sequenceNumber);
+    await sendEmail({
+      to: updated.clientEmail!,
+      subject: `Invoice ${invoiceNumber} from IT-Guru Online`,
+      html: emailLayout(
+        `Invoice ${invoiceNumber}`,
+        `<p>Good day,</p><p>Please find invoice ${invoiceNumber} attached as a PDF. If you have any questions, simply reply to this email.</p><p>Thank you,<br/>IT-Guru Online</p>`
+      ),
+      attachments: [{ filename: `Invoice-${invoiceNumber}.pdf`, content: pdfBuffer }],
+    });
   } else if (inv.status === "sent" && target === "paid") {
     // D-09: mark paid records the payment timestamp.
     await db
