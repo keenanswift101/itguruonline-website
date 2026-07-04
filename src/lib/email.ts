@@ -124,6 +124,19 @@ interface SendEmailOptions {
   replyTo?: string;
 }
 
+// Every outgoing email is BCC'd to the business inbox (owner requirement:
+// IT-Guru must have a copy of all automation + transactional mail). Skipped
+// when the copy address is already a direct recipient. Override with
+// EMAIL_BCC_COPY; set it to "off" to disable entirely.
+const BCC_COPY_ADDRESS = process.env.EMAIL_BCC_COPY ?? "info@it-guru.co.za";
+
+function bccCopyFor(to: string | string[]): string | undefined {
+  if (BCC_COPY_ADDRESS.toLowerCase() === "off") return undefined;
+  const recipients = (Array.isArray(to) ? to : [to]).map((r) => r.toLowerCase());
+  if (recipients.includes(BCC_COPY_ADDRESS.toLowerCase())) return undefined;
+  return BCC_COPY_ADDRESS;
+}
+
 /**
  * Sends an email via Resend. Failures are logged but never thrown — a missing
  * notification shouldn't fail the form submission it's attached to.
@@ -134,12 +147,15 @@ export async function sendEmail({ to, subject, html, replyTo }: SendEmailOptions
     return;
   }
 
+  const bcc = bccCopyFor(to);
+
   try {
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
       to,
       subject,
       html,
+      ...(bcc ? { bcc } : {}),
       ...(replyTo ? { replyTo } : {}),
     });
 
