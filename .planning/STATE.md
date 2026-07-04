@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-status: verified
-stopped_at: Phase 4 verified complete and LIVE IN PRODUCTION (all of Phases 1-4). admin.it-guru.co.za subdomain working end-to-end. Owner account-management gaps closed (settings page, change-password, logout, password eye icons) and verified end-to-end in production. One test Draft invoice (id=1, "Test Client (Sample Invoice)") created in the LIVE production DB at the owner's request for a portal walkthrough -- real production data, not a fixture; delete or ignore it as the owner directs. No unfinished ad-hoc work. NEXT - Phase 5 (Scheduled Automation), already fully planned, ready for `/gsd:execute-phase 5`.
-last_updated: "2026-07-04T08:10:00.000Z"
+status: executing
+stopped_at: Completed 05-01-PLAN.md (schema + migration + Wave 0 test stubs for Phase 5 automation)
+last_updated: "2026-07-04T06:06:38.875Z"
 last_activity: 2026-07-04
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 22
-  completed_plans: 16
+  completed_plans: 17
   percent: 73
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-04)
 
 **Core value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
-**Current focus:** Phase 05 — scheduled automation. Already fully planned (6 plans in `.planning/phases/05-scheduled-automation/`, plus CONTEXT/RESEARCH/VALIDATION docs) but not yet executed — ready to go straight to `/gsd:execute-phase 5`. No unfinished ad-hoc work remains from the last session (see "Side Task" and Decisions log below for what shipped).
+**Current focus:** Phase 05 — scheduled-automation
 
 ## Current Position
 
-Phase: 05
-Plan: Not started (already planned — 6 plans ready, see .planning/phases/05-scheduled-automation/)
-Status: Phase 4 complete and verified (7/7 must-haves, VERIFICATION.md passed). Production deploy of Phases 1-4 succeeded after a same-day incident (see Blockers/Concerns) -- the whole admin portal is genuinely live at https://it-guru.co.za for the first time.
+Phase: 05 (scheduled-automation) — EXECUTING
+Plan: 2 of 6
+Status: Ready to execute
 Last activity: 2026-07-04
 
 Progress: [███████░░░] 73% (of plans; phases 1-4 of 5 complete)
@@ -72,6 +72,7 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 | Phase 04-invoicing P03 | 8min | 3 tasks | 7 files |
 | Phase 04-invoicing P04 | ~30min | 2 tasks | 8 files |
 | Phase 04-invoicing P05 | 20min | 3 tasks | 2 files |
+| Phase 05 P01 | 10min | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -111,6 +112,8 @@ Recent decisions affecting current work:
 - **[2026-07-04]**: Fixed 18 test files that checked the legacy `NETLIFY_DATABASE_URL` (instead of `NETLIFY_DB_URL`) to decide whether to skip DB-dependent tests — they'd have silently skipped forever even with a correctly configured local DB.
 - **[2026-07-04]**: Added a reusable `PasswordInput` component (`src/components/ui/PasswordInput.tsx`, inline eye/eye-slash SVG toggle) and wired it into every password field (login, reset-password, change-password) — owner-requested.
 - **[2026-07-04]**: Created a real test Draft invoice in the **live production database** at the owner's request (id=1, "Test Client (Sample Invoice)", R270 total, two line items) via the actual `/api/admin/invoices` API — not a local/dev fixture. It will show up in `/admin/invoices`, CSV exports, and any future invoice-count queries until deleted. If a future session sees an unexplained invoice #1 with an obviously fake client name, this is why — check with the owner before assuming it's a bug, and offer to delete it if it's still sitting there unaddressed.
+- [Phase 05]: 05-01: Migration renumbered 0004 (not 0003) since 0003_invoices.sql already exists from Phase 4
+- [Phase 05]: 05-01: Wave 0 test stubs gate describeIfDb on NETLIFY_DB_URL, not the plan's literal NETLIFY_DATABASE_URL, matching this project's actual env var convention
 
 ### Pending Todos
 
@@ -128,7 +131,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-04T08:10:00.000Z
-Stopped at: Phase 4 verified complete and deployed to production for real (after diagnosing and fixing a same-day production outage — see the CRITICAL NETLIFY_DB_URL decision above). admin.it-guru.co.za subdomain fully working end-to-end. Account-management gaps closed and verified in production: `/admin/settings` with change-password, a logout button, show/hide password eye icons on every password field. Created one real test Draft invoice (id=1) in production at the owner's request, walked through it live with them (list page, detail page, line items, total all render correctly) — left in place, not deleted, pending the owner's call on whether to remove it. No known outstanding issues.
+Last session: 2026-07-04T06:06:38.869Z
+Stopped at: Completed 05-01-PLAN.md (schema + migration + Wave 0 test stubs for Phase 5 automation)
 NEXT: no unfinished ad-hoc work remains. Either take further ad-hoc requests (check whether the owner wants test invoice #1 deleted), or move to Phase 5 (Scheduled Automation) — already fully planned/researched (6 plans, CONTEXT/RESEARCH/VALIDATION all exist in `.planning/phases/05-scheduled-automation/`) — go straight to `/gsd:execute-phase 5` unless the plan needs revisiting first.
 Resume file: None

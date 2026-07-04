@@ -99,7 +99,14 @@ Plans:
   2. Owner receives a reminder email when an invoice is overdue
   3. A recurring invoice is automatically generated for each active hosting client on their billing cycle, and re-running the same job does not create a duplicate invoice for a period already billed
   4. Each scheduled automation (reminders, recurring billing) has a manually-triggerable equivalent the owner/developer can run on demand, so it can be tested on the `dev` branch where Netlify Scheduled Functions don't run
-**Plans**: TBD
+**Plans**: 6 plans
+Plans:
+- [x] 05-01-PLAN.md — DB schema (billing_schedules, automation_runs) + 0004 migration + Wave 0 test stubs
+- [ ] 05-02-PLAN.md
+- [ ] 05-03-PLAN.md
+- [ ] 05-04-PLAN.md
+- [ ] 05-05-PLAN.md
+- [ ] 05-06-PLAN.md
 
 ## Progress
 
@@ -112,6 +119,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. CRM Capture + Viewing | 4/4 | Complete | 2026-07-02 |
 | 3. Live Pricing Migration | 3/3 | Complete | 2026-07-02 |
 | 4. Invoicing | 5/5 | Complete | 2026-07-03 |
-| 5. Scheduled Automation | 0/6 | Planned (not executed) | - |
+| 5. Scheduled Automation | 1/6 | In Progress | - |
 
 *This table was found badly out of sync with actual state (2026-07-04) — phases 2-4 were fully complete and even deployed to production, but this table still showed them in-progress or not-started, most likely from parallel worktree-agent execution never syncing their local ROADMAP.md updates back. Corrected against each phase's VERIFICATION.md and SUMMARY.md files as source of truth. If this table looks wrong again, don't trust it blindly — cross-check the VERIFICATION.md and SUMMARY.md files under each phase directory directly.*
