@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
+import { getClientsForPicker } from "@/lib/client-query";
 import InvoiceForm from "@/components/forms/InvoiceForm";
 
 export const dynamic = "force-dynamic";
@@ -9,6 +10,8 @@ export const metadata = { title: "New Invoice" };
 export default async function NewInvoicePage() {
   const session = await requireAdmin();
   if (!session) redirect("/admin/login");
+
+  const clients = await getClientsForPicker();
 
   return (
     <main className="p-8">
@@ -20,7 +23,7 @@ export default async function NewInvoicePage() {
 
       <div className="rounded-xl border border-(--border-color) bg-(--bg-primary)/80 backdrop-blur-sm p-8">
         <h1 className="text-2xl font-bold text-(--text-primary) mb-6">New Invoice</h1>
-        <InvoiceForm />
+        <InvoiceForm clients={clients} />
       </div>
     </main>
   );

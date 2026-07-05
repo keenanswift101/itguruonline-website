@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { db } from "@/lib/db/index";
 import { invoices, invoiceLineItems } from "@/lib/db/schema";
+import { getClientsForPicker } from "@/lib/client-query";
 import { formatInvoiceNumber } from "@/lib/invoices";
 import { isOverdue, STATUS_BADGE, OVERDUE_BADGE } from "@/lib/invoice-status";
 import InvoiceForm from "@/components/forms/InvoiceForm";
@@ -44,6 +45,8 @@ export default async function InvoiceDetailPage({
     .from(invoiceLineItems)
     .where(eq(invoiceLineItems.invoiceId, numId))
     .orderBy(asc(invoiceLineItems.sortOrder), asc(invoiceLineItems.id));
+
+  const clients = await getClientsForPicker();
 
   const badge = STATUS_BADGE[inv.status] ?? STATUS_BADGE.draft;
   const overdue = isOverdue(inv.status, inv.dueDate);
@@ -87,6 +90,8 @@ export default async function InvoiceDetailPage({
         {inv.status === "draft" ? (
           <InvoiceForm
             invoiceId={inv.id}
+            clients={clients}
+            initialClientId={inv.clientId}
             initial={{
               clientName: inv.clientName,
               clientEmail: inv.clientEmail ?? "",
