@@ -1,10 +1,8 @@
 import { z } from "zod";
+import { lineItemInput } from "@/lib/billing-shared";
 
-export const lineItemInput = z.object({
-  description: z.string().trim().min(1).max(2000),
-  quantity: z.number().int().min(1).max(9999),
-  unitPriceRands: z.number().int().min(0).max(99999999),
-});
+export { lineItemInput, computeTotals } from "@/lib/billing-shared";
+export type { LineItemInput } from "@/lib/billing-shared";
 
 export const invoiceInput = z.object({
   clientId: z.number().int().positive().nullable().optional(), // null/undefined = one-off free-text invoice
@@ -30,22 +28,6 @@ export const invoiceInput = z.object({
 });
 
 export type InvoiceInput = z.infer<typeof invoiceInput>;
-export type LineItemInput = z.infer<typeof lineItemInput>;
-
-/**
- * Server-side total computation — the client never dictates totals.
- * Money convention: INTEGER rands (not cents), per Phase 3.
- */
-export function computeTotals<T extends { quantity: number; unitPriceRands: number }>(
-  items: T[]
-) {
-  const lines = items.map((i) => ({
-    ...i,
-    lineTotalRands: i.quantity * i.unitPriceRands,
-  }));
-  const totalRands = lines.reduce((s, l) => s + l.lineTotalRands, 0);
-  return { lines, totalRands };
-}
 
 /**
  * INV-YYYY-NNN display format (D-04). Draft invoices have no number
