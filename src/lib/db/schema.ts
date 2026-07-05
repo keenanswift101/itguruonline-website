@@ -214,3 +214,36 @@ export const clients = pgTable("clients", {
     .defaultNow()
     .$onUpdate(() => new Date()),
 });
+
+export const quotations = pgTable("quotations", {
+  id: serial("id").primaryKey(),
+  // Optional link to a stored client (mirrors invoices.clientId, QUOTE-01)
+  clientId: integer("client_id").references(() => clients.id, { onDelete: "set null" }),
+  clientName: varchar("client_name", { length: 255 }).notNull(),
+  clientEmail: varchar("client_email", { length: 320 }),
+  billingAddress: text("billing_address"),
+  issueDate: date("issue_date").notNull(),
+  validUntil: date("valid_until").notNull(),
+  // 'draft' | 'sent' | 'accepted' | 'declined' — varchar(10), NOT 8 ("accepted"/"declined" are 8 chars, need headroom)
+  status: varchar("status", { length: 10 }).notNull().default("draft"),
+  totalRands: integer("total_rands").notNull().default(0),
+  // QUOTE-05 idempotency anchor — set once on first convert; NULL = not yet converted
+  convertedInvoiceId: integer("converted_invoice_id").references(() => invoices.id, { onDelete: "set null" }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
+
+export const quotationLineItems = pgTable("quotation_line_items", {
+  id: serial("id").primaryKey(),
+  quotationId: integer("quotation_id")
+    .notNull()
+    .references(() => quotations.id, { onDelete: "cascade" }),
+  description: text("description").notNull(),
+  quantity: smallint("quantity").notNull().default(1),
+  unitPriceRands: integer("unit_price_rands").notNull(),
+  lineTotalRands: integer("line_total_rands").notNull(),
+  sortOrder: smallint("sort_order").notNull().default(0),
+});

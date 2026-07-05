@@ -50,6 +50,13 @@
       "when": 1783187808700,
       "tag": "0006_invoice_client_link",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1783244163283,
+      "tag": "0007_quotations",
+      "breakpoints": true
     }
   ]
 }
