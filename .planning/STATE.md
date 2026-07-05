@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Clients, Tickets, Invoicing & Quotations
 status: executing
-stopped_at: Completed 10-01-PLAN.md
-last_updated: "2026-07-05T10:12:59.937Z"
+stopped_at: Completed 10-02-PLAN.md
+last_updated: "2026-07-05T11:25:23.574Z"
 last_activity: 2026-07-05
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 16
-  completed_plans: 11
+  completed_plans: 12
 ---
 
 # Project State
@@ -34,7 +34,7 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 ## Current Position
 
 Phase: 10 (quotations) — EXECUTING
-Plan: 2 of 6
+Plan: 3 of 6
 Status: Ready to execute
 Last activity: 2026-07-05
 
@@ -83,6 +83,7 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 | Phase 08 P05 | 10min | 2 tasks | 4 files |
 | Phase 08 P03 | 6min | 3 tasks | 4 files |
 | Phase 10 P01 | 16min | 3 tasks | 15 files |
+| Phase 10 P02 | 20min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -123,6 +124,8 @@ Recent decisions affecting current work:
 - [Phase 10]: 10-01: quotations.status is varchar(10) not varchar(8) (avoids invoices' tight-fit risk for 8-char statuses)
 - [Phase 10]: 10-01: accepted quotation status is terminal (no outgoing transitions) so future QUOTE-05 convert-to-invoice idempotency stays simple
 - [Phase 10]: 10-01 correction: did not mark QUOTE-01/QUOTE-04 complete — this plan only built Wave 0 foundation (schema/libs/test-stubs), not the owner-facing routes; mirrors the 06-01/08-01 correction pattern
+- [Phase 10]: 10-02: pdf-shared.ts extracted (react-pdf StyleSheet + formatRands), imported whole by both InvoiceDocument and QuotationDocument per Pitfall 6 (never spread/merge style keys)
+- [Phase 10]: 10-02 correction: did not mark QUOTE-03/QUOTE-06 complete - this plan only builds the PDF generation + download-route building block, not the full sent-email flow (10-04) or list/filter UI (10-05/10-06)
 
 ### Pending Todos
 
@@ -136,7 +139,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-05T10:12:59.932Z
-Stopped at: Completed 10-01-PLAN.md
+Last session: 2026-07-05T11:25:23.569Z
+Stopped at: Completed 10-02-PLAN.md
 NEXT: Phase 08 (linked-invoicing-delivery) — 08-01 and 08-04 complete; 08-02 (linking routes), 08-03 (picker UI), and 08-05 (client invoice history) still remain before the phase is done.
 Resume file: None
