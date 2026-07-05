@@ -4,7 +4,7 @@ import { requireAdmin } from "@/lib/auth";
 import { db } from "@/lib/db/index";
 import { crmNotes } from "@/lib/db/schema";
 import { eq, and, asc } from "drizzle-orm";
-import { getClientById } from "@/lib/client-query";
+import { getClientById, getClientInvoices } from "@/lib/client-query";
 import ClientForm from "@/components/forms/ClientForm";
 import { ClientNoteForm } from "@/components/admin/clients/ClientNoteForm";
 import { Card } from "@/components/ui/Card";
@@ -26,6 +26,8 @@ export default async function ClientDetailPage({
 
   const client = await getClientById(numId);
   if (!client) notFound();
+
+  const clientInvoices = await getClientInvoices(client.id);
 
   const notes = await db
     .select()
@@ -80,6 +82,34 @@ export default async function ClientDetailPage({
           }}
         />
       </Card>
+
+      {/* ── Client history ─────────────────────────────────────────────
+          Invoices now (CLIENT-06). Tickets are DEFERRED to Phase 7: add a
+          sibling <Card> here (do NOT merge into this one) once the tickets
+          table + client_id FK exist — zero rework to this block. */}
+      <Card className="mb-8">
+        <h2 className="text-lg font-semibold text-(--text-primary) mb-4">Invoices</h2>
+        {clientInvoices.length === 0 ? (
+          <p className="text-sm text-(--text-secondary)">No invoices yet.</p>
+        ) : (
+          <ul className="divide-y divide-(--border-color)">
+            {clientInvoices.map((inv) => (
+              <li key={inv.id} className="flex items-center justify-between py-2">
+                <Link
+                  href={`/admin/invoices/${inv.id}`}
+                  className="text-sm text-(--text-primary) hover:underline"
+                >
+                  {inv.invoiceNumber}
+                </Link>
+                <span className="text-xs text-(--text-secondary)">
+                  R{inv.totalRands} · {inv.status} · due {inv.dueDate}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Card>
+      {/* Phase 7: <Card className="mb-8"><h2>Tickets</h2>…</Card> goes here. */}
 
       {/* Notes section */}
       <Card>
