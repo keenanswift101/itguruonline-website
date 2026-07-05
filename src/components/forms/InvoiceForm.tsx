@@ -2,6 +2,8 @@
 
 import { useId, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { ClientPicker } from "@/components/forms/ClientPicker";
+import type { ClientPickerOption } from "@/lib/client-types";
 
 interface LineItemRow {
   description: string;
@@ -35,6 +37,10 @@ interface InvoiceFormProps {
   invoiceId?: number;
   /** Prefill values for edit mode. */
   initial?: InvoiceFormInitial;
+  /** Stored clients for the searchable picker (INVOICE-09). Omitted/empty hides the picker. */
+  clients?: ClientPickerOption[];
+  /** Pre-selects the currently-linked client when editing a draft. */
+  initialClientId?: number | null;
 }
 
 const emptyLineItem = (): LineItemRow => ({ description: "", quantity: 1, unitPriceRands: 0 });
@@ -51,7 +57,7 @@ function lineTotal(item: LineItemRow): number {
   return (Number.isFinite(item.quantity) ? item.quantity : 0) * (Number.isFinite(item.unitPriceRands) ? item.unitPriceRands : 0);
 }
 
-export default function InvoiceForm({ invoiceId, initial }: InvoiceFormProps) {
+export default function InvoiceForm({ invoiceId, initial, clients, initialClientId }: InvoiceFormProps) {
   const id = useId();
   const router = useRouter();
 
@@ -69,9 +75,22 @@ export default function InvoiceForm({ invoiceId, initial }: InvoiceFormProps) {
   const [lineItems, setLineItems] = useState<LineItemRow[]>(
     initial?.lineItems.length ? initial.lineItems : [emptyLineItem()]
   );
+  const [clientId, setClientId] = useState<number | null>(initialClientId ?? null);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
   const [serverMessage, setServerMessage] = useState("");
+
+  function handleClientSelect(client: ClientPickerOption | null) {
+    setClientId(client ? client.id : null);
+    if (client) {
+      setFields((prev) => ({
+        ...prev,
+        clientName: client.name,
+        clientEmail: client.email,
+        billingAddress: client.physicalAddress || client.postalAddress || prev.billingAddress,
+      }));
+    }
+  }
 
   const invoiceTotal = lineItems.reduce((sum, item) => sum + lineTotal(item), 0);
 
@@ -127,6 +146,7 @@ export default function InvoiceForm({ invoiceId, initial }: InvoiceFormProps) {
     setServerMessage("");
 
     const body = JSON.stringify({
+      clientId,
       clientName: fields.clientName,
       clientEmail: fields.clientEmail,
       billingAddress: fields.billingAddress,
@@ -208,6 +228,13 @@ export default function InvoiceForm({ invoiceId, initial }: InvoiceFormProps) {
       )}
 
       {/* Client info */}
+      {clients && clients.length > 0 && (
+        <div className="sm:col-span-2">
+          <label className="block text-sm font-medium text-(--text-primary) mb-1.5">Client</label>
+          <ClientPicker clients={clients} selectedClientId={clientId} onSelect={handleClientSelect} />
+          <p className="mt-1 text-xs text-(--text-secondary)">Pick a stored client to auto-fill, or choose one-off. Fields stay editable.</p>
+        </div>
+      )}
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor={`${id}-clientName`} className="block text-sm font-medium text-(--text-primary) mb-1.5">
