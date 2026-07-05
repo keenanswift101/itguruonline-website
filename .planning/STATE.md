@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Clients, Tickets, Invoicing & Quotations
 status: executing
-stopped_at: Completed 08-05-PLAN.md
-last_updated: "2026-07-05T05:59:47.037Z"
+stopped_at: Completed 08-03-PLAN.md
+last_updated: "2026-07-05T06:33:37.370Z"
 last_activity: 2026-07-05
 progress:
   total_phases: 5
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 10
-  completed_plans: 8
+  completed_plans: 10
 ---
 
 # Project State
@@ -33,9 +33,9 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 
 ## Current Position
 
-Phase: 08 (linked-invoicing-delivery) — EXECUTING
-Plan: 4 of 5 complete (08-01, 08-02, 08-04, 08-05 done; 08-03 remaining — 08-04 and 08-05 ran ahead of 08-03 since neither depended on the picker UI)
-Status: Ready to execute 08-03 (last remaining plan in Phase 8)
+Phase: 08 (linked-invoicing-delivery) — COMPLETE
+Plan: 5 of 5 complete (08-01, 08-02, 08-03, 08-04, 08-05 all done)
+Status: Phase 08 done. Next: Phase 7 (Tickets) — was skipped ahead of in the execution order (08 ran before 07); CLIENT-06's tickets half was deferred to Phase 7 with a seam left in the client detail page. Phase 9 (Dashboard Rework) comes after Phase 7 per the roadmap dependency chain.
 Last activity: 2026-07-05
 
 Progress: v2.0 complete (22/22 plans, shipped, 5/5 phases). v2.1 roadmap defined (4 phases, 18 requirements, 0 plans yet).
@@ -81,6 +81,7 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 | Phase 08 P04 | 12min | 3 tasks | 5 files |
 | Phase 08 P02 | 8min | 2 tasks | 4 files |
 | Phase 08 P05 | 10min | 2 tasks | 4 files |
+| Phase 08 P03 | 6min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -117,6 +118,7 @@ Recent decisions affecting current work:
 - [Phase 08]: 08-02: Client-existence guard runs as a plain db.select outside withTxDb (pre-condition read, not part of the atomic write); 422 shape reuses the existing zod fieldErrors format ({ fields: { clientId: [...] } }) rather than a new error type
 - [Phase 08]: 08-02 correction: 08-02-PLAN.md's frontmatter listed INVOICE-09 as a requirement even though it only built the POST/PUT backend route half (client-existence check + persist) — the picker UI is 08-03's job and INVOICE-09's acceptance criteria requires it. Reverted REQUIREMENTS.md's INVOICE-09 checkbox back to unchecked/In Progress; INVOICE-10 (free-text one-off) is genuinely complete end-to-end
 - [Phase 08]: 08-05 (PARTIAL): CLIENT-06's invoices half delivered (getClientInvoices + Invoices Card); tickets half stays deferred to Phase 7 per plan design, with an explicit seam comment left on the client detail page for zero-rework Phase 7 addition.
+- [Phase 08]: [Phase 08, 08-03]: clientId is only ever set inside handleClientSelect (never handleFieldChange) so editing auto-filled fields keeps the client link, per the locked decision
 
 ### Pending Todos
 
@@ -130,7 +132,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-05T05:59:47.031Z
-Stopped at: Completed 08-05-PLAN.md
+Last session: 2026-07-05T06:33:37.364Z
+Stopped at: Completed 08-03-PLAN.md
 NEXT: Phase 08 (linked-invoicing-delivery) — 08-01 and 08-04 complete; 08-02 (linking routes), 08-03 (picker UI), and 08-05 (client invoice history) still remain before the phase is done.
 Resume file: None

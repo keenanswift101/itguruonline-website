@@ -89,7 +89,7 @@ Plans:
 Plans:
 - [x] 08-01-PLAN.md — Foundation: invoices.client_id FK + 0006 migration, shared PDF helper, sendEmail attachments, picker-data query, Wave 0 stubs
 - [x] 08-02-PLAN.md — Invoice→client linking backend (POST/PUT thread clientId + existence check)
-- [ ] 08-03-PLAN.md — Client picker UI (searchable ClientPicker + InvoiceForm auto-fill + invoice pages)
+- [x] 08-03-PLAN.md — Client picker UI (searchable ClientPicker + InvoiceForm auto-fill + invoice pages)
 - [x] 08-04-PLAN.md — Send/Resend/Revert delivery (email-on-send, no-email guard, resend route, buttons)
 - [x] 08-05-PLAN.md — Client invoice history (getClientInvoices + Invoices Card + Phase 7 tickets seam)
 **UI hint**: yes

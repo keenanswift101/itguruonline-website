@@ -28,7 +28,7 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 
 ### Linked Invoicing & Delivery
 
-- [ ] **INVOICE-09**: Owner can create an invoice by selecting a stored client from a searchable picker, which auto-fills client name/email/address and links the invoice to that client (`client_id`)
+- [x] **INVOICE-09**: Owner can create an invoice by selecting a stored client from a searchable picker, which auto-fills client name/email/address and links the invoice to that client (`client_id`)
 - [x] **INVOICE-10**: Owner can still create a one-off invoice with free-text client details (no stored client); existing free-text invoices remain valid and editable
 - [x] **INVOICE-11**: When the owner marks an invoice as Sent, the system emails the invoice PDF (as an attachment) to the invoice's client email address
 - [x] **INVOICE-12**: The owner cannot mark an invoice Sent when it has no client email — they are blocked and prompted to add a client email first (so every "sent" invoice was genuinely delivered)
