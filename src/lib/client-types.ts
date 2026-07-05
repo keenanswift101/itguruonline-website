@@ -15,6 +15,19 @@ export interface ClientPickerOption {
   postalAddress: string;
 }
 
+/**
+ * Invoice rows linked to a client via invoices.client_id (CLIENT-06), shaped
+ * for the client detail page's Invoices Card.
+ */
+export interface ClientInvoiceSummary {
+  id: number;
+  invoiceNumber: string; // formatInvoiceNumber output ("DRAFT" if unassigned)
+  status: string;
+  totalRands: number;
+  issueDate: string; // Postgres date → already a plain string
+  dueDate: string;
+}
+
 export interface ClientListItem {
   id: number;
   name: string;

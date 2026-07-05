@@ -1,7 +1,13 @@
 import { db } from "@/lib/db/index";
-import { clients } from "@/lib/db/schema";
+import { clients, invoices } from "@/lib/db/schema";
 import { desc, eq } from "drizzle-orm";
-import type { ClientListItem, ClientPickerOption, ClientSource } from "@/lib/client-types";
+import { formatInvoiceNumber } from "@/lib/invoices";
+import type {
+  ClientInvoiceSummary,
+  ClientListItem,
+  ClientPickerOption,
+  ClientSource,
+} from "@/lib/client-types";
 
 /**
  * List all clients, newest first, as serialization-safe list items.
@@ -43,5 +49,26 @@ export async function getClientsForPicker(): Promise<ClientPickerOption[]> {
     company: c.company,
     physicalAddress: c.physicalAddress,
     postalAddress: c.postalAddress,
+  }));
+}
+
+/**
+ * Invoices linked to a client via invoices.client_id (CLIENT-06), newest first.
+ * Serialization-safe (no raw Date fields) — issue/due dates are Postgres DATE
+ * columns that Drizzle already returns as plain strings.
+ */
+export async function getClientInvoices(clientId: number): Promise<ClientInvoiceSummary[]> {
+  const rows = await db
+    .select()
+    .from(invoices)
+    .where(eq(invoices.clientId, clientId))
+    .orderBy(desc(invoices.createdAt));
+  return rows.map((inv) => ({
+    id: inv.id,
+    invoiceNumber: formatInvoiceNumber(inv.fiscalYear, inv.sequenceNumber),
+    status: inv.status,
+    totalRands: inv.totalRands,
+    issueDate: inv.issueDate,
+    dueDate: inv.dueDate,
   }));
 }
