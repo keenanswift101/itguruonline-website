@@ -36,8 +36,8 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 
 ### Quotations
 
-- [ ] **QUOTE-01**: Owner can create a quotation (client via the same picker or free-text, line items, and a "valid until" date), mirroring invoice creation
-- [ ] **QUOTE-02**: Owner can edit and delete a draft quotation
+- [x] **QUOTE-01**: Owner can create a quotation (client via the same picker or free-text, line items, and a "valid until" date), mirroring invoice creation
+- [x] **QUOTE-02**: Owner can edit and delete a draft quotation
 - [ ] **QUOTE-03**: Owner can mark a quotation Sent, which emails the quotation PDF (labeled "Quotation", no SARS invoice number) to the client's email
 - [ ] **QUOTE-04**: Owner can track a quotation's status through its lifecycle (draft → sent → accepted / declined)
 - [ ] **QUOTE-05**: Owner can convert an accepted quotation into a draft invoice in one click (same client + line items carried over)
@@ -91,8 +91,8 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 | DASH-03 | Phase 9 | Pending |
 | DASH-04 | Phase 9 | Pending |
 | DASH-05 | Phase 9 | Pending |
-| QUOTE-01 | Phase 10 | Pending |
-| QUOTE-02 | Phase 10 | Pending |
+| QUOTE-01 | Phase 10 | Complete |
+| QUOTE-02 | Phase 10 | Complete |
 | QUOTE-03 | Phase 10 | Pending |
 | QUOTE-04 | Phase 10 | Pending |
 | QUOTE-05 | Phase 10 | Pending |

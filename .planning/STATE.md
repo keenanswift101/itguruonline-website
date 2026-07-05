@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Clients, Tickets, Invoicing & Quotations
 status: executing
-stopped_at: Completed 10-02-PLAN.md
-last_updated: "2026-07-05T11:25:23.574Z"
+stopped_at: Completed 10-04-PLAN.md
+last_updated: "2026-07-05T12:44:04.139Z"
 last_activity: 2026-07-05
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 16
-  completed_plans: 12
+  completed_plans: 14
 ---
 
 # Project State
@@ -34,7 +34,7 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 ## Current Position
 
 Phase: 10 (quotations) — EXECUTING
-Plan: 3 of 6
+Plan: 5 of 6
 Status: Ready to execute
 Last activity: 2026-07-05
 
@@ -84,6 +84,8 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 | Phase 08 P03 | 6min | 3 tasks | 4 files |
 | Phase 10 P01 | 16min | 3 tasks | 15 files |
 | Phase 10 P02 | 20min | 3 tasks | 7 files |
+| Phase 10 P03 | 10min | 2 tasks | 4 files |
+| Phase 10 P04 | 14min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -126,6 +128,10 @@ Recent decisions affecting current work:
 - [Phase 10]: 10-01 correction: did not mark QUOTE-01/QUOTE-04 complete — this plan only built Wave 0 foundation (schema/libs/test-stubs), not the owner-facing routes; mirrors the 06-01/08-01 correction pattern
 - [Phase 10]: 10-02: pdf-shared.ts extracted (react-pdf StyleSheet + formatRands), imported whole by both InvoiceDocument and QuotationDocument per Pitfall 6 (never spread/merge style keys)
 - [Phase 10]: 10-02 correction: did not mark QUOTE-03/QUOTE-06 complete - this plan only builds the PDF generation + download-route building block, not the full sent-email flow (10-04) or list/filter UI (10-05/10-06)
+- [Phase 10]: 10-03: Skipped mocked-db-module pattern for non-numeric-id 400 test — Number.isNaN check runs before any db access, so the real db module is safely never reached
+- [Phase 10]: 10-04: status route omits invoice's gapless-numbering UPDATE entirely (not a SARS document); accepted stays terminal via ALLOWED_TRANSITIONS
+- [Phase 10]: 10-04: convert route mirrors 06-04's withTxDb + AlreadyConvertedError-thrown-inside-the-tx idempotency pattern; converted_invoice_id race-proof
+- [Phase 10]: 10-04 correction: did not mark QUOTE-03/04/05 complete - backend routes only, owner-facing trigger needs 10-06's UI; mirrors 06-01/06-02/08-01/08-02/10-01/10-02 pattern
 
 ### Pending Todos
 
@@ -139,7 +145,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-05T11:25:23.569Z
-Stopped at: Completed 10-02-PLAN.md
+Last session: 2026-07-05T12:44:04.125Z
+Stopped at: Completed 10-04-PLAN.md
 NEXT: Phase 08 (linked-invoicing-delivery) — 08-01 and 08-04 complete; 08-02 (linking routes), 08-03 (picker UI), and 08-05 (client invoice history) still remain before the phase is done.
 Resume file: None
