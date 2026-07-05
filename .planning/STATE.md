@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Clients, Tickets, Invoicing & Quotations
-status: completed
-stopped_at: Completed 08-03-PLAN.md
-last_updated: "2026-07-05T06:43:32.234Z"
+status: executing
+stopped_at: Completed 10-01-PLAN.md
+last_updated: "2026-07-05T10:12:59.937Z"
 last_activity: 2026-07-05
 progress:
   total_phases: 5
   completed_phases: 2
-  total_plans: 10
-  completed_plans: 10
+  total_plans: 16
+  completed_plans: 11
 ---
 
 # Project State
@@ -20,7 +20,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-04)
 
 **Core value:** Every enquiry and client interaction is captured and actionable in one place, with hosting/domain pricing editable live.
-**Current focus:** Phase 08 — linked-invoicing-delivery
+**Current focus:** Phase 10 — quotations
 
 **v2.1 design decisions (locked with owner):** Clients = new first-class entity (add manual OR convert enquiry/registration); build lightweight in-portal ticketing (tickets linked to clients); invoice→client via optional `client_id` FK with auto-fill (free-text one-off invoices stay valid); dashboard reworked to show open tickets + new leads + unpaid/overdue invoices + revenue-this-month + recent activity. Research skipped (standard CRUD on the established v2.0 stack).
 
@@ -33,9 +33,9 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 
 ## Current Position
 
-Phase: 9
-Plan: Not started
-Status: Phase 08 done. Next: Phase 7 (Tickets) — was skipped ahead of in the execution order (08 ran before 07); CLIENT-06's tickets half was deferred to Phase 7 with a seam left in the client detail page. Phase 9 (Dashboard Rework) comes after Phase 7 per the roadmap dependency chain.
+Phase: 10 (quotations) — EXECUTING
+Plan: 2 of 6
+Status: Ready to execute
 Last activity: 2026-07-05
 
 Progress: v2.0 complete (22/22 plans, shipped, 5/5 phases). v2.1 roadmap defined (4 phases, 18 requirements, 0 plans yet).
@@ -82,6 +82,7 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 | Phase 08 P02 | 8min | 2 tasks | 4 files |
 | Phase 08 P05 | 10min | 2 tasks | 4 files |
 | Phase 08 P03 | 6min | 3 tasks | 4 files |
+| Phase 10 P01 | 16min | 3 tasks | 15 files |
 
 ## Accumulated Context
 
@@ -119,6 +120,9 @@ Recent decisions affecting current work:
 - [Phase 08]: 08-02 correction: 08-02-PLAN.md's frontmatter listed INVOICE-09 as a requirement even though it only built the POST/PUT backend route half (client-existence check + persist) — the picker UI is 08-03's job and INVOICE-09's acceptance criteria requires it. Reverted REQUIREMENTS.md's INVOICE-09 checkbox back to unchecked/In Progress; INVOICE-10 (free-text one-off) is genuinely complete end-to-end
 - [Phase 08]: 08-05 (PARTIAL): CLIENT-06's invoices half delivered (getClientInvoices + Invoices Card); tickets half stays deferred to Phase 7 per plan design, with an explicit seam comment left on the client detail page for zero-rework Phase 7 addition.
 - [Phase 08]: [Phase 08, 08-03]: clientId is only ever set inside handleClientSelect (never handleFieldChange) so editing auto-filled fields keeps the client link, per the locked decision
+- [Phase 10]: 10-01: quotations.status is varchar(10) not varchar(8) (avoids invoices' tight-fit risk for 8-char statuses)
+- [Phase 10]: 10-01: accepted quotation status is terminal (no outgoing transitions) so future QUOTE-05 convert-to-invoice idempotency stays simple
+- [Phase 10]: 10-01 correction: did not mark QUOTE-01/QUOTE-04 complete — this plan only built Wave 0 foundation (schema/libs/test-stubs), not the owner-facing routes; mirrors the 06-01/08-01 correction pattern
 
 ### Pending Todos
 
@@ -132,7 +136,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-05T06:33:37.364Z
-Stopped at: Completed 08-03-PLAN.md
+Last session: 2026-07-05T10:12:59.932Z
+Stopped at: Completed 10-01-PLAN.md
 NEXT: Phase 08 (linked-invoicing-delivery) — 08-01 and 08-04 complete; 08-02 (linking routes), 08-03 (picker UI), and 08-05 (client invoice history) still remain before the phase is done.
 Resume file: None

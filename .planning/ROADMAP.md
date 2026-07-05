@@ -121,7 +121,7 @@ Plans:
 **Notes**: Separate `quotations` + `quotation_line_items` tables (own numbering, no SARS gapless requirement, no "paid" status) — but reuses the invoice line-item UI pattern, a parameterized PDF document component, and the Phase 8 email-delivery mechanism. Convert-to-invoice inserts a draft invoice via `withTxDb()` (atomic multi-table write).
 **Plans**: 6 plans (4 waves)
 Plans:
-- [ ] 10-01-PLAN.md — Foundation: quotations + quotation_line_items tables (0007), billing-shared extraction, quotations.ts/quotation-status.ts, Wave 0 test stubs
+- [x] 10-01-PLAN.md — Foundation: quotations + quotation_line_items tables (0007), billing-shared extraction, quotations.ts/quotation-status.ts, Wave 0 test stubs
 - [ ] 10-02-PLAN.md — PDF: pdf-shared extraction, QuotationDocument, quotation-pdf helper, PDF download route
 - [ ] 10-03-PLAN.md — CRUD backend: POST create + PUT/DELETE draft-only edit/delete
 - [ ] 10-04-PLAN.md — Delivery: status transitions + email-on-send, resend, convert-to-invoice
@@ -145,4 +145,4 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10
 | 7. Tickets | v2.1 | 0/? | Not started | - |
 | 8. Linked Invoicing & Delivery | v2.1 | 4/5 | In Progress|  |
 | 9. Dashboard Rework | v2.1 | 0/? | Not started | - |
-| 10. Quotations | v2.1 | 0/? | Not started | - |
+| 10. Quotations | v2.1 | 1/6 | In Progress|  |
