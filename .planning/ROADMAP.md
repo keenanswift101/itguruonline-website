@@ -119,7 +119,14 @@ Plans:
   5. Owner can convert an accepted quotation into a draft invoice, carrying over the client and line items, in one click
   6. Owner can list all quotations, filter by status, and download a quotation PDF
 **Notes**: Separate `quotations` + `quotation_line_items` tables (own numbering, no SARS gapless requirement, no "paid" status) — but reuses the invoice line-item UI pattern, a parameterized PDF document component, and the Phase 8 email-delivery mechanism. Convert-to-invoice inserts a draft invoice via `withTxDb()` (atomic multi-table write).
-**Plans**: TBD
+**Plans**: 6 plans (4 waves)
+Plans:
+- [ ] 10-01-PLAN.md — Foundation: quotations + quotation_line_items tables (0007), billing-shared extraction, quotations.ts/quotation-status.ts, Wave 0 test stubs
+- [ ] 10-02-PLAN.md — PDF: pdf-shared extraction, QuotationDocument, quotation-pdf helper, PDF download route
+- [ ] 10-03-PLAN.md — CRUD backend: POST create + PUT/DELETE draft-only edit/delete
+- [ ] 10-04-PLAN.md — Delivery: status transitions + email-on-send, resend, convert-to-invoice
+- [ ] 10-05-PLAN.md — UI: QuotationForm + New page + list/filter + sidebar nav
+- [ ] 10-06-PLAN.md — UI: QuotationStatusActions (lifecycle + convert) + detail/edit page
 **UI hint**: yes
 
 ## Progress
