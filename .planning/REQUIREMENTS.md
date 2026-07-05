@@ -41,7 +41,7 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 - [ ] **QUOTE-03**: Owner can mark a quotation Sent, which emails the quotation PDF (labeled "Quotation", no SARS invoice number) to the client's email
 - [ ] **QUOTE-04**: Owner can track a quotation's status through its lifecycle (draft → sent → accepted / declined)
 - [ ] **QUOTE-05**: Owner can convert an accepted quotation into a draft invoice in one click (same client + line items carried over)
-- [ ] **QUOTE-06**: Owner can view a list of all quotations, filter by status, and download a quotation PDF
+- [x] **QUOTE-06**: Owner can view a list of all quotations, filter by status, and download a quotation PDF
 
 ### Dashboard
 
@@ -96,6 +96,6 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 | QUOTE-03 | Phase 10 | Pending |
 | QUOTE-04 | Phase 10 | Pending |
 | QUOTE-05 | Phase 10 | Pending |
-| QUOTE-06 | Phase 10 | Pending |
+| QUOTE-06 | Phase 10 | Complete |
 
 **Coverage:** 27/27 v2.1 requirements mapped to a phase. No orphans. (Phase 6 CLIENT-01..05 complete; +3 invoice-delivery reqs folded into Phase 8; +6 QUOTE reqs in new Phase 10.)
