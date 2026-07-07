@@ -5,6 +5,7 @@ import { db } from "@/lib/db/index";
 import { crmNotes } from "@/lib/db/schema";
 import { eq, and, asc } from "drizzle-orm";
 import { getClientById, getClientInvoices } from "@/lib/client-query";
+import { getClientTickets } from "@/lib/ticket-query";
 import ClientForm from "@/components/forms/ClientForm";
 import { ClientNoteForm } from "@/components/admin/clients/ClientNoteForm";
 import { Card } from "@/components/ui/Card";
@@ -28,6 +29,7 @@ export default async function ClientDetailPage({
   if (!client) notFound();
 
   const clientInvoices = await getClientInvoices(client.id);
+  const clientTickets = await getClientTickets(client.id);
 
   const notes = await db
     .select()
@@ -83,10 +85,7 @@ export default async function ClientDetailPage({
         />
       </Card>
 
-      {/* ── Client history ─────────────────────────────────────────────
-          Invoices now (CLIENT-06). Tickets are DEFERRED to Phase 7: add a
-          sibling <Card> here (do NOT merge into this one) once the tickets
-          table + client_id FK exist — zero rework to this block. */}
+      {/* ── Client history ───────────────────────────────────────────── */}
       <Card className="mb-8">
         <h2 className="text-lg font-semibold text-(--text-primary) mb-4">Invoices</h2>
         {clientInvoices.length === 0 ? (
@@ -109,7 +108,29 @@ export default async function ClientDetailPage({
           </ul>
         )}
       </Card>
-      {/* Phase 7: <Card className="mb-8"><h2>Tickets</h2>…</Card> goes here. */}
+
+      <Card className="mb-8">
+        <h2 className="text-lg font-semibold text-(--text-primary) mb-4">Tickets</h2>
+        {clientTickets.length === 0 ? (
+          <p className="text-sm text-(--text-secondary)">No tickets yet.</p>
+        ) : (
+          <ul className="divide-y divide-(--border-color)">
+            {clientTickets.map((t) => (
+              <li key={t.id} className="flex items-center justify-between py-2">
+                <Link
+                  href={`/admin/tickets/${t.id}`}
+                  className="text-sm text-(--text-primary) hover:underline"
+                >
+                  {t.subject}
+                </Link>
+                <span className="text-xs text-(--text-secondary)">
+                  {t.priority} · {t.status}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Card>
 
       {/* Notes section */}
       <Card>
