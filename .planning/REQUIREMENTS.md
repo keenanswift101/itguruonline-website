@@ -76,11 +76,11 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 | CLIENT-04 | Phase 6 | Complete (06-02 GET/PUT + 06-05 edit UI) |
 | CLIENT-05 | Phase 6 | Complete (06-05 notes route/UI via crm_notes recordType "client") |
 | CLIENT-06 | Phase 8 | In Progress (08-05: invoices half delivered — getClientInvoices + Invoices Card; tickets half deferred to Phase 7 by design) |
-| TICKET-01 | Phase 7 | Pending |
+| TICKET-01 | Phase 7 | In Progress (07-02 built the POST route — create with client-existence check; create UI lands in 07-04) |
 | TICKET-02 | Phase 7 | Pending |
 | TICKET-03 | Phase 7 | Pending |
-| TICKET-04 | Phase 7 | Pending |
-| TICKET-05 | Phase 7 | Pending |
+| TICKET-04 | Phase 7 | In Progress (07-02 built getTickets + GET route with ?status filter and open-first ordering; list UI lands in 07-04) |
+| TICKET-05 | Phase 7 | In Progress (07-02 built getTicketById + GET/PUT route; detail UI lands in 07-05) |
 | INVOICE-09 | Phase 8 | In Progress (08-02 built the POST/PUT route linking + client-existence check; picker UI lands in 08-03) |
 | INVOICE-10 | Phase 8 | Complete (08-02: POST/PUT persist clientId or NULL for a free-text one-off; existing free-text invoices unaffected) |
 | INVOICE-11 | Phase 8 | In Progress (08-01 built generateInvoicePdfBuffer + sendEmail attachments; email-on-send hook lands in 08-04) |
