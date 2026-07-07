@@ -20,10 +20,10 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 
 ### Tickets
 
-- [ ] **TICKET-01**: Owner can create a support ticket linked to a client, with subject, description, and priority
+- [x] **TICKET-01**: Owner can create a support ticket linked to a client, with subject, description, and priority
 - [ ] **TICKET-02**: Owner can set and update a ticket's status (open → in-progress → resolved)
 - [ ] **TICKET-03**: Owner can add follow-up notes/updates to a ticket over time
-- [ ] **TICKET-04**: Owner can view a list of all tickets, filterable by status (and see open ones first)
+- [x] **TICKET-04**: Owner can view a list of all tickets, filterable by status (and see open ones first)
 - [ ] **TICKET-05**: Owner can open an individual ticket to see its full detail and history
 
 ### Linked Invoicing & Delivery

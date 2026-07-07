@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Clients, Tickets, Invoicing & Quotations
 status: executing
-stopped_at: Completed 07-03-PLAN.md
-last_updated: "2026-07-07T10:33:42.623Z"
+stopped_at: Completed 07-04-PLAN.md
+last_updated: "2026-07-07T11:29:43.667Z"
 last_activity: 2026-07-07
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 21
-  completed_plans: 19
+  completed_plans: 20
 ---
 
 # Project State
@@ -34,7 +34,7 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 ## Current Position
 
 Phase: 07 (tickets) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-07-07
 
@@ -90,6 +90,7 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 | Phase 07 P01 | 14min | 3 tasks | 9 files |
 | Phase 07-tickets P02 | 22min | 3 tasks | 5 files |
 | Phase 07-tickets P03 | 12min | 2 tasks | 4 files |
+| Phase 07-tickets P04 | 26min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -144,6 +145,8 @@ Recent decisions affecting current work:
 - [Phase 07-tickets]: 07-03: Status route omits quotations' email/PDF block entirely (TICKET-06 email-on-status-change deferred) - pure DB update with resolved_at stamp/clear only
 - [Phase 07-tickets]: 07-03: Notes route non-numeric-id guard test asserts 401 not 404 - requireAdmin() always runs before Number(id) validation, matching clients/[id]/notes/route.test.ts convention
 - [Phase 07-tickets]: 07-03 correction: did not mark TICKET-02/TICKET-03 complete - backend routes only, owner-facing status control + note UI lands in 07-05, mirrors 06-01/06-02/07-02/08-01/08-02/10-01 pattern
+- [Phase 07-tickets]: 07-04: TicketForm keeps ClientPicker's built-in one-off option in the UI but validate() blocks submit on null clientId (component itself untouched, since QuotationForm relies on one-off being valid there)
+- [Phase 07-tickets]: 07-04: TICKET-01/TICKET-04 marked complete - this plan delivers the owner-facing create+list UI that 07-02 left pending
 
 ### Pending Todos
 
@@ -157,7 +160,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-07T10:33:42.616Z
-Stopped at: Completed 07-03-PLAN.md
+Last session: 2026-07-07T11:29:43.654Z
+Stopped at: Completed 07-04-PLAN.md
 NEXT: Phase 08 (linked-invoicing-delivery) — 08-01 and 08-04 complete; 08-02 (linking routes), 08-03 (picker UI), and 08-05 (client invoice history) still remain before the phase is done.
 Resume file: None

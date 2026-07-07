@@ -73,7 +73,7 @@ Plans:
 - [x] 07-01-PLAN.md — Foundation: tickets table (0008 migration), ticket-types + ticket-status libs, status unit test + Wave 0 route stubs
 - [x] 07-02-PLAN.md — Query layer (getTickets/getTicketById/getClientTickets) + CRUD API (create/list/get/edit)
 - [x] 07-03-PLAN.md — Status transition route (ALLOWED_TRANSITIONS + resolved_at) + notes route (crm_notes recordType 'ticket')
-- [ ] 07-04-PLAN.md — List + create UI (TicketForm, /admin/tickets list+filter, /admin/tickets/new, sidebar nav)
+- [x] 07-04-PLAN.md — List + create UI (TicketForm, /admin/tickets list+filter, /admin/tickets/new, sidebar nav)
 - [ ] 07-05-PLAN.md — Detail UI (TicketStatusSelect + TicketNoteForm + detail page) + client-detail Tickets Card (CLIENT-06 tickets half)
 **UI hint**: yes
 
@@ -148,7 +148,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10
 | 4. Invoicing | v2.0 | 5/5 | Complete | 2026-07-03 |
 | 5. Scheduled Automation | v2.0 | 6/6 | Complete | 2026-07-04 |
 | 6. Clients Entity + CRM Integration | v2.1 | 5/5 | Complete | 2026-07-04 |
-| 7. Tickets | v2.1 | 0/5 | Planned | - |
+| 7. Tickets | v2.1 | 4/5 | In Progress|  |
 | 8. Linked Invoicing & Delivery | v2.1 | 4/5 | In Progress|  |
 | 9. Dashboard Rework | v2.1 | 0/? | Not started | - |
 | 10. Quotations | v2.1 | 6/6 | Complete    | 2026-07-07 |
