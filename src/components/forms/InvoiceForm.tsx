@@ -3,6 +3,8 @@
 import { useId, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { ClientPicker } from "@/components/forms/ClientPicker";
+import { useToast } from "@/components/ui/Toast";
+import { Spinner } from "@/components/ui/Spinner";
 import type { ClientPickerOption } from "@/lib/client-types";
 
 interface LineItemRow {
@@ -60,6 +62,7 @@ function lineTotal(item: LineItemRow): number {
 export default function InvoiceForm({ invoiceId, initial, clients, initialClientId }: InvoiceFormProps) {
   const id = useId();
   const router = useRouter();
+  const toast = useToast();
 
   const [fields, setFields] = useState<ClientFields>(
     initial
@@ -182,6 +185,7 @@ export default function InvoiceForm({ invoiceId, initial, clients, initialClient
       if (res.ok && invoiceId) {
         // Edit mode: stay on the detail page, just revalidate server data.
         setStatus("idle");
+        toast.success("Invoice saved.");
         router.refresh();
         return;
       }
@@ -412,13 +416,15 @@ export default function InvoiceForm({ invoiceId, initial, clients, initialClient
         disabled={status === "submitting"}
         className="btn-metallic text-sm px-6 py-2.5 rounded-lg disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        {invoiceId
-          ? status === "submitting"
-            ? "Saving…"
-            : "Save Changes"
-          : status === "submitting"
-            ? "Creating…"
-            : "Create Invoice"}
+        {status === "submitting" ? (
+          <span className="inline-flex items-center gap-2">
+            <Spinner /> {invoiceId ? "Saving…" : "Creating…"}
+          </span>
+        ) : invoiceId ? (
+          "Save Changes"
+        ) : (
+          "Create Invoice"
+        )}
       </button>
     </form>
   );

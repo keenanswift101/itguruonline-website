@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/Toast";
+import { Spinner } from "@/components/ui/Spinner";
 
 type JobName = "enquiry-reminder" | "invoice-reminder" | "recurring-billing";
 
@@ -17,6 +19,7 @@ interface JobResult {
 
 export function RunNowButton({ job }: RunNowButtonProps) {
   const router = useRouter();
+  const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<JobResult | null>(null);
 
@@ -31,10 +34,15 @@ export function RunNowButton({ job }: RunNowButtonProps) {
       const data = (await res.json()) as JobResult;
       setResult(data);
       if (data.ok) {
+        toast.success(`Job finished — ${formatSummary(data.summary)}.`);
         router.refresh();
+      } else {
+        toast.error(data.error ?? "The job failed. Check the function logs.");
       }
-    } catch (err) {
-      setResult({ ok: false, error: String(err) });
+    } catch {
+      const msg = "Couldn't reach the server. Check your connection and try again.";
+      setResult({ ok: false, error: msg });
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -56,7 +64,13 @@ export function RunNowButton({ job }: RunNowButtonProps) {
         disabled={loading}
         className="btn-glass text-sm px-4 py-2 disabled:opacity-50"
       >
-        {loading ? "Running…" : "Run Now"}
+        {loading ? (
+          <span className="inline-flex items-center gap-2">
+            <Spinner /> Running…
+          </span>
+        ) : (
+          "Run Now"
+        )}
       </button>
       {result && (
         <p

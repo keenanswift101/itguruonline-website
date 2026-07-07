@@ -3,6 +3,8 @@
 import { useId, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { ClientPicker } from "@/components/forms/ClientPicker";
+import { useToast } from "@/components/ui/Toast";
+import { Spinner } from "@/components/ui/Spinner";
 import type { ClientPickerOption } from "@/lib/client-types";
 
 interface LineItemRow {
@@ -60,6 +62,7 @@ function lineTotal(item: LineItemRow): number {
 export default function QuotationForm({ quotationId, initial, clients, initialClientId }: QuotationFormProps) {
   const id = useId();
   const router = useRouter();
+  const toast = useToast();
 
   const [fields, setFields] = useState<ClientFields>(
     initial
@@ -182,6 +185,7 @@ export default function QuotationForm({ quotationId, initial, clients, initialCl
       if (res.ok && quotationId) {
         // Edit mode: stay on the detail page, just revalidate server data.
         setStatus("idle");
+        toast.success("Quotation saved.");
         router.refresh();
         return;
       }
@@ -412,13 +416,15 @@ export default function QuotationForm({ quotationId, initial, clients, initialCl
         disabled={status === "submitting"}
         className="btn-metallic text-sm px-6 py-2.5 rounded-lg disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        {quotationId
-          ? status === "submitting"
-            ? "Saving…"
-            : "Save Changes"
-          : status === "submitting"
-            ? "Creating…"
-            : "Create Quotation"}
+        {status === "submitting" ? (
+          <span className="inline-flex items-center gap-2">
+            <Spinner /> {quotationId ? "Saving…" : "Creating…"}
+          </span>
+        ) : quotationId ? (
+          "Save Changes"
+        ) : (
+          "Create Quotation"
+        )}
       </button>
     </form>
   );
