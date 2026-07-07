@@ -13,6 +13,7 @@ const navLinks = [
   { href: "/admin/dashboard", label: "Dashboard" },
   { href: "/admin/crm", label: "CRM" },
   { href: "/admin/clients", label: "Clients" },
+  { href: "/admin/tickets", label: "Tickets" },
   { href: "/admin/pricing", label: "Pricing" },
   { href: "/admin/invoices", label: "Invoices" },
   { href: "/admin/quotations", label: "Quotations" },
