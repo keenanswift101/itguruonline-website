@@ -3,9 +3,15 @@ import type { NextConfig } from "next";
 // Only external origins this site actually loads resources from:
 // - Google Maps embed (iframe) on the Contact page
 // - flagcdn.com flag images on the registration form's country picker
+//
+// 'unsafe-eval' is added to script-src ONLY in development — Next.js/Turbopack's
+// dev error overlay + React dev tooling use eval() (e.g. to reconstruct call
+// stacks). Production NEVER gets 'unsafe-eval' (React doesn't use eval in prod),
+// so this is a dev-only convenience with no production security impact.
+const isDev = process.env.NODE_ENV === "development";
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: https://flagcdn.com",
   "font-src 'self' data:",
