@@ -116,11 +116,11 @@ export function AddScheduleForm({ packages }: AddScheduleFormProps) {
             id="package-id"
             value={packageId}
             onChange={(e) => setPackageId(e.target.value)}
-            className="w-full rounded-lg border border-(--border-color) bg-white/10 px-3 py-1.5 text-sm text-(--text-primary) focus:outline-none focus:ring-1 focus:ring-white/30"
+            className="w-full rounded-lg border border-(--border-color) bg-white/10 px-3 py-1.5 text-sm text-(--text-primary) scheme-dark focus:outline-none focus:ring-1 focus:ring-white/30"
           >
-            <option value="">— None —</option>
+            <option value="" className="bg-(--bg-primary) text-(--text-primary)">— None —</option>
             {packages.map((pkg) => (
-              <option key={pkg.id} value={pkg.id}>
+              <option key={pkg.id} value={pkg.id} className="bg-(--bg-primary) text-(--text-primary)">
                 {pkg.name} (R{pkg.priceRands}/mo)
               </option>
             ))}
