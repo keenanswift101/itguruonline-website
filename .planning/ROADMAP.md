@@ -34,6 +34,7 @@ Full details: [milestones/v2.0-ROADMAP.md](milestones/v2.0-ROADMAP.md)
 - [x] **Phase 6: Clients Entity + CRM Integration** - Owner can manage clients as a distinct entity, separate from leads, with full CRUD and notes — completed 2026-07-04
 - [ ] **Phase 7: Tickets** - Owner can track support work for a client from creation through resolution
 - [ ] **Phase 8: Linked Invoicing & Delivery** - Owner can invoice a stored client (auto-filled) or go one-off free-text, email the PDF to the client on send, and see a client's full invoice+ticket history
+- [ ] **Phase 8.5: Pricing Management** [INSERTED 2026-07-07] - Owner can add hosting packages / domain TLDs / add-on items, edit them via an explicit Edit→Save-card flow (no accidental auto-save), and deactivate them — all reflected live on the public site
 - [ ] **Phase 9: Dashboard Rework** - Dashboard surfaces open tickets, new leads, unpaid/overdue invoices, monthly revenue, and recent activity
 - [x] **Phase 10: Quotations** - Owner can create/send/track quotations (mirroring invoicing) and convert an accepted quote into a draft invoice (completed 2026-07-07)
 
@@ -98,6 +99,20 @@ Plans:
 - [x] 08-03-PLAN.md — Client picker UI (searchable ClientPicker + InvoiceForm auto-fill + invoice pages)
 - [x] 08-04-PLAN.md — Send/Resend/Revert delivery (email-on-send, no-email guard, resend route, buttons)
 - [x] 08-05-PLAN.md — Client invoice history (getClientInvoices + Invoices Card + Phase 7 tickets seam)
+**UI hint**: yes
+
+### Phase 8.5: Pricing Management [INSERTED 2026-07-07]
+**Goal**: Owner can add new hosting packages, domain TLD prices, and add-on items, edit them safely via an explicit Edit → Save Changes flow (read-only cards by default, single commit, no per-field auto-save), and deactivate any of them — with every change reflected live on the public services page with no code deploy
+**Depends on**: Phase 3 (live-pricing DB foundation — hosting_packages, domain_prices, pricing.ts read layer)
+**Requirements**: PRICE-06, PRICE-07, PRICE-08, PRICE-09, PRICE-10
+**Success Criteria** (what must be TRUE):
+  1. Owner can add a brand-new hosting package and it appears on the public services page within seconds
+  2. Each hosting package is a read-only card by default; Edit unlocks the fields, Save Changes commits all edits at once, then it returns to the card (no accidental per-field auto-save)
+  3. Owner can deactivate/reactivate a hosting package — inactive packages disappear from the public site but keep their data
+  4. Owner can add a new domain TLD price and edit/deactivate existing TLDs via the same Edit→Save-card flow
+  5. Owner can create/edit/deactivate add-on items (name, description, price) shown on the public services page as an add-ons section
+**Notes**: Migration 0009 adds `is_active` to hosting_packages + domain_prices (default true) and a new `addons` table; `src/lib/pricing.ts` (getHostingPackages/getDomainPriceMap + new getAddons) filters is_active for public reads. Reworks src/app/admin/pricing/PricingPackagesTable.tsx + DomainPricesTable.tsx from per-field auto-save to the Edit→Save-card flow. Reuse toast+spinner + scheme-dark. New POST routes for add-package/add-TLD/add-addon; public services page gains an add-ons section.
+**Plans**: TBD
 **UI hint**: yes
 
 ### Phase 9: Dashboard Rework

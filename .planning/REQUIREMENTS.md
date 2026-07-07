@@ -51,6 +51,14 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 - [ ] **DASH-04**: Dashboard shows revenue for the current month (paid) and/or amount invoiced this month
 - [ ] **DASH-05**: Dashboard shows a recent-activity feed (latest leads, tickets, and invoices)
 
+### Pricing Management (added 2026-07-07, Phase 8.5 — before Dashboard)
+
+- [ ] **PRICE-06**: Owner can add a brand-new hosting package (all fields), which appears on the public services page live with no code deploy
+- [ ] **PRICE-07**: Owner edits a hosting package via an explicit Edit → Save Changes flow — each package is a read-only card by default, an Edit button unlocks the fields, a single Save Changes button commits all edits at once, then it returns to the read-only card (no per-field auto-save) to prevent accidental changes
+- [ ] **PRICE-08**: Owner can deactivate and reactivate a hosting package (hidden from the public site when inactive, data retained — no hard delete)
+- [ ] **PRICE-09**: Owner can add a new domain TLD price, and edit/deactivate existing TLD prices via the same Edit → Save-card flow
+- [ ] **PRICE-10**: Owner can create, edit (Edit → Save-card), and deactivate add-on items — a new priced-extras concept (name, description, price) — which appear on the public services page as an add-ons section; all pricing changes reflect live with no deploy
+
 ## Future Requirements (deferred, not this milestone)
 
 - **CLIENT-07**: Client-facing self-service portal (clients log in to see their own invoices/tickets) — deferred; owner-only for now
@@ -97,5 +105,10 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 | QUOTE-04 | Phase 10 | Pending |
 | QUOTE-05 | Phase 10 | Pending |
 | QUOTE-06 | Phase 10 | Complete |
+| PRICE-06 | Phase 8.5 | Pending |
+| PRICE-07 | Phase 8.5 | Pending |
+| PRICE-08 | Phase 8.5 | Pending |
+| PRICE-09 | Phase 8.5 | Pending |
+| PRICE-10 | Phase 8.5 | Pending |
 
-**Coverage:** 27/27 v2.1 requirements mapped to a phase. No orphans. (Phase 6 CLIENT-01..05 complete; +3 invoice-delivery reqs folded into Phase 8; +6 QUOTE reqs in new Phase 10.)
+**Coverage:** 32/32 v2.1 requirements mapped to a phase. No orphans. (Phases 6/7/8/10 complete; Phase 8.5 Pricing Management + Phase 9 Dashboard remain.)
