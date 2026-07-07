@@ -114,7 +114,13 @@ Plans:
   4. Owner can add a new domain TLD price and edit/deactivate existing TLDs via the same Edit→Save-card flow
   5. Owner can create/edit/deactivate add-on items (name, description, price) shown on the public services page as an add-ons section
 **Notes**: Migration 0009 adds `is_active` to hosting_packages + domain_prices (default true) and a new `addons` table; `src/lib/pricing.ts` (getHostingPackages/getDomainPriceMap + new getAddons) filters is_active for public reads. Reworks src/app/admin/pricing/PricingPackagesTable.tsx + DomainPricesTable.tsx from per-field auto-save to the Edit→Save-card flow. Reuse toast+spinner + scheme-dark. New POST routes for add-package/add-TLD/add-addon; public services page gains an add-ons section.
-**Plans**: TBD
+**Plans**: 5 plans (4 waves)
+Plans:
+- [ ] 08.5-01-PLAN.md — Foundation: is_active on hosting_packages+domain_prices + new addons table (0009 migration), pricing.ts public/admin read split, Wave 0 test stubs
+- [ ] 08.5-02-PLAN.md — Packages+domains backend: POST create routes (slug-gen/tld 422) + PATCH full-object + is_active toggle
+- [ ] 08.5-03-PLAN.md — Add-ons backend: GET/POST + PATCH (full-object + is_active) for the new addons table
+- [ ] 08.5-04-PLAN.md — Packages+domains admin UI rework: read-only card -> Edit -> Save Changes, Add Package/Add TLD, Deactivate; repoint admin reads
+- [ ] 08.5-05-PLAN.md — Add-ons UI: AddonsTable (Edit->Save-card) + admin section + public /services add-ons section
 **UI hint**: yes
 
 ### Phase 8.6: Business Settings & Owner Autonomy [INSERTED 2026-07-07, sign-off-critical]
