@@ -16,15 +16,15 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 - [x] **CLIENT-03**: Owner can view a list of clients in the CRM area, visually separated from leads (enquiries + registrations)
 - [x] **CLIENT-04**: Owner can open and edit an individual client's details
 - [x] **CLIENT-05**: Owner can add private notes to a client record (same notes machinery as leads)
-- [ ] **CLIENT-06**: Owner can see a client's linked invoices and tickets on the client detail page (history view)
+- [x] **CLIENT-06**: Owner can see a client's linked invoices and tickets on the client detail page (history view)
 
 ### Tickets
 
 - [x] **TICKET-01**: Owner can create a support ticket linked to a client, with subject, description, and priority
-- [ ] **TICKET-02**: Owner can set and update a ticket's status (open → in-progress → resolved)
-- [ ] **TICKET-03**: Owner can add follow-up notes/updates to a ticket over time
+- [x] **TICKET-02**: Owner can set and update a ticket's status (open → in-progress → resolved)
+- [x] **TICKET-03**: Owner can add follow-up notes/updates to a ticket over time
 - [x] **TICKET-04**: Owner can view a list of all tickets, filterable by status (and see open ones first)
-- [ ] **TICKET-05**: Owner can open an individual ticket to see its full detail and history
+- [x] **TICKET-05**: Owner can open an individual ticket to see its full detail and history
 
 ### Linked Invoicing & Delivery
 
