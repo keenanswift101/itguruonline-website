@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Clients, Tickets, Invoicing & Quotations
-status: verifying
-stopped_at: Completed 07-05-PLAN.md
-last_updated: "2026-07-07T12:08:30.549Z"
+status: ready_to_execute
+stopped_at: "Phases 6/7/8/10 complete + verified. Phase 8.5 (Pricing) planned+verified, ready to execute. 8.6 (Business Settings, sign-off-critical)/8.7/9 queued. Session handed off — see Session Continuity."
+last_updated: "2026-07-07T13:00:00.000Z"
 last_activity: 2026-07-07
 progress:
   total_phases: 5
@@ -33,12 +33,12 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 
 ## Current Position
 
-Phase: 08
-Plan: Not started
-Status: Phase complete — ready for verification
+Phase: 8.5 (Pricing Management) — PLANNED + VERIFIED, ready to execute
+Plan: 0/5 executed (plans + research + validation all committed)
+Status: Ready to execute — run `/gsd:execute-phase 8.5`
 Last activity: 2026-07-07
 
-Progress: v2.0 complete (22/22 plans, shipped, 5/5 phases). v2.1 roadmap defined (4 phases, 18 requirements, 0 plans yet).
+Progress: v2.0 shipped (5/5). v2.1: Phases 6 (Clients), 7 (Tickets), 8 (Invoicing & Delivery), 10 (Quotations) COMPLETE. Remaining: 8.5 (Pricing, planned/verified), 8.6 (Business Settings — sign-off-critical), 8.7 (Submissions→Tickets), 9 (Dashboard + nav counters).
 
 ## Side Task: admin.it-guru.co.za subdomain — DONE (2026-07-04)
 
@@ -161,9 +161,29 @@ Recent decisions affecting current work:
 - None currently blocking v2.1 roadmap/planning. Full historical blocker log preserved in git history of this file (v2.0 security audit, testing-methodology traps, etc. — all resolved).
 - Reminder for Phase 6 planning: new `clients` table migration will be `0005` (0000 initial, 0001 CRM, 0002 pricing, 0003 invoices, 0004 automation).
 
-## Session Continuity
+## Session Continuity — HANDOFF FOR NEW SESSION (2026-07-07)
 
-Last session: 2026-07-07T11:55:12.112Z
-Stopped at: Completed 07-05-PLAN.md
-NEXT: Phase 08 (linked-invoicing-delivery) — 08-01 and 08-04 complete; 08-02 (linking routes), 08-03 (picker UI), and 08-05 (client invoice history) still remain before the phase is done.
+**Everything is committed on `dev` and pushed to origin/dev. `dev` is 24 commits ahead of `main` (main = last prod deploy `218ad9f`). Nothing is lost; a fresh session resumes cleanly.**
+
+### DONE this session (v2.1)
+- Phase 6 Clients ✅, Phase 8 Linked Invoicing & Delivery ✅, Phase 10 Quotations ✅, Phase 7 Tickets ✅ (all verified). Plus: brand logo on all PDFs, global toast+spinner feedback system across every admin action, friendly line-item validation messages, dev-only CSP unsafe-eval fix.
+- Deployed to prod once this session (`218ad9f`): Clients + Invoicing & Delivery + Quotations + toasts + logo. **NOT yet deployed: Phase 7 Tickets, the friendly-message fix, the CSP dev fix, and everything from Phase 8.5 onward.**
+
+### NEXT — resume order
+1. **`/gsd:execute-phase 8.5`** (Pricing Management) — 5 plans/4 waves, PLANNED + VERIFIED, ready. Adds packages/domains/add-ons, Edit→Save-card UX (retires per-field auto-save), deactivate. Migration 0009.
+2. **Phase 8.6 Business Settings** (SIGN-OFF-CRITICAL) — plan+build: owner edits banking/business-identity/doc-footer/notification-emails/logo from Settings; PDFs/emails read from `site_settings` (currently HARDCODED in InvoiceDocument.tsx lines 47-59, 85-88). `/gsd:plan-phase 8.6`.
+3. **Phase 8.7 Submissions→Tickets** — auto-create a ticket from each contact/registration submission + bump bell. NOTE: requires making `tickets.client_id` NULLABLE (currently NOT NULL) — migration + UI must handle null client.
+4. **Phase 9 Dashboard + Nav counters** — overview tiles + total-item count badges on nav (NAV-01, "total items" not actionable).
+
+### LOCAL DEV state (owner is testing locally)
+- Use **`netlify dev` → http://localhost:3000** (NOT 8888 — netlify's 8888 proxy has an ERR_CONTENT_DECODING_FAILED bug that serves blank pages; 3000 is netlify dev's real Next server with the DB). Bare `npm run dev` has NO database.
+- Local DB migrations applied through **0008** (tickets). When Phase 8.5 runs, apply 0009 locally with `netlify database migrations apply`.
+- **LESSON: when a newly-built feature errors locally with "Failed query", the migration hasn't been applied to the LOCAL dev DB — run `netlify database migrations apply`.** (This is what caused the tickets-page runtime error 2026-07-07, now fixed.)
+- Seeded local test data: 2 clients (Acme Corp w/ keenanswift101@gmail.com, Blue Ridge), quotes, invoices — all local-only.
+- `.next` route-cache can corrupt after many restarts (all dynamic `[id]` routes start 404ing) → fix = kill dev server, `rm -rf .next`, restart `netlify dev`.
+- CSP dev fix (unsafe-eval in dev) needs a `netlify dev` restart to take effect.
+
+### Open todos (`.planning/todos/pending/`)
+- Notification bell for registrations (partly built), pricing add-packages (now Phase 8.5), + others.
+
 Resume file: None
