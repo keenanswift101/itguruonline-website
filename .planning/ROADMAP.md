@@ -35,7 +35,9 @@ Full details: [milestones/v2.0-ROADMAP.md](milestones/v2.0-ROADMAP.md)
 - [ ] **Phase 7: Tickets** - Owner can track support work for a client from creation through resolution
 - [ ] **Phase 8: Linked Invoicing & Delivery** - Owner can invoice a stored client (auto-filled) or go one-off free-text, email the PDF to the client on send, and see a client's full invoice+ticket history
 - [ ] **Phase 8.5: Pricing Management** [INSERTED 2026-07-07] - Owner can add hosting packages / domain TLDs / add-on items, edit them via an explicit Edit→Save-card flow (no accidental auto-save), and deactivate them — all reflected live on the public site
-- [ ] **Phase 9: Dashboard Rework** - Dashboard surfaces open tickets, new leads, unpaid/overdue invoices, monthly revenue, and recent activity
+- [ ] **Phase 8.6: Business Settings & Owner Autonomy** [INSERTED 2026-07-07, sign-off-critical] - Owner edits banking, business identity, document footer/terms, notification emails, and logo from Settings; PDFs/emails read from the DB so no code changes after handover
+- [ ] **Phase 8.7: Website Submissions → Tickets** [INSERTED 2026-07-07] - Contact-form + registration submissions auto-create tickets (client link optional) and increment the notification bell
+- [ ] **Phase 9: Dashboard Rework + Nav Counters** - Dashboard surfaces open tickets, new leads, unpaid/overdue invoices, monthly revenue, and recent activity; plus total-item count badges on the nav (NAV-01)
 - [x] **Phase 10: Quotations** - Owner can create/send/track quotations (mirroring invoicing) and convert an accepted quote into a draft invoice (completed 2026-07-07)
 
 ## Phase Details
@@ -115,11 +117,38 @@ Plans:
 **Plans**: TBD
 **UI hint**: yes
 
-### Phase 9: Dashboard Rework
-**Goal**: The dashboard surfaces the business's current open work and financial position at a glance, replacing whatever v2.0 tiles existed with data drawn from clients, tickets, invoices, and leads
-**Depends on**: Phase 6 (clients/leads split), Phase 7 (tickets), Phase 8 (invoice-client links)
-**Requirements**: DASH-01, DASH-02, DASH-03, DASH-04, DASH-05
+### Phase 8.6: Business Settings & Owner Autonomy [INSERTED 2026-07-07, sign-off-critical]
+**Goal**: After handover the owner can change every business detail from the Settings page without touching code — banking/EFT details, business identity, document footer/terms text, notification emails, and the logo — with the PDF and email components reading these from the DB instead of hardcoded constants
+**Depends on**: Phase 3 (site_settings store), Phase 8/10 (invoice + quotation PDF components that consume the details)
+**Requirements**: SET-01, SET-02, SET-03, SET-04, SET-05
 **Success Criteria** (what must be TRUE):
+  1. Owner can edit banking/EFT bank options from Settings and see them on the next invoice/quotation PDF
+  2. Owner can edit business identity (name, address, email, phone, website) from Settings, reflected on all PDFs + emails
+  3. Owner can edit document footer/terms text (quote validity, invoice notes, thank-you line, setup-fee note) from Settings
+  4. Owner can edit notification/automation settings (reminder recipient, BCC address, reminder-day thresholds) from Settings
+  5. Owner can upload/replace the PDF logo from Settings; no hardcoded business/banking constants remain in the PDF/email components
+**Notes**: Move BANK_OPTIONS + company block out of InvoiceDocument.tsx/QuotationDocument.tsx into site_settings (or a settings JSON), read via a getBusinessSettings() helper. Extend the existing SiteSettingsForm / Settings page. Logo upload needs a store (Netlify Blob or a settings-held data URI — decide in research). This directly satisfies the client's explicit sign-off requirement for full admin autonomy.
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 8.7: Website Submissions → Tickets [INSERTED 2026-07-07]
+**Goal**: Every website contact-form and registration submission automatically becomes a ticket the owner can action, and bumps the notification bell — turning Tickets into the incoming-work inbox
+**Depends on**: Phase 7 (tickets), Phase 2 (contact/registration capture)
+**Requirements**: SUBMIT-01, SUBMIT-02
+**Success Criteria** (what must be TRUE):
+  1. A new website contact-form submission auto-creates a ticket (client link optional/null) visible on the Tickets page
+  2. A new website registration submission auto-creates a ticket (client link optional/null)
+  3. Each auto-created ticket increments the notification bell badge
+**Notes**: Requires making tickets.client_id NULLABLE (migration — it's currently NOT NULL) so anonymous submissions can be tickets; the ticket create/list/detail UI must handle a null client gracefully. Hook /api/register and /api/contact to insert a ticket after capturing the CRM record. Notification bell (/api/admin/crm/new-count) either extends to include open tickets or a new count endpoint.
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 9: Dashboard Rework + Nav Counters
+**Goal**: The dashboard surfaces the business's current open work and financial position at a glance, replacing whatever v2.0 tiles existed with data drawn from clients, tickets, invoices, and leads; plus total-item count badges on the admin nav
+**Depends on**: Phase 6 (clients/leads split), Phase 7 (tickets), Phase 8 (invoice-client links)
+**Requirements**: DASH-01, DASH-02, DASH-03, DASH-04, DASH-05, NAV-01
+**Success Criteria** (what must be TRUE):
+  0. Admin nav shows a total-item count badge on Clients, Pricing, Invoices, Quotations, Automations, Tickets (NAV-01)
   1. Dashboard shows a count and short list of currently open tickets
   2. Dashboard shows a count of new/uncontacted leads (enquiries + registrations not yet actioned)
   3. Dashboard shows the count and total amount of unpaid + overdue invoices

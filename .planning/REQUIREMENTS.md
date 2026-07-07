@@ -59,6 +59,25 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 - [ ] **PRICE-09**: Owner can add a new domain TLD price, and edit/deactivate existing TLD prices via the same Edit → Save-card flow
 - [ ] **PRICE-10**: Owner can create, edit (Edit → Save-card), and deactivate add-on items — a new priced-extras concept (name, description, price) — which appear on the public services page as an add-ons section; all pricing changes reflect live with no deploy
 
+### Business Settings & Owner Autonomy (added 2026-07-07, Phase 8.6 — sign-off-critical)
+
+*Goal: after handover the owner never edits code to change their own details. All the following move from hardcoded constants into `site_settings` (or a settings store), edited from the Settings page, and read by the PDF/email components.*
+
+- [ ] **SET-01**: Owner can edit banking/EFT details (multiple bank options — name, bank, account number, branch code; add/remove options) shown on the invoice + quotation PDF footers
+- [ ] **SET-02**: Owner can edit business identity (company name, physical address, email, phone, website) used across all PDFs and email templates
+- [ ] **SET-03**: Owner can edit document footer & terms text (quotation validity/terms line, invoice notes, "thank you for your business" line, hosting setup-fee note)
+- [ ] **SET-04**: Owner can edit notification/automation settings from Settings (reminder-recipient email, BCC copy address, stale-enquiry days, overdue-invoice days)
+- [ ] **SET-05**: Owner can upload/replace the business logo used on PDFs (and any other reasonable owner-facing settings identified during build)
+
+### Website Submissions → Tickets (added 2026-07-07, Phase 8.7)
+
+- [ ] **SUBMIT-01**: A new website contact-form submission auto-creates a ticket (client link optional) and increments the notification bell
+- [ ] **SUBMIT-02**: A new website registration submission auto-creates a ticket (client link optional) and increments the notification bell
+
+### Navigation Counters (added 2026-07-07, folded into Phase 9)
+
+- [ ] **NAV-01**: The admin nav shows a total-item count badge on Clients, Pricing, Invoices, Quotations, Automations, and Tickets (not Settings/Dashboard/CRM)
+
 ## Future Requirements (deferred, not this milestone)
 
 - **CLIENT-07**: Client-facing self-service portal (clients log in to see their own invoices/tickets) — deferred; owner-only for now
@@ -110,5 +129,13 @@ Requirements for the v2.1 milestone. Each maps to exactly one roadmap phase (Pha
 | PRICE-08 | Phase 8.5 | Pending |
 | PRICE-09 | Phase 8.5 | Pending |
 | PRICE-10 | Phase 8.5 | Pending |
+| SET-01 | Phase 8.6 | Pending |
+| SET-02 | Phase 8.6 | Pending |
+| SET-03 | Phase 8.6 | Pending |
+| SET-04 | Phase 8.6 | Pending |
+| SET-05 | Phase 8.6 | Pending |
+| SUBMIT-01 | Phase 8.7 | Pending |
+| SUBMIT-02 | Phase 8.7 | Pending |
+| NAV-01 | Phase 9 | Pending |
 
-**Coverage:** 32/32 v2.1 requirements mapped to a phase. No orphans. (Phases 6/7/8/10 complete; Phase 8.5 Pricing Management + Phase 9 Dashboard remain.)
+**Coverage:** 40/40 v2.1 requirements mapped to a phase. No orphans. (Phases 6/7/8/10 complete; remaining: 8.5 Pricing, 8.6 Business Settings [sign-off-critical], 8.7 Submissions→Tickets, 9 Dashboard+nav counters.)
