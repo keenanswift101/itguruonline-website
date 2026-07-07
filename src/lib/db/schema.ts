@@ -247,3 +247,25 @@ export const quotationLineItems = pgTable("quotation_line_items", {
   lineTotalRands: integer("line_total_rands").notNull(),
   sortOrder: smallint("sort_order").notNull().default(0),
 });
+
+export const tickets = pgTable("tickets", {
+  id: serial("id").primaryKey(),
+  // NOT NULL — a ticket must belong to a client (no free-text ticket concept, per 07-RESEARCH).
+  // ON DELETE restrict (NOT set null): client_id is NOT NULL so set null is invalid SQL;
+  // restrict blocks deleting a client that still has tickets (Pitfall 2).
+  clientId: integer("client_id")
+    .notNull()
+    .references(() => clients.id, { onDelete: "restrict" }),
+  subject: varchar("subject", { length: 200 }).notNull(),
+  description: text("description").notNull().default(""),
+  // 'low' | 'medium' | 'high'
+  priority: varchar("priority", { length: 8 }).notNull().default("medium"),
+  // 'open' | 'in_progress' | 'resolved' — varchar(12); "in_progress" is 11 chars (Pitfall 1)
+  status: varchar("status", { length: 12 }).notNull().default("open"),
+  resolvedAt: timestamp("resolved_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
