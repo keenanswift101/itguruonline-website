@@ -68,7 +68,13 @@ Plans:
   3. Owner can add follow-up notes to a ticket over time and see them in chronological order (same notes machinery as clients/leads)
   4. Owner can view a list of all tickets, filter it by status, with open tickets surfaced first
   5. Owner can open an individual ticket and see its full detail — client, priority, status, and note history
-**Plans**: TBD
+**Plans**: 5 plans (3 waves)
+Plans:
+- [ ] 07-01-PLAN.md — Foundation: tickets table (0008 migration), ticket-types + ticket-status libs, status unit test + Wave 0 route stubs
+- [ ] 07-02-PLAN.md — Query layer (getTickets/getTicketById/getClientTickets) + CRUD API (create/list/get/edit)
+- [ ] 07-03-PLAN.md — Status transition route (ALLOWED_TRANSITIONS + resolved_at) + notes route (crm_notes recordType 'ticket')
+- [ ] 07-04-PLAN.md — List + create UI (TicketForm, /admin/tickets list+filter, /admin/tickets/new, sidebar nav)
+- [ ] 07-05-PLAN.md — Detail UI (TicketStatusSelect + TicketNoteForm + detail page) + client-detail Tickets Card (CLIENT-06 tickets half)
 **UI hint**: yes
 
 ### Phase 8: Linked Invoicing & Delivery
@@ -142,7 +148,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10
 | 4. Invoicing | v2.0 | 5/5 | Complete | 2026-07-03 |
 | 5. Scheduled Automation | v2.0 | 6/6 | Complete | 2026-07-04 |
 | 6. Clients Entity + CRM Integration | v2.1 | 5/5 | Complete | 2026-07-04 |
-| 7. Tickets | v2.1 | 0/? | Not started | - |
+| 7. Tickets | v2.1 | 0/5 | Planned | - |
 | 8. Linked Invoicing & Delivery | v2.1 | 4/5 | In Progress|  |
 | 9. Dashboard Rework | v2.1 | 0/? | Not started | - |
 | 10. Quotations | v2.1 | 6/6 | Complete    | 2026-07-07 |
