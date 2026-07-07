@@ -35,7 +35,7 @@ Full details: [milestones/v2.0-ROADMAP.md](milestones/v2.0-ROADMAP.md)
 - [ ] **Phase 7: Tickets** - Owner can track support work for a client from creation through resolution
 - [ ] **Phase 8: Linked Invoicing & Delivery** - Owner can invoice a stored client (auto-filled) or go one-off free-text, email the PDF to the client on send, and see a client's full invoice+ticket history
 - [ ] **Phase 9: Dashboard Rework** - Dashboard surfaces open tickets, new leads, unpaid/overdue invoices, monthly revenue, and recent activity
-- [ ] **Phase 10: Quotations** - Owner can create/send/track quotations (mirroring invoicing) and convert an accepted quote into a draft invoice
+- [x] **Phase 10: Quotations** - Owner can create/send/track quotations (mirroring invoicing) and convert an accepted quote into a draft invoice (completed 2026-07-07)
 
 ## Phase Details
 
@@ -126,7 +126,7 @@ Plans:
 - [x] 10-03-PLAN.md — CRUD backend: POST create + PUT/DELETE draft-only edit/delete
 - [x] 10-04-PLAN.md — Delivery: status transitions + email-on-send, resend, convert-to-invoice
 - [x] 10-05-PLAN.md — UI: QuotationForm + New page + list/filter + sidebar nav
-- [ ] 10-06-PLAN.md — UI: QuotationStatusActions (lifecycle + convert) + detail/edit page
+- [x] 10-06-PLAN.md — UI: QuotationStatusActions (lifecycle + convert) + detail/edit page
 **UI hint**: yes
 
 ## Progress
@@ -145,4 +145,4 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10
 | 7. Tickets | v2.1 | 0/? | Not started | - |
 | 8. Linked Invoicing & Delivery | v2.1 | 4/5 | In Progress|  |
 | 9. Dashboard Rework | v2.1 | 0/? | Not started | - |
-| 10. Quotations | v2.1 | 5/6 | In Progress|  |
+| 10. Quotations | v2.1 | 6/6 | Complete    | 2026-07-07 |
