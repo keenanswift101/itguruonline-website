@@ -2,6 +2,8 @@
 
 import { useId, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/Toast";
+import { Spinner } from "@/components/ui/Spinner";
 
 interface ClientFormInitial {
   name: string;
@@ -40,6 +42,7 @@ const emptyFields: ClientFormInitial = {
 export default function ClientForm({ clientId, initial }: ClientFormProps) {
   const id = useId();
   const router = useRouter();
+  const toast = useToast();
 
   const [fields, setFields] = useState<ClientFormInitial>(initial ?? emptyFields);
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -104,6 +107,7 @@ export default function ClientForm({ clientId, initial }: ClientFormProps) {
       if (res.ok && clientId) {
         // Edit mode: stay on the page, revalidate server data, show a saved indicator.
         setStatus("saved");
+        toast.success("Client saved.");
         router.refresh();
         return;
       }
@@ -260,13 +264,15 @@ export default function ClientForm({ clientId, initial }: ClientFormProps) {
         disabled={status === "submitting"}
         className="btn-metallic text-sm px-6 py-2.5 rounded-lg disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        {clientId
-          ? status === "submitting"
-            ? "Saving…"
-            : "Save Changes"
-          : status === "submitting"
-            ? "Creating…"
-            : "Create Client"}
+        {status === "submitting" ? (
+          <span className="inline-flex items-center gap-2">
+            <Spinner /> {clientId ? "Saving…" : "Creating…"}
+          </span>
+        ) : clientId ? (
+          "Save Changes"
+        ) : (
+          "Create Client"
+        )}
       </button>
     </form>
   );

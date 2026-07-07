@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/Toast";
+import { Spinner } from "@/components/ui/Spinner";
 
 interface PackageOption {
   id: number;
@@ -17,6 +19,7 @@ type FieldErrors = Record<string, string[]>;
 
 export function AddScheduleForm({ packages }: AddScheduleFormProps) {
   const router = useRouter();
+  const toast = useToast();
   const [clientName, setClientName] = useState("");
   const [clientEmail, setClientEmail] = useState("");
   const [packageId, setPackageId] = useState<string>(
@@ -50,6 +53,7 @@ export function AddScheduleForm({ packages }: AddScheduleFormProps) {
         setClientName("");
         setClientEmail("");
         setBillingStart("");
+        toast.success("Billing schedule added.");
         router.refresh();
         return;
       }
@@ -57,11 +61,16 @@ export function AddScheduleForm({ packages }: AddScheduleFormProps) {
       const data = await res.json();
       if (res.status === 422 && data.fields) {
         setErrors(data.fields as FieldErrors);
+        toast.error("Please fix the highlighted fields.");
       } else {
-        setFormError(data.error ?? "Failed to create billing schedule.");
+        const msg = data.error ?? "Failed to create billing schedule.";
+        setFormError(msg);
+        toast.error(msg);
       }
     } catch {
-      setFormError("Failed to create billing schedule.");
+      const msg = "Couldn't reach the server. Check your connection and try again.";
+      setFormError(msg);
+      toast.error(msg);
     } finally {
       setSubmitting(false);
     }
@@ -149,7 +158,13 @@ export function AddScheduleForm({ packages }: AddScheduleFormProps) {
 
       <div className="mt-4">
         <button type="submit" disabled={submitting} className="btn-metallic text-sm px-4 py-2 disabled:opacity-50">
-          {submitting ? "Adding…" : "Add Schedule"}
+          {submitting ? (
+            <span className="inline-flex items-center gap-2">
+              <Spinner /> Adding…
+            </span>
+          ) : (
+            "Add Schedule"
+          )}
         </button>
       </div>
     </form>
