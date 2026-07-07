@@ -53,6 +53,11 @@ export const styles = StyleSheet.create({
   companyBlock: {
     alignItems: "flex-end",
   },
+  logo: {
+    width: 150,
+    marginBottom: 8,
+    objectFit: "contain",
+  },
   companyName: {
     fontFamily: "Helvetica-Bold",
     fontSize: 14,

@@ -1,6 +1,7 @@
-import { Document, Page, Text, View } from "@react-pdf/renderer";
+import { Document, Page, Text, View, Image } from "@react-pdf/renderer";
 import { formatInvoiceNumber } from "@/lib/invoices";
 import { styles, formatRands } from "@/components/pdf/pdf-shared";
+import { getLogoDataUri } from "@/components/pdf/pdf-logo";
 
 /**
  * Server-only react-pdf invoice document (D-01). Rendered exclusively via
@@ -63,6 +64,7 @@ const BANK_OPTIONS: Array<{ option: string; rows: Array<[string, string]> }> = [
 export function InvoiceDocument({ invoice, lineItems }: InvoiceDocumentProps) {
   const heading = invoice.status === "draft" ? "Draft Invoice" : "Invoice";
   const number = formatInvoiceNumber(invoice.fiscalYear, invoice.sequenceNumber);
+  const logoSrc = getLogoDataUri();
 
   return (
     <Document title={`${heading} ${number}`} author="IT-Guru Online">
@@ -77,7 +79,11 @@ export function InvoiceDocument({ invoice, lineItems }: InvoiceDocumentProps) {
             ) : null}
           </View>
           <View style={styles.companyBlock}>
-            <Text style={styles.companyName}>IT-Guru Online</Text>
+            {logoSrc ? (
+              <Image src={logoSrc} style={styles.logo} />
+            ) : (
+              <Text style={styles.companyName}>IT-Guru Online</Text>
+            )}
             <Text style={styles.companyMeta}>Kuils River, South Africa</Text>
             <Text style={styles.companyMeta}>https://it-guru.co.za</Text>
           </View>

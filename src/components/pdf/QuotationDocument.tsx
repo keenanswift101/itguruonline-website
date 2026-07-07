@@ -1,6 +1,7 @@
-import { Document, Page, Text, View } from "@react-pdf/renderer";
+import { Document, Page, Text, View, Image } from "@react-pdf/renderer";
 import { styles, formatRands } from "@/components/pdf/pdf-shared";
 import { formatQuotationNumber } from "@/lib/quotations";
+import { getLogoDataUri } from "@/components/pdf/pdf-logo";
 
 /**
  * Server-only react-pdf quotation document (QUOTE-03/QUOTE-06). Structural
@@ -36,6 +37,7 @@ export interface QuotationDocumentProps {
 export function QuotationDocument({ quotation, lineItems }: QuotationDocumentProps) {
   const heading = quotation.status === "draft" ? "Draft Quotation" : "Quotation";
   const reference = formatQuotationNumber(quotation.id);
+  const logoSrc = getLogoDataUri();
 
   return (
     <Document title={`${heading} ${reference}`} author="IT-Guru Online">
@@ -47,7 +49,11 @@ export function QuotationDocument({ quotation, lineItems }: QuotationDocumentPro
             <Text style={styles.invoiceNumber}>{reference}</Text>
           </View>
           <View style={styles.companyBlock}>
-            <Text style={styles.companyName}>IT-Guru Online</Text>
+            {logoSrc ? (
+              <Image src={logoSrc} style={styles.logo} />
+            ) : (
+              <Text style={styles.companyName}>IT-Guru Online</Text>
+            )}
             <Text style={styles.companyMeta}>Kuils River, South Africa</Text>
             <Text style={styles.companyMeta}>https://it-guru.co.za</Text>
           </View>
