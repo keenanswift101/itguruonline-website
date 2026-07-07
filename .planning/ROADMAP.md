@@ -72,7 +72,7 @@ Plans:
 Plans:
 - [x] 07-01-PLAN.md — Foundation: tickets table (0008 migration), ticket-types + ticket-status libs, status unit test + Wave 0 route stubs
 - [x] 07-02-PLAN.md — Query layer (getTickets/getTicketById/getClientTickets) + CRUD API (create/list/get/edit)
-- [ ] 07-03-PLAN.md — Status transition route (ALLOWED_TRANSITIONS + resolved_at) + notes route (crm_notes recordType 'ticket')
+- [x] 07-03-PLAN.md — Status transition route (ALLOWED_TRANSITIONS + resolved_at) + notes route (crm_notes recordType 'ticket')
 - [ ] 07-04-PLAN.md — List + create UI (TicketForm, /admin/tickets list+filter, /admin/tickets/new, sidebar nav)
 - [ ] 07-05-PLAN.md — Detail UI (TicketStatusSelect + TicketNoteForm + detail page) + client-detail Tickets Card (CLIENT-06 tickets half)
 **UI hint**: yes

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Clients, Tickets, Invoicing & Quotations
 status: executing
-stopped_at: Completed 07-02-PLAN.md
-last_updated: "2026-07-07T10:13:45.224Z"
+stopped_at: Completed 07-03-PLAN.md
+last_updated: "2026-07-07T10:33:42.623Z"
 last_activity: 2026-07-07
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 21
-  completed_plans: 18
+  completed_plans: 19
 ---
 
 # Project State
@@ -34,7 +34,7 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 ## Current Position
 
 Phase: 07 (tickets) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-07-07
 
@@ -89,6 +89,7 @@ No outstanding follow-up here. If a future session sees this section, the subdom
 | Phase 10 P05 | 10min | 2 tasks | 4 files |
 | Phase 07 P01 | 14min | 3 tasks | 9 files |
 | Phase 07-tickets P02 | 22min | 3 tasks | 5 files |
+| Phase 07-tickets P03 | 12min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -140,6 +141,9 @@ Recent decisions affecting current work:
 - [Phase 07]: 07-01 correction: did not mark TICKET-01..05 complete - this plan only built Wave 0 foundation (schema/types/test-stubs, no routes/UI); mirrors 06-01/08-01/10-01 pattern
 - [Phase 07-tickets]: 07-02: Client-existence check for ticket create is a plain db.select outside any tx (single insert, no withTxDb needed)
 - [Phase 07-tickets]: 07-02 correction: did not mark TICKET-01/04/05 complete - this plan only built the backend route layer; owner-facing UI is 07-04/07-05's job, mirrors 06-01/06-02/08-01/08-02/10-01 pattern
+- [Phase 07-tickets]: 07-03: Status route omits quotations' email/PDF block entirely (TICKET-06 email-on-status-change deferred) - pure DB update with resolved_at stamp/clear only
+- [Phase 07-tickets]: 07-03: Notes route non-numeric-id guard test asserts 401 not 404 - requireAdmin() always runs before Number(id) validation, matching clients/[id]/notes/route.test.ts convention
+- [Phase 07-tickets]: 07-03 correction: did not mark TICKET-02/TICKET-03 complete - backend routes only, owner-facing status control + note UI lands in 07-05, mirrors 06-01/06-02/07-02/08-01/08-02/10-01 pattern
 
 ### Pending Todos
 
@@ -153,7 +157,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-07-07T10:13:45.216Z
-Stopped at: Completed 07-02-PLAN.md
+Last session: 2026-07-07T10:33:42.616Z
+Stopped at: Completed 07-03-PLAN.md
 NEXT: Phase 08 (linked-invoicing-delivery) — 08-01 and 08-04 complete; 08-02 (linking routes), 08-03 (picker UI), and 08-05 (client invoice history) still remain before the phase is done.
 Resume file: None
